@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  bholder-blog:
+    image: postgres
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "bholder-blog-2020"
+      POSTGRES_DB: "bholder-database"
+    ports:
+      - "5555:5432"

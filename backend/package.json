@@ -1,0 +1,32 @@
+{
+  "name": "bholder-blog-backend",
+  "version": "1.0.0",
+  "description": "Backend for bholder blog",
+  "main": "./src/app.ts",
+  "scripts": {
+    "dev": "nodemon ./src/app.ts"
+  },
+  "author": "Christian Alexsander",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.2",
+    "sequelize-cli": "^5.5.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "@types/bluebird": "^3.5.29",
+    "@types/node": "^13.1.0",
+    "@types/validator": "^12.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^7.15.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.3"
+  }
+}
