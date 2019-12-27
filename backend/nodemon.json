@@ -6,6 +6,6 @@
   "watch": ["./src"],
   "ext": "ts",
   "execMap": {
-    "ts": "ts-node ./src/app.ts"
+    "ts": "node --inspect -r ts-node/register"
   }
 }

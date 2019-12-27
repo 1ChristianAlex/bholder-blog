@@ -1,5 +1,5 @@
-import { Model, DataTypes } from 'sequelize';
-import { sequelize } from '../../config/database';
+import { Model, DataTypes } from "sequelize";
+import { sequelize } from "../../config/database";
 
 export default class User extends Model {}
 User.init(
@@ -17,5 +17,5 @@ User.init(
       type: DataTypes.STRING
     }
   },
-  { sequelize }
+  { sequelize, schema: "user" }
 );

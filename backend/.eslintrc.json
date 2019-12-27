@@ -1,6 +1,6 @@
 {
   "env": {
-    "browser": true,
+    "browser": false,
     "es6": true
   },
   "extends": [
@@ -17,6 +17,5 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
-  "rules": {},
-  "overrides": []
+  "rules": {}
 }

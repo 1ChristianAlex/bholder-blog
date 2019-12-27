@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import UserService from './service';
+import { Request, Response } from "express";
+import UserService from "./service";
 
 export default class UserController {
   constructor(private UserService: UserService) {}
@@ -10,7 +10,7 @@ export default class UserController {
       res.json(result);
       next();
     } catch (error) {
-      res.status(400).json('Error');
+      res.status(400).json("Error");
     }
   }
   static getInstance() {

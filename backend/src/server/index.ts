@@ -1,7 +1,7 @@
-import * as express from 'express';
-import * as cors from 'cors';
-import routes from './routes';
-import { sequelize } from '../config/database';
+import * as express from "express";
+import * as cors from "cors";
+import routes from "./routes";
+import { sequelize } from "../config/database";
 
 class Server {
   private app = express();
