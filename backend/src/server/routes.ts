@@ -1,3 +1,6 @@
-import { Router } from "express";
+import userRoutes from '../modules/user/routes';
+import { Router } from 'express';
 
-export const router = Router();
+const routes: [Router] = [userRoutes];
+
+export default routes;

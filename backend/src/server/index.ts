@@ -1,7 +1,7 @@
-import * as express from "express";
-import * as cors from "cors";
-import { router } from "./routes";
-import { sequelize } from "../config/database";
+import * as express from 'express';
+import * as cors from 'cors';
+import routes from './routes';
+import { sequelize } from '../config/database';
 
 class Server {
   private app = express();
@@ -11,10 +11,10 @@ class Server {
     this.app.use(cors());
   }
   private routes() {
-    this.app.use(router);
+    routes.forEach(route => this.app.use(route));
   }
   private async database() {
-    sequelize.authenticate();
+    sequelize.sync();
   }
   public init() {
     this.database();
