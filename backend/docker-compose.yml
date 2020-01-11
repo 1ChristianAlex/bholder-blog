@@ -1,11 +1,12 @@
-version: "3"
+version: '3.3'
 
 services:
   bholder-blog:
-    image: postgres
+    image: mysql:5.7
     environment:
-      POSTGRES_USER: "admin"
-      POSTGRES_PASSWORD: "bholder-blog-2020"
-      POSTGRES_DB: "bholder-database"
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'bholder-blog-2020'
+      MYSQL_ROOT_PASSWORD: 'bholder-blog-2020'
+      MYSQL_DATABASE: 'bholder-database'
     ports:
-      - "5555:5432"
+      - '5555:3306'

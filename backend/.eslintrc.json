@@ -9,7 +9,9 @@
   ],
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
+    "module": "readonly",
+    "require": "readonly"
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,5 +19,5 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
-  "rules": {}
+  "rules": { "no-undef": "off", "@typescript-eslint/no-unused-vars": "warn" }
 }

@@ -1,10 +1,12 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
+import * as env from './env';
 
 export const sequelize = new Sequelize({
-  host: "localhost",
-  dialect: "postgres",
-  username: "admin",
-  password: "bholder-blog-2020",
-  database: "bholder-database",
-  port: 5555
+  host: env.HOSTNAME,
+  dialect: 'mysql',
+  username: env.DB_USER,
+  password: env.PASSWORD,
+  database: env.DB_NAME,
+  port: parseInt(env.DB_PORT),
+  logging: false
 });

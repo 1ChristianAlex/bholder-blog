@@ -1,3 +1,8 @@
-import app from "./server";
+import app from './server';
+import { BACKEND_PORT, HOSTNAME } from './config/env';
 
-app.listen(5000);
+const host = `http://${HOSTNAME}:${BACKEND_PORT}`;
+
+app.listen(parseInt(BACKEND_PORT), HOSTNAME, () =>
+  console.log(`Server running on ${host}`)
+);
