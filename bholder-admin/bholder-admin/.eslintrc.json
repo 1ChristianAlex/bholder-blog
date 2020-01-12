@@ -19,6 +19,11 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx"] }],
-    "import/no-unresolved": [0, { "commonjs": false }]
+    "import/no-unresolved": [0, { "commonjs": false }],
+    "no-undef": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "linebreak-style": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off"
   }
 }

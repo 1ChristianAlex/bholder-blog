@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
+import Routes from './routes';
+import './styles/globals.scss';
 
-const App: React.FC = () => <div className="App">REACT BHOLDER</div>;
+const App: FC = () => <Routes />;
 
 export default App;
