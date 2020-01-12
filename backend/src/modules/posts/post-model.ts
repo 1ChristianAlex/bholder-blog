@@ -13,6 +13,9 @@ Posts.init(
     user_id: {
       type: DataTypes.INTEGER
     },
+    thumbnail: {
+      type: DataTypes.STRING
+    },
     categorie: { type: DataTypes.STRING },
     meta: { type: DataTypes.STRING },
     keywords: { type: DataTypes.STRING },

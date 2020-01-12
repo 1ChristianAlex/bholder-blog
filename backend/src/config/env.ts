@@ -11,5 +11,9 @@ export const {
   DB_NAME,
   DB_PORT,
   BACKEND_PORT,
-  SECRET
+  SECRET,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
+  AWS_PASS,
+  BUCKET_NAME
 } = process.env;

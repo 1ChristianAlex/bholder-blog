@@ -6,6 +6,7 @@ interface IUser {
   password?: string;
   created_at?: string;
   updated_at?: string;
+  image?: string;
 }
 interface ICurrentuser extends IUser {}
 

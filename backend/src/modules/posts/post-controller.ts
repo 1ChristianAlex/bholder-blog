@@ -11,9 +11,9 @@ export default class PostController {
 
   async Create(req: Request, res: Response, next: Function) {
     try {
-      const { post, currentUser } = req.body as IBody;
+      const { post, data, currentUser } = req.body as IBody;
       const user_id = currentUser?.id;
-      const newPost = { ...post, user_id };
+      const newPost = { ...post, data, user_id };
 
       const result = await this.service.Create(newPost);
       res.json({ post: result });
@@ -37,8 +37,9 @@ export default class PostController {
   }
   public async Update(req: Request, res: Response, next: Function) {
     try {
-      const { id, post } = req.body;
-      const postUpdated = await this.service.Update(id, post);
+      const { id, post, data } = req.body;
+      const postData = { ...post, ...data };
+      const postUpdated = await this.service.Update(id, postData);
 
       res.json({ post: postUpdated });
       next();

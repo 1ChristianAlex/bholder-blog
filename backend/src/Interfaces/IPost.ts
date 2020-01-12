@@ -4,6 +4,7 @@ export interface IPost {
   title?: string;
   content?: string;
   categorie?: string;
+  thumbnail?: string;
   meta?: string;
   keywords?: string;
   created_at?: string;

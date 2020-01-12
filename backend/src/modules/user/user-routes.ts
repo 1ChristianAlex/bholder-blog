@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { upload, MulterUpload } from '../../middleware/';
 
 import UserController from './user-controller';
 
@@ -12,11 +13,16 @@ const controller = UserController.getInstance();
 userRouter
   .route(userRouterUrl)
   .get(controller.GetUserById.bind(controller))
-  .patch(controller.Update.bind(controller))
+  .patch(upload.any(), MulterUpload, controller.Update.bind(controller))
   .delete(controller.DeleteUser.bind(controller));
 userRouter.get(currentUserUrl, controller.CurrentUser.bind(controller));
 
 // Public User Routes
-userRouter.post(publicUserUrl, controller.Create.bind(controller));
+userRouter.post(
+  publicUserUrl,
+  upload.any(),
+  MulterUpload,
+  controller.Create.bind(controller)
+);
 
 export default userRouter;

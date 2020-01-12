@@ -1,5 +1,5 @@
 import { Router } from 'express';
-
+import { upload, MulterUpload } from '../../middleware/';
 import PostController from './post-controller';
 
 const postRouter = Router();
@@ -16,8 +16,8 @@ postRouter
   .route(privatePostUrl)
   .get(controller.GetSinglePost.bind(controller))
   .delete(controller.DeletePost.bind(controller))
-  .patch(controller.Update.bind(controller))
-  .post(controller.Create.bind(controller));
+  .patch(upload.any(), MulterUpload, controller.Update.bind(controller))
+  .post(upload.any(), MulterUpload, controller.Create.bind(controller));
 postRouter.get(privatePostUrlQuery, controller.GetAll.bind(controller));
 
 // Public post routes

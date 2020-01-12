@@ -11,9 +11,9 @@ export default class UserController {
 
   public async Create(req: Request, res: Response, next: Function) {
     try {
-      const { user } = req.body as IBody;
-
-      const result = await this.service.Create(user);
+      const { user, data } = req.body as IBody;
+      const userData = { ...user, ...data };
+      const result = await this.service.Create(userData);
       res.json({ user: result });
       next();
     } catch (error) {
@@ -46,8 +46,9 @@ export default class UserController {
   }
   public async Update(req: Request, res: Response, next: Function) {
     try {
-      const { id, user } = req.body;
-      const userUpdated = await this.service.Update(id, user);
+      const { id, user, data } = req.body;
+      const userData = { ...user, ...data };
+      const userUpdated = await this.service.Update(id, userData);
 
       res.json({ user: userUpdated });
       next();

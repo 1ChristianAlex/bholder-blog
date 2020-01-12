@@ -5,6 +5,7 @@ interface IBody {
   user?: IUser;
   currentUser?: ICurrentuser;
   login?: ILogin;
+  data: object;
 }
 
 export { IBody };

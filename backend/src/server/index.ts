@@ -9,6 +9,7 @@ class Server {
 
   private middleware() {
     this.app.use(express.json());
+    this.app.use(express.urlencoded());
     this.app.use(cors());
     this.app.use(privatesRoutes);
   }

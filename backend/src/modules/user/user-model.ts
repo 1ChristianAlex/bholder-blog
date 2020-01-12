@@ -9,6 +9,9 @@ User.init(
     email: { type: DataTypes.STRING },
     password: { type: DataTypes.STRING },
     role_id: { type: DataTypes.INTEGER },
+    image: {
+      type: DataTypes.STRING
+    },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: new Date()
