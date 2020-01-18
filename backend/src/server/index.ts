@@ -8,9 +8,9 @@ class Server {
   private app = express();
 
   private middleware() {
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded());
-    this.app.use(cors());
     this.app.use(privatesRoutes);
   }
   private routes() {

@@ -1,19 +1,22 @@
 import React from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Container } from 'react-bootstrap';
 import { Logo, LoginForm } from 'components';
 import { ContentCenter } from 'containers';
+import { BackgroundLogin, BackgroundInner } from './styled';
 
 const Login: React.FC = () => (
-  <Container>
-    <Row className="vh-100 justify-content-center">
-      <Col md={6}>
+  <BackgroundLogin>
+    <Container>
+      <Row className="vh-100 justify-content-center">
         <ContentCenter>
-          <Logo height={150} />
-          <LoginForm />
+          <BackgroundInner>
+            <Logo height={150} />
+            <LoginForm />
+          </BackgroundInner>
         </ContentCenter>
-      </Col>
-    </Row>
-  </Container>
+      </Row>
+    </Container>
+  </BackgroundLogin>
 );
 
 export default Login;

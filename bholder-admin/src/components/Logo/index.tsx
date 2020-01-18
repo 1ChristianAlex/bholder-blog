@@ -1,7 +1,10 @@
 import React from 'react';
 import { Logo as LogoPath } from 'assets/images';
-import { ILogo } from 'interfaces/IComponents';
 import { LogoText, LogoImage, LogoContainer, LogoLink } from './styled';
+
+export interface ILogo {
+  height?: number;
+}
 
 const Logo: React.FC<ILogo> = ({ height }) => (
   <LogoContainer>

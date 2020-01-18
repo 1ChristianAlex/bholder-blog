@@ -1,23 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { InputText, Button } from 'components';
+import { Auth, Validation } from 'services';
+import { ILogin } from 'interfaces';
+import { Alert } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { LoginForm } from './styled';
 
 export const FormLogin: React.FC = () => {
-  function handleSubmit(data: any) {
-    console.log(data);
+  const [error, setError] = useState<string>('');
+  const history = useHistory();
 
-    /**
-     * {
-     *   email: 'email@example.com',
-     *   password: '123456'
-     * }
-     */
-  }
+  const validation = (login: ILogin) => {
+    const val = Validation.getInstance();
+    const hasError = val.LoginValidaion(login);
+
+    if (hasError === true) {
+      return true;
+    }
+
+    hasError.forEach(erro => setError(erro));
+  };
+  const handleSubmit = async (data: any) => {
+    const login: ILogin = data;
+    const auth = Auth.getInstance();
+    const validationStatus = validation(login);
+
+    if (validationStatus) {
+      const user = await auth.Login(login);
+      if (user?.token) {
+        history.push('/admin');
+      } else {
+        setError('Email or password worg');
+      }
+    }
+  };
 
   return (
     <LoginForm onSubmit={handleSubmit}>
       <InputText name="email" />
       <InputText name="password" type="password" />
+      {error && <Alert variant="danger">{error}</Alert>}
 
       <Button type="submit" text="Sign in" />
     </LoginForm>
