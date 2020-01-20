@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { Route, RouteProps, Redirect } from 'react-router-dom';
-import { Auth, CurrentUser } from 'services';
-import { useUser, useDispatch } from 'context/hooks';
-import { updateUser } from 'context/user/action';
+import React, { FC } from "react";
+import { Route, RouteProps, Redirect } from "react-router-dom";
+import { Auth, CurrentUser } from "services";
+import { useUser, useDispatch } from "context/hooks";
+import { updateUser } from "context/user/action";
 
 export interface IRoutes extends RouteProps {
   component: FC;

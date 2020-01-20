@@ -1,5 +1,5 @@
-import React, { FC, createRef, useEffect, useState } from 'react';
-import { CardItem } from 'components';
+import React, { FC, createRef, useEffect, useState } from "react";
+import { CardItem } from "components";
 import {
   LineChart,
   CartesianGrid,
@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
   Line
-} from 'recharts';
+} from "recharts";
 
 const LineChartGraph: FC = () => {
   const cardRef = createRef<HTMLDivElement>();
@@ -20,45 +20,75 @@ const LineChartGraph: FC = () => {
   }, [cardRef]);
   const data = [
     {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
+      name: "January",
+      ["Post Access"]: 4000,
+      ["Pages Access"]: 2400,
       amt: 2400
     },
     {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
+      name: "February",
+      ["Post Access"]: 3000,
+      ["Pages Access"]: 1398,
       amt: 2210
     },
     {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
+      name: "March",
+      ["Post Access"]: 2000,
+      ["Pages Access"]: 9800,
       amt: 2290
     },
     {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
+      name: "April",
+      ["Post Access"]: 2780,
+      ["Pages Access"]: 3908,
       amt: 2000
     },
     {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
+      name: "May",
+      ["Post Access"]: 1890,
+      ["Pages Access"]: 4800,
       amt: 2181
     },
     {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
+      name: "June",
+      ["Post Access"]: 2390,
+      ["Pages Access"]: 3800,
       amt: 2500
     },
     {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
+      name: "July",
+      ["Post Access"]: 3490,
+      ["Pages Access"]: 4300,
+      amt: 2100
+    },
+    {
+      name: "August",
+      ["Post Access"]: 3490,
+      ["Pages Access"]: 4300,
+      amt: 2100
+    },
+    {
+      name: "September",
+      ["Post Access"]: 3490,
+      ["Pages Access"]: 4300,
+      amt: 2100
+    },
+    {
+      name: "October",
+      ["Post Access"]: 3490,
+      ["Pages Access"]: 4300,
+      amt: 2100
+    },
+    {
+      name: "November",
+      ["Post Access"]: 3490,
+      ["Pages Access"]: 4300,
+      amt: 2100
+    },
+    {
+      name: "December",
+      ["Post Access"]: 3490,
+      ["Pages Access"]: 4300,
       amt: 2100
     }
   ];
@@ -75,8 +105,8 @@ const LineChartGraph: FC = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        <Line type="monotone" dataKey="Pages Access" stroke="#8884d8" />
+        <Line type="monotone" dataKey="Post Access" stroke="#82ca9d" />
       </LineChart>
     </CardItem>
   );
