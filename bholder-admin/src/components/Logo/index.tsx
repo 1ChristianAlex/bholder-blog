@@ -4,13 +4,15 @@ import { LogoText, LogoImage, LogoContainer, LogoLink } from './styled';
 
 export interface ILogo {
   height?: number;
+  fontSize?: string;
+  hiddeText?: boolean;
 }
 
-const Logo: React.FC<ILogo> = ({ height }) => (
+const Logo: React.FC<ILogo> = ({ height, fontSize, hiddeText = false }) => (
   <LogoContainer>
     <LogoLink to="/admin">
       <LogoImage src={LogoPath} height={height} />
-      <LogoText>Bholder</LogoText>
+      {!hiddeText && <LogoText fontSize={fontSize}>Bholder</LogoText>}
     </LogoLink>
   </LogoContainer>
 );

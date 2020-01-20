@@ -3,9 +3,12 @@ import { defaultColors } from 'assets/colors';
 import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export const LogoText = styled.h3`
+interface ISLogoText{
+  fontSize?:string
+}
+export const LogoText = styled.h3<ISLogoText>`
   font-family: 'Permanent Marker', cursive;
-  font-size: 40px;
+  font-size: ${props => props.fontSize || '40px'};
   color: ${defaultColors.yellow};
 `;
 

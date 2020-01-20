@@ -1,15 +1,18 @@
 import axios from 'axios';
 
-class HttpPublic {
+class HttpPrivate {
   constructor(private Url:string) {}
 
 
     private Instance = axios.create({
-      baseURL: `http://localhost:5000/${this.Url}`,
+      baseURL: `http://localhost:5000/api/${this.Url}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('TOKEN')?.replace(/"/gi, '')}`
+      }
     })
 
-    public async Post(body:object | string | JSON) {
-      const respose = await this.Instance.post('/', body);
+    public async Post(body:object | string | JSON, path = '/') {
+      const respose = await this.Instance.post(path, body);
       return respose.data
     }
 
@@ -29,8 +32,8 @@ class HttpPublic {
     }
 
     static getInstance() {
-      return new HttpPublic('/')
+      return new HttpPrivate('/')
     }
 }
 
-export default HttpPublic
+export default HttpPrivate

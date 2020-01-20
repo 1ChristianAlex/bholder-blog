@@ -1,6 +1,11 @@
 import React from 'react';
-import { WithSideBar } from 'containers';
+import { Welcome, LineChart } from 'components';
 
-const Dashboard: React.FC = () => <WithSideBar />;
+const Dashboard: React.FC = () => (
+  <>
+    <Welcome />
+    <LineChart />
+  </>
+);
 
 export default Dashboard;
