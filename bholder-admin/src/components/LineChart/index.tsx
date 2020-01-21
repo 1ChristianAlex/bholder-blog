@@ -1,5 +1,5 @@
-import React, { FC, createRef, useEffect, useState } from "react";
-import { CardItem } from "components";
+import React, { FC, createRef, useEffect, useState } from 'react';
+import { CardItem } from 'components';
 import {
   LineChart,
   CartesianGrid,
@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
   Line
-} from "recharts";
+} from 'recharts';
 
 const LineChartGraph: FC = () => {
   const cardRef = createRef<HTMLDivElement>();
@@ -20,75 +20,75 @@ const LineChartGraph: FC = () => {
   }, [cardRef]);
   const data = [
     {
-      name: "January",
-      ["Post Access"]: 4000,
-      ["Pages Access"]: 2400,
+      name: 'Jan',
+      'Post Access': 4000,
+      'Pages Access': 2400,
       amt: 2400
     },
     {
-      name: "February",
-      ["Post Access"]: 3000,
-      ["Pages Access"]: 1398,
+      name: 'February',
+      'Post Access': 3000,
+      'Pages Access': 1398,
       amt: 2210
     },
     {
-      name: "March",
-      ["Post Access"]: 2000,
-      ["Pages Access"]: 9800,
+      name: 'March',
+      'Post Access': 2000,
+      'Pages Access': 9800,
       amt: 2290
     },
     {
-      name: "April",
-      ["Post Access"]: 2780,
-      ["Pages Access"]: 3908,
+      name: 'April',
+      'Post Access': 2780,
+      'Pages Access': 3908,
       amt: 2000
     },
     {
-      name: "May",
-      ["Post Access"]: 1890,
-      ["Pages Access"]: 4800,
+      name: 'May',
+      'Post Access': 1890,
+      'Pages Access': 4800,
       amt: 2181
     },
     {
-      name: "June",
-      ["Post Access"]: 2390,
-      ["Pages Access"]: 3800,
+      name: 'June',
+      'Post Access': 2390,
+      'Pages Access': 3800,
       amt: 2500
     },
     {
-      name: "July",
-      ["Post Access"]: 3490,
-      ["Pages Access"]: 4300,
+      name: 'July',
+      'Post Access': 3490,
+      'Pages Access': 4300,
       amt: 2100
     },
     {
-      name: "August",
-      ["Post Access"]: 3490,
-      ["Pages Access"]: 4300,
+      name: 'August',
+      'Post Access': 3490,
+      'Pages Access': 4300,
       amt: 2100
     },
     {
-      name: "September",
-      ["Post Access"]: 3490,
-      ["Pages Access"]: 4300,
+      name: 'September',
+      'Post Access': 3490,
+      'Pages Access': 4300,
       amt: 2100
     },
     {
-      name: "October",
-      ["Post Access"]: 3490,
-      ["Pages Access"]: 4300,
+      name: 'October',
+      'Post Access': 3490,
+      'Pages Access': 4300,
       amt: 2100
     },
     {
-      name: "November",
-      ["Post Access"]: 3490,
-      ["Pages Access"]: 4300,
+      name: 'November',
+      'Post Access': 3490,
+      'Pages Access': 4300,
       amt: 2100
     },
     {
-      name: "December",
-      ["Post Access"]: 3490,
-      ["Pages Access"]: 4300,
+      name: 'December',
+      'Post Access': 3490,
+      'Pages Access': 4300,
       amt: 2100
     }
   ];

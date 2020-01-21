@@ -1,9 +1,9 @@
-import React from "react";
-import { Row, Col, Dropdown } from "react-bootstrap";
-import { useUser, useDispatch } from "context/hooks";
-import { deleteUser } from "context/user/action";
-import { Logo } from "components";
-import { Auth } from "services";
+import React from 'react';
+import { Row, Col, Dropdown } from 'react-bootstrap';
+import { useUser, useDispatch } from 'context/hooks';
+import { deleteUser } from 'context/user/action';
+import { Logo } from 'components';
+import { Auth } from 'services';
 
 import {
   BgBar,
@@ -11,7 +11,7 @@ import {
   LogoContainer,
   DropdownToggle,
   DropdownConteiner
-} from "./styled";
+} from './styled';
 
 const InfoBar: React.FC = () => {
   const { first_name } = useUser();
@@ -23,7 +23,7 @@ const InfoBar: React.FC = () => {
   };
   return (
     <BgBar>
-      <Row style={{ width: "100vw" }}>
+      <Row style={{ width: '100vw' }}>
         <Col md={2}>
           <LogoContainer>
             <Logo hiddeText height={30} />

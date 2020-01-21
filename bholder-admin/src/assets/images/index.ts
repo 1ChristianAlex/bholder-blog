@@ -1,7 +1,5 @@
-import Logo from './logo.png';
-import logoBig from './logoBig.png';
+import Logo from './logo.svg';
 
 export {
-  Logo,
-  logoBig,
+  Logo
 }

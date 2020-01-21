@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import { defaultColors } from "assets/colors";
-import { RefObject } from "react";
+import styled from 'styled-components';
+import { defaultColors } from 'assets/colors';
 
 interface ISViewContainer {
   ref?: any;

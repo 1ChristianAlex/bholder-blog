@@ -9,8 +9,8 @@ const Login: React.FC = () => (
     <Container>
       <Row className="vh-100 justify-content-center">
         <ContentCenter>
+          <Logo height={90} />
           <BackgroundInner>
-            <Logo height={150} />
             <LoginForm />
           </BackgroundInner>
         </ContentCenter>

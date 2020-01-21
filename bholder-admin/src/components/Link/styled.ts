@@ -8,7 +8,7 @@ export interface ISLink{
 }
 
 export const LinkItem = styled(Link)<ISLink>`
-color:${(props) => props.color || defaultColors.white};
+color:${(props) => props.color || defaultColors.purple};
 font-size: ${(props) => props.fontSize || '14px'};
 display: block;
 text-decoration: none;
@@ -23,7 +23,7 @@ padding: 5px 10px;
     
 };
 :focus {
-    color:${(props) => props.color || defaultColors.white};
+    color:${(props) => props.color || defaultColors.yellow};
     text-decoration: none;
     width: 100%;
     display: block;

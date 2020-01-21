@@ -7,7 +7,7 @@ interface ISLogoText{
   fontSize?:string
 }
 export const LogoText = styled.h3<ISLogoText>`
-  font-family: 'Permanent Marker', cursive;
+  font-family:'Righteous', cursive;
   font-size: ${props => props.fontSize || '40px'};
   color: ${defaultColors.yellow};
 `;

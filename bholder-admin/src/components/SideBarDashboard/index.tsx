@@ -1,6 +1,6 @@
-import React, { createRef, useEffect, useState } from "react";
-import { AccordionCollapse, NavLink, Link } from "components";
-import { Row, Col } from "react-bootstrap";
+import React, { createRef, useEffect, useState } from 'react';
+import { AccordionCollapse, NavLink, Link } from 'components';
+import { Row, Col } from 'react-bootstrap';
 import {
   FaHome,
   FaMarker,
@@ -10,8 +10,8 @@ import {
   FaUserAlt,
   FaComment,
   FaCogs
-} from "react-icons/fa";
-import { ViewContainer, LinksContainer, FixedMenu } from "./styled";
+} from 'react-icons/fa';
+import { ViewContainer, LinksContainer, FixedMenu } from './styled';
 
 const SideBarDashboard: React.FC = () => {
   const widthRef = createRef<HTMLDivElement>();

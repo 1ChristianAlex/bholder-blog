@@ -1,0 +1,34 @@
+import React, { ChangeEvent } from 'react';
+import { InputContainer, InputT, Label } from './styled';
+
+export interface IInput {
+  id?: string;
+  name: string;
+  label?: string;
+  placeholder?: string;
+  onChange?:
+    | ((event: ChangeEvent<HTMLInputElement>) => void)
+    | ((event: ChangeEvent<HTMLTextAreaElement>) => void);
+  type?: any;
+}
+
+const InputTextFlat: React.FC<IInput> = ({
+  id,
+  name,
+  label,
+  placeholder,
+  ...rest
+}) => (
+  <InputContainer>
+    <Label htmlFor={id} />
+    <InputT
+      className="teste"
+      name={name}
+      label={label}
+      id={id}
+      placeholder={placeholder}
+      {...rest}
+    />
+  </InputContainer>
+);
+export default InputTextFlat;

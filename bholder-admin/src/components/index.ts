@@ -1,6 +1,7 @@
 export { default as Logo } from './Logo';
 export { default as LoginForm } from './LoginForm';
 export { default as InputText } from './Inputs';
+export { default as InputFlat } from './InputFlat';
 export { default as Button } from './Button';
 export { default as SideBarDashboard } from './SideBarDashboard';
 export { default as AccordionCollapse } from './AccordionCollapse';

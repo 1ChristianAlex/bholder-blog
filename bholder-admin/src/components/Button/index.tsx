@@ -2,14 +2,22 @@ import React, { ButtonHTMLAttributes } from 'react';
 import { ButtonStyled } from './styled';
 
 export interface IButton extends ButtonHTMLAttributes<any> {
-  color?: string;
+  color?: 'primary' | 'secundary';
   background?: string;
   text?: string;
   type?: 'submit' | 'reset' | 'button';
+  block?: boolean;
 }
 
-const Button: React.FC<IButton> = ({ text, ...props }) => (
-  <ButtonStyled {...props}>{text}</ButtonStyled>
+const Button: React.FC<IButton> = ({
+  text,
+  block = false,
+  color,
+  ...props
+}) => (
+  <ButtonStyled block={block} color={color} {...props}>
+    {text}
+  </ButtonStyled>
 );
 
 export default Button;

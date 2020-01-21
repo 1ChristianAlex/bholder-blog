@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InputText, Button } from 'components';
+import { InputFlat, Button, Link } from 'components';
 import { Auth, Validation } from 'services';
 import { ILogin } from 'interfaces';
 import { Alert } from 'react-bootstrap';
@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { updateUser } from 'context/user/action';
 import { useDispatch } from 'context/hooks';
 
-import { LoginForm } from './styled';
+import { LoginForm, ForgotLinkContainer } from './styled';
 
 export const FormLogin: React.FC = () => {
   const [error, setError] = useState<string>('');
@@ -43,11 +43,14 @@ export const FormLogin: React.FC = () => {
 
   return (
     <LoginForm onSubmit={handleSubmit}>
-      <InputText name="email" />
-      <InputText name="password" type="password" />
+      <InputFlat name="email" placeholder="Login" />
+      <InputFlat name="password" type="password" placeholder="Password" />
       {error && <Alert variant="danger">{error}</Alert>}
 
-      <Button type="submit" text="Sign in" />
+      <Button type="submit" text="Sign in" block />
+      <ForgotLinkContainer>
+        <Link url="/" text="Forgot password" />
+      </ForgotLinkContainer>
     </LoginForm>
   );
 };

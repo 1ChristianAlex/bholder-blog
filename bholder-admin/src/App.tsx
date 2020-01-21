@@ -5,10 +5,10 @@ import Routes from './routes';
 
 const App: FC = () => (
   <>
+    <GlobalStyled />
     <Provider>
       <Routes />
     </Provider>
-    <GlobalStyled />
   </>
 );
 
