@@ -11,3 +11,4 @@ export { default as InfoBar } from './InfoBar';
 export { default as CardItem } from './CardItem';
 export { default as Welcome } from './Welcome';
 export { default as LineChart } from './LineChart';
+export { default as Spinner } from './Spinner';

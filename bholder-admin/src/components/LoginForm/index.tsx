@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InputFlat, Button, Link } from 'components';
+import { InputFlat, Button, Link, Spinner } from 'components';
 import { Auth, Validation } from 'services';
 import { ILogin } from 'interfaces';
 import { Alert } from 'react-bootstrap';
@@ -11,6 +11,8 @@ import { LoginForm, ForgotLinkContainer } from './styled';
 
 export const FormLogin: React.FC = () => {
   const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -30,13 +32,16 @@ export const FormLogin: React.FC = () => {
     const validationStatus = validation(login);
 
     if (validationStatus) {
+      setLoading(true);
       const user = await auth.Login(login);
       if (user?.token) {
         dispatch(updateUser(user.user));
+        setLoading(false);
 
         history.push('/admin');
       } else {
         setError('Email or password worg');
+        setLoading(false);
       }
     }
   };
@@ -47,7 +52,9 @@ export const FormLogin: React.FC = () => {
       <InputFlat name="password" type="password" placeholder="Password" />
       {error && <Alert variant="danger">{error}</Alert>}
 
-      <Button type="submit" text="Sign in" block />
+      <Button type="submit" text="Sign in" block>
+        {loading && <Spinner size="sm" animation="border" />}
+      </Button>
       <ForgotLinkContainer>
         <Link url="/" text="Forgot password" />
       </ForgotLinkContainer>

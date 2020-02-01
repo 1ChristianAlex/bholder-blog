@@ -8,28 +8,28 @@ export interface ISLink{
 }
 
 export const LinkItem = styled(Link)<ISLink>`
-color:${(props) => props.color || defaultColors.purple};
-font-size: ${(props) => props.fontSize || '14px'};
-display: block;
+ color: ${props => props.color || defaultColors.white};
+  font-size: ${props => props.fontSize || '14px'};
+display: flex;
 text-decoration: none;
-width: 100%;
-padding: 5px 10px;
-
 :hover {
     color:${defaultColors.yellow};
     text-decoration: none;
-    display: block;
     width: 100%;
-    
 };
 :focus {
     color:${(props) => props.color || defaultColors.yellow};
     text-decoration: none;
     width: 100%;
-    display: block;
 }
 `;
 export const IconContainer = styled.span`
-float: right;
-padding: 0 15px;
+padding:10px 20px;
+flex: 1;
+text-align: center;
 `;
+export const TextContainer = styled.div`
+flex: 2;
+padding: 10px 10px;
+
+`

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LinkItem, IconContainer } from './styled';
+import { LinkItem, IconContainer, TextContainer } from './styled';
 
 export interface ILink {
   url: string;
@@ -9,7 +9,7 @@ export interface ILink {
 
 const LinkButton: React.FC<ILink> = ({ text, url, Icon }) => (
   <LinkItem to={url}>
-    {text}
+    {text && <TextContainer>{text}</TextContainer>}
     {Icon && (
       <IconContainer>
         <Icon />

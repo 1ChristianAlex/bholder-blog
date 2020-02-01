@@ -9,22 +9,16 @@ export interface ISLink {
 export const AccordionText = styled.span<ISLink>`
   color: ${props => props.color || defaultColors.white};
   font-size: ${props => props.fontSize || '14px'};
-  display: block;
-  text-decoration: none;
-  width: 100%;
-  padding: 5px 10px;
+  padding: 10px 10px;
   cursor: pointer;
+  flex: 2;
   :hover {
     color: ${defaultColors.yellow};
     text-decoration: none;
-    display: block;
-    width: 100%;
   }
   :focus {
     color: ${props => props.color || defaultColors.white};
     text-decoration: none;
-    width: 100%;
-    display: block;
   }
 `;
 export const AccordionContent = styled.div<ISLink>`
@@ -48,6 +42,10 @@ export const AccordionContent = styled.div<ISLink>`
   }
 `;
 export const IconContainer = styled.span`
-  float: right;
-  padding: 0 15px;
+    padding: 10px 20px;
+    flex: 1;
+    text-align: center;
 `;
+export const AccordionTextContainer = styled.div`
+display:flex;
+`

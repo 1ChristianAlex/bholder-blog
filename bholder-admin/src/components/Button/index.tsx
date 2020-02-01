@@ -9,14 +9,10 @@ export interface IButton extends ButtonHTMLAttributes<any> {
   block?: boolean;
 }
 
-const Button: React.FC<IButton> = ({
-  text,
-  block = false,
-  color,
-  ...props
-}) => (
+const Button: React.FC<IButton> = ({ text, block = false, color, children, ...props }) => (
   <ButtonStyled block={block} color={color} {...props}>
     {text}
+    {children}
   </ButtonStyled>
 );
 

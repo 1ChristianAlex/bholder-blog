@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { Accordion } from 'react-bootstrap';
-import { AccordionText, AccordionContent, IconContainer } from './styled';
+import { AccordionText, AccordionContent, IconContainer, AccordionTextContainer } from './styled';
 
 export interface IAccordionCollapse {
-  TogleTitle: string;
+  TogleTitle?: string;
   keyBinding?: string;
   CollapseColor?: string;
   Icon?: FC;
@@ -18,14 +18,14 @@ const AccordionCollapse: React.FC<IAccordionCollapse> = ({
 }) => (
   <Accordion defaultActiveKey={keyBinding}>
     <Accordion.Toggle as="div" eventKey={keyBinding || '0'}>
-      <AccordionText>
-        {TogleTitle}
+      <AccordionTextContainer>
+        {TogleTitle && <AccordionText>{TogleTitle}</AccordionText>}
         {Icon && (
           <IconContainer>
             <Icon />
           </IconContainer>
         )}
-      </AccordionText>
+      </AccordionTextContainer>
     </Accordion.Toggle>
     <Accordion.Collapse eventKey={keyBinding || '0'} color={CollapseColor}>
       <AccordionContent>{children}</AccordionContent>

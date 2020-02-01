@@ -1,5 +1,5 @@
 import { IUser } from 'interfaces';
-import { DELETE_USER, UPDATE_USER } from './reducer';
+import { DELETE_USER, UPDATE_USER } from './types';
 
 export const updateUser = (user:IUser) => ({
   type: UPDATE_USER,

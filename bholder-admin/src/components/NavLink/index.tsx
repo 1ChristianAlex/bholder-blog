@@ -3,13 +3,13 @@ import { NavLinkItem, IconContainer } from './styled';
 
 export interface ILink {
   url: string;
-  text: string;
+  text?: string | undefined;
   Icon?: React.FC;
 }
 
 const LinkButton: React.FC<ILink> = ({ text, url, Icon }) => (
   <NavLinkItem activeClassName="active-nav" to={url}>
-    {text}
+    {text && text}
     {Icon && (
       <IconContainer>
         <Icon />
