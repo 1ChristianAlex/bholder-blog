@@ -1,4 +1,4 @@
-import * as multer from 'multer';
+import multer from 'multer';
 import { Request, Response, NextFunction } from 'express';
 import { S3File } from '../resources';
 import { JsonToken } from '../helpers/';
@@ -7,11 +7,7 @@ import { IUser } from '../Interfaces';
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-const MulterUpload = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const MulterUpload = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const s3 = new S3File();
     const jsonToken = new JsonToken();
