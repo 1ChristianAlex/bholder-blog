@@ -5,18 +5,8 @@ import PrivateRoute from './PrivateRoute';
 
 const AdminRoutes = () => (
   <Switch>
-    <PrivateRoute
-      exact
-      path="/admin"
-      component={Dashboard}
-      title="Friend Profile"
-    />
-    <PrivateRoute
-      exact
-      path="/admin/posts"
-      component={Posts}
-      title="Friend Profile"
-    />
+    <PrivateRoute exact path="/admin" component={Dashboard} title="Friend Profile" />
+    <PrivateRoute exact path="/admin/posts/new" component={Posts} title="Friend Profile" />
   </Switch>
 );
 

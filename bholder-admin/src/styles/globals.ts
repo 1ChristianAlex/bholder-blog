@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import 'bootstrap/scss/bootstrap.scss';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { defaultColors } from 'assets/colors';
 
 const GlobalStyled = createGlobalStyle`

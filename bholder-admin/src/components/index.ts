@@ -12,3 +12,6 @@ export { default as CardItem } from './CardItem';
 export { default as Welcome } from './Welcome';
 export { default as LineChart } from './LineChart';
 export { default as Spinner } from './Spinner';
+export { default as PageTitle } from './PageTitle';
+export { default as PostForm } from './PostForm';
+export { default as DraftArea } from './DraftArea';

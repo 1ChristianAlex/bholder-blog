@@ -67,11 +67,10 @@ const SideBarDashboard: React.FC = () => {
             <Row>
               <Col md={12}>
                 <LinksContainer>
-                  <AccordionCollapse TogleTitle={sideBarStatus ? 'Comments' : ''} Icon={FaComment}>
+                  <AccordionCollapse TogleTitle={sideBarStatus ? 'Media' : ''} Icon={FaImages}>
                     <>
-                      <NavLink text="New Post" url="/admin/posts/new" />
-                      <NavLink text="List posts" url="/admin/posts/list" />
-                      <NavLink text="Caterogies" url="/admin/posts/categories" />
+                      <NavLink text="List media" url="/admin/media/list" />
+                      <NavLink text="Caterogies" url="/admin/media/categories" />
                     </>
                   </AccordionCollapse>
                 </LinksContainer>
@@ -80,10 +79,11 @@ const SideBarDashboard: React.FC = () => {
             <Row>
               <Col md={12}>
                 <LinksContainer>
-                  <AccordionCollapse TogleTitle={sideBarStatus ? 'Media' : ''} Icon={FaImages}>
+                  <AccordionCollapse TogleTitle={sideBarStatus ? 'Comments' : ''} Icon={FaComment}>
                     <>
-                      <NavLink text="List media" url="/admin/media/list" />
-                      <NavLink text="Caterogies" url="/admin/media/categories" />
+                      <NavLink text="New Post" url="/admin/posts/new" />
+                      <NavLink text="List posts" url="/admin/posts/list" />
+                      <NavLink text="Caterogies" url="/admin/posts/categories" />
                     </>
                   </AccordionCollapse>
                 </LinksContainer>

@@ -11,10 +11,10 @@ export const InputT = styled(Input)`
     font-weight: 400;
     line-height: 1.5;
     color: ${defaultColors.black};
-    background-color: #fff;
+    background-color:white;
     background-clip: padding-box;
-    border: 1px solid ${defaultColors.black};
-    border-radius: .25rem;
+    border: 1px solid ${defaultColors.gray};
+    border-radius: 5px;
     -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 `

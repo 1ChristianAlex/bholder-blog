@@ -1,4 +1,4 @@
-import { ILogin, ILoginResponse, IUser } from 'interfaces';
+import { ILogin, ILoginResponse } from 'interfaces';
 import HttpP from './http-public';
 
 class Auth extends HttpP {

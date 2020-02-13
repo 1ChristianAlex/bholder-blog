@@ -12,22 +12,10 @@ export interface IInput {
   type?: any;
 }
 
-const InputText: React.FC<IInput> = ({
-  id,
-  name,
-  label,
-  placeholder,
-  ...rest
-}) => (
-  <InputContainer>
-    <Label htmlFor={id} />
-    <InputT
-      name={name}
-      label={label}
-      id={id}
-      placeholder={placeholder}
-      {...rest}
-    />
+const InputText: React.FC<IInput> = ({ id, name, label, placeholder, ...rest }) => (
+  <InputContainer className={!label ? 'mt-3 ' : ''}>
+    {label && <Label htmlFor={id} />}
+    <InputT name={name} label={label} id={id} placeholder={placeholder} {...rest} />
   </InputContainer>
 );
 export default InputText;

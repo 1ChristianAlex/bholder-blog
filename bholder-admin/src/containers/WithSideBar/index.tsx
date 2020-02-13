@@ -18,7 +18,7 @@ const WithSideBar: FC<SideBarContainer> = ({ SideBarComponent, MainComponent }) 
         </Col>
       )}
       {MainComponent && (
-        <Col md={!collapseSideBar ? 11 : 10} className="mt-3 ">
+        <Col md={!collapseSideBar ? 11 : 10} className="mt-4">
           <Row>
             <Container>
               <MainComponent />
