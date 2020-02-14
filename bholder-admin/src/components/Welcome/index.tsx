@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
-import { CardItem } from 'components';
-import { useUser } from 'context/hooks';
+import React, { FC } from "react";
+import { CardItem } from "components";
+import { useUser } from "context/hooks";
 
 const Welcome: FC = () => {
   const { first_name } = useUser();

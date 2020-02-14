@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { Route, RouteProps, Redirect } from 'react-router-dom';
-import { Auth, CurrentUser } from 'services';
-import { useUser, useDispatch } from 'context/hooks';
-import { updateUser } from 'context/user/action';
+import React, { FC } from "react";
+import { Route, RouteProps, Redirect } from "react-router-dom";
+import { Auth, CurrentUser } from "services";
+import { useUser, useDispatch } from "context/hooks";
+import { updateUser } from "context/user/action";
 
 export interface IRoutes extends RouteProps {
   component: FC;
@@ -31,7 +31,15 @@ const PrivateRoute: React.FC<IRoutes> = ({ component, ...rest }) => {
     return false;
   };
 
-  return <>{!verifyLoged() ? <Redirect to="/" /> : <Route component={component} {...rest} />}</>;
+  return (
+    <>
+      {!verifyLoged() ? (
+        <Redirect to="/" />
+      ) : (
+        <Route component={component} {...rest} />
+      )}
+    </>
+  );
 };
 
 export default PrivateRoute;

@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { defaultColors } from 'assets/colors';
-import { Link } from 'react-router-dom';
-import { Dropdown } from 'react-bootstrap';
+import styled from "styled-components";
+import { defaultColors } from "assets/colors";
+import { Link } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 
 export const BgBar = styled.div`
   background-color: ${defaultColors.black};
@@ -15,7 +15,7 @@ export const LogoContainer = styled.div`
 `;
 export const LinkTop = styled(Link)`
   color: ${defaultColors.white};
-  font-size: ${'14px'};
+  font-size: ${"14px"};
   display: block;
   text-decoration: none;
   width: 100%;

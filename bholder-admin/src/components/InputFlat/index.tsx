@@ -1,5 +1,5 @@
-import React, { ChangeEvent } from 'react';
-import { InputContainer, InputT, Label } from './styled';
+import React, { ChangeEvent } from "react";
+import { InputContainer, InputT, Label } from "./styled";
 
 export interface IInput {
   id?: string;

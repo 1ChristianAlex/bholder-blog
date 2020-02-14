@@ -1,13 +1,13 @@
-import { createContext } from 'react';
-import { IUser } from 'interfaces';
-import { ICollapseSideBar } from '../sidebar/reducer';
+import { createContext } from "react";
+import { IUser } from "interfaces";
+import { ICollapseSideBar } from "../sidebar/reducer";
 
-export const initalState:IUser = {};
+export const initalState: IUser = {};
 
 interface IContext {
-user:IUser,
-collapseSideBar: ICollapseSideBar,
-dispatch: React.Dispatch<any>
+  user: IUser;
+  collapseSideBar: ICollapseSideBar;
+  dispatch: React.Dispatch<any>;
 }
 const context = {
   user: initalState,
@@ -15,9 +15,8 @@ const context = {
     status: true
   },
   dispatch: () => {}
-}
+};
 
 const AppContext = createContext<IContext>(context);
-
 
 export { AppContext };

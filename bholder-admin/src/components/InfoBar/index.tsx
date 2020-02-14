@@ -1,11 +1,17 @@
-import React from 'react';
-import { Row, Col, Dropdown } from 'react-bootstrap';
-import { useUser, useDispatch, useSideBar } from 'context/hooks';
-import { deleteUser } from 'context/user/action';
-import { Logo } from 'components';
-import { Auth } from 'services';
+import React from "react";
+import { Row, Col, Dropdown } from "react-bootstrap";
+import { useUser, useDispatch, useSideBar } from "context/hooks";
+import { deleteUser } from "context/user/action";
+import { Logo } from "components";
+import { Auth } from "services";
 
-import { BgBar, LinkTop, LogoContainer, DropdownToggle, DropdownConteiner } from './styled';
+import {
+  BgBar,
+  LinkTop,
+  LogoContainer,
+  DropdownToggle,
+  DropdownConteiner
+} from "./styled";
 
 const InfoBar: React.FC = () => {
   const { first_name } = useUser();
@@ -18,7 +24,7 @@ const InfoBar: React.FC = () => {
   };
   return (
     <BgBar>
-      <Row style={{ width: '100vw' }}>
+      <Row style={{ width: "100vw" }}>
         <Col md={sideBarStatus ? 2 : 2 - 1}>
           <LogoContainer>
             <Logo hiddeText height={30} />

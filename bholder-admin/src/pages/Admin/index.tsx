@@ -1,7 +1,7 @@
-import React from 'react';
-import { WithSideBar } from 'containers';
-import { SideBarDashboard, InfoBar } from 'components';
-import AdminRoutes from 'routes/adminRoutes';
+import React from "react";
+import { WithSideBar } from "containers";
+import { SideBarDashboard, InfoBar } from "components";
+import AdminRoutes from "routes/adminRoutes";
 
 const Admin: React.FC = () => (
   <>

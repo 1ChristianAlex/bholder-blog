@@ -1,10 +1,22 @@
-import React, { FC } from 'react';
-import { Spinner, SpinnerProps } from 'react-bootstrap';
-import { SpinnerContainer } from './styled';
+import React, { FC } from "react";
+import { Spinner, SpinnerProps } from "react-bootstrap";
+import { SpinnerContainer } from "./styled";
 
-const LoadingSpinner: FC<SpinnerProps> = ({ animation, bsPrefix, role, size, variant }) => (
+const LoadingSpinner: FC<SpinnerProps> = ({
+  animation,
+  bsPrefix,
+  role,
+  size,
+  variant
+}) => (
   <SpinnerContainer>
-    <Spinner animation={animation} bsPrefix={bsPrefix} role={role} size={size} variant={variant} />
+    <Spinner
+      animation={animation}
+      bsPrefix={bsPrefix}
+      role={role}
+      size={size}
+      variant={variant}
+    />
   </SpinnerContainer>
 );
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLinkItem, IconContainer } from './styled';
+import React from "react";
+import { NavLinkItem, IconContainer } from "./styled";
 
 export interface ILink {
   url: string;

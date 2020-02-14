@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { InputFlat, Button, Link, Spinner } from 'components';
-import { Auth, Validation } from 'services';
-import { ILogin } from 'interfaces';
-import { Alert } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
-import { updateUser } from 'context/user/action';
-import { useDispatch } from 'context/hooks';
+import React, { useState } from "react";
+import { InputFlat, Button, Link, Spinner } from "components";
+import { Auth, Validation } from "services";
+import { ILogin } from "interfaces";
+import { Alert } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { updateUser } from "context/user/action";
+import { useDispatch } from "context/hooks";
 
-import { LoginForm, ForgotLinkContainer } from './styled';
+import { LoginForm, ForgotLinkContainer } from "./styled";
 
 export const FormLogin: React.FC = () => {
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const history = useHistory();
@@ -38,9 +38,9 @@ export const FormLogin: React.FC = () => {
         dispatch(updateUser(user.user));
         setLoading(false);
 
-        history.push('/admin');
+        history.push("/admin");
       } else {
-        setError('Email or password worg');
+        setError("Email or password worg");
         setLoading(false);
       }
     }
