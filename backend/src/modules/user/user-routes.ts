@@ -22,7 +22,7 @@ userRouter.post(
   publicUserUrl,
   upload.any(),
   MulterUpload,
-  controller.Create.bind(controller)
+  controller.Create.bind(controller),
 );
 
 export default userRouter;

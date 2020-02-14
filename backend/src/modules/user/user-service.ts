@@ -11,7 +11,7 @@ export default class UserService {
 
       const newUser: IUser = {
         ...user,
-        password: cript.CreateHash()
+        password: cript.CreateHash(),
       };
 
       const query = await model
@@ -37,8 +37,8 @@ export default class UserService {
       return model
         .destroy({
           where: {
-            id
-          }
+            id,
+          },
         })
         .then(deleted => {
           if (deleted > 0) {
@@ -54,10 +54,10 @@ export default class UserService {
     try {
       const update = await model
         .update(updateValue, {
-          where: { id }
+          where: { id },
         })
         .then(() =>
-          model.findByPk(id).then(userUpdated => userUpdated.toJSON() as IUser)
+          model.findByPk(id).then(userUpdated => userUpdated.toJSON() as IUser),
         );
       return update;
     } catch (error) {

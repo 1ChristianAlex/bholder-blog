@@ -8,5 +8,5 @@ export const sequelize = new Sequelize({
   password: env.PASSWORD,
   database: env.DB_NAME,
   port: parseInt(env.DB_PORT),
-  logging: false
+  logging: false,
 });

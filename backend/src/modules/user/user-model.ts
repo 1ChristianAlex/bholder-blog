@@ -10,18 +10,18 @@ User.init(
     password: { type: DataTypes.STRING },
     role_id: { type: DataTypes.INTEGER },
     image: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     created_at: {
       type: DataTypes.DATE,
-      defaultValue: new Date()
+      defaultValue: new Date(),
     },
     updated_at: {
       type: DataTypes.DATE,
-      defaultValue: new Date()
-    }
+      defaultValue: new Date(),
+    },
   },
-  { sequelize, tableName: 'users', underscored: true }
+  { sequelize, tableName: 'users', underscored: true },
 );
 
 User.hasMany(ModelPosts);

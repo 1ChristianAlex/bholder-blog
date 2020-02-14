@@ -7,11 +7,11 @@ module.exports = {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.INTEGER
+          type: Sequelize.INTEGER,
         },
         name: {
-          type: Sequelize.STRING
-        }
+          type: Sequelize.STRING,
+        },
       })
       .then(() => {
         return queryInterface
@@ -20,40 +20,40 @@ module.exports = {
               allowNull: false,
               autoIncrement: true,
               primaryKey: true,
-              type: Sequelize.INTEGER
+              type: Sequelize.INTEGER,
             },
             first_name: {
-              type: Sequelize.STRING
+              type: Sequelize.STRING,
             },
             last_name: {
-              type: Sequelize.STRING
+              type: Sequelize.STRING,
             },
             email: {
-              type: Sequelize.STRING
+              type: Sequelize.STRING,
             },
             password: {
-              type: Sequelize.STRING
+              type: Sequelize.STRING,
             },
             image: {
-              type: Sequelize.STRING
+              type: Sequelize.STRING,
             },
             created_at: {
               allowNull: false,
               type: Sequelize.DATE,
-              defaultValueValue: new Date()
+              defaultValueValue: new Date(),
             },
             updated_at: {
               allowNull: false,
               type: Sequelize.DATE,
-              defaultValueValue: new Date()
+              defaultValueValue: new Date(),
             },
             role_id: {
               type: Sequelize.INTEGER,
               references: {
                 model: 'roles',
-                key: 'id'
-              }
-            }
+                key: 'id',
+              },
+            },
           })
           .then(() => {
             return queryInterface
@@ -62,43 +62,43 @@ module.exports = {
                   allowNull: false,
                   autoIncrement: true,
                   primaryKey: true,
-                  type: Sequelize.INTEGER
+                  type: Sequelize.INTEGER,
                 },
                 user_id: {
                   type: Sequelize.INTEGER,
                   references: {
                     model: 'users',
-                    key: 'id'
-                  }
+                    key: 'id',
+                  },
                 },
                 title: {
-                  type: Sequelize.STRING
+                  type: Sequelize.STRING,
                 },
                 thumbnail: {
-                  type: Sequelize.STRING
+                  type: Sequelize.STRING,
                 },
                 content: {
-                  type: Sequelize.STRING
+                  type: Sequelize.STRING,
                 },
                 categorie: {
-                  type: Sequelize.STRING
+                  type: Sequelize.STRING,
                 },
                 meta: {
-                  type: Sequelize.STRING
+                  type: Sequelize.STRING,
                 },
                 keywords: {
-                  type: Sequelize.STRING
+                  type: Sequelize.STRING,
                 },
                 created_at: {
                   allowNull: false,
                   type: Sequelize.DATE,
-                  defaultValue: new Date()
+                  defaultValue: new Date(),
                 },
                 updated_at: {
                   allowNull: false,
                   type: Sequelize.DATE,
-                  defaultValue: new Date()
-                }
+                  defaultValue: new Date(),
+                },
               })
               .then(() =>
                 queryInterface.createTable('comments', {
@@ -106,42 +106,42 @@ module.exports = {
                     allowNull: false,
                     autoIncrement: true,
                     primaryKey: true,
-                    type: Sequelize.INTEGER
+                    type: Sequelize.INTEGER,
                   },
                   post_id: {
                     type: Sequelize.INTEGER,
                     references: {
                       model: 'posts',
-                      key: 'id'
-                    }
+                      key: 'id',
+                    },
                   },
                   user_id: {
                     type: Sequelize.INTEGER,
                     references: {
                       model: 'users',
-                      key: 'id'
-                    }
+                      key: 'id',
+                    },
                   },
                   title: {
-                    type: Sequelize.STRING
+                    type: Sequelize.STRING,
                   },
                   content: {
-                    type: Sequelize.STRING
+                    type: Sequelize.STRING,
                   },
                   meta: {
-                    type: Sequelize.STRING
+                    type: Sequelize.STRING,
                   },
                   created_at: {
                     allowNull: false,
                     type: Sequelize.DATE,
-                    defaultValue: new Date()
+                    defaultValue: new Date(),
                   },
                   updated_at: {
                     allowNull: false,
                     type: Sequelize.DATE,
-                    defaultValue: new Date()
-                  }
-                })
+                    defaultValue: new Date(),
+                  },
+                }),
               );
           });
       }),
@@ -151,5 +151,5 @@ module.exports = {
       .then(() => queryInterface.dropTable('posts'))
       .then(() => queryInterface.dropTable('users'))
       .then(() => queryInterface.dropTable('roles'));
-  }
+  },
 };

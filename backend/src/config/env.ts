@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import { resolve } from 'path';
 
 config({
-  path: resolve(__dirname, '.env')
+  path: resolve(__dirname, '.env'),
 });
 export const {
   HOSTNAME,
@@ -15,5 +15,5 @@ export const {
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY,
   AWS_PASS,
-  BUCKET_NAME
+  BUCKET_NAME,
 } = process.env;

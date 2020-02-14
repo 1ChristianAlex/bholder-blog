@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import UserService from './user-service';
-import {  IBody } from '../../Interfaces';
+import { IBody } from '../../Interfaces';
 
 export default class UserController {
   constructor(private service: UserService) {}
@@ -60,7 +60,7 @@ export default class UserController {
     try {
       const { currentUser } = req.body;
 
-      res.json( {user:currentUser} );
+      res.json({ user: currentUser });
       next();
     } catch (error) {
       res.status(404).json({ mensage: 'Error on get current user', error });

@@ -21,7 +21,7 @@ class Server {
       .sync({
         logging: false,
         alter: false,
-        force: false
+        force: false,
       })
       .then(() => console.log('Database Ready'));
   }

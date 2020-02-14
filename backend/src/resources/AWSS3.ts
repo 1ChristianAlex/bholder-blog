@@ -5,7 +5,7 @@ export class S3File {
   private S3 = new AWS.S3();
   public Upload = (
     buffer: Buffer,
-    filename: string
+    filename: string,
   ): Promise<AWS.S3.ManagedUpload.SendData> => {
     return new Promise((res, rej) => {
       this.S3.createBucket({ Bucket: BUCKET_NAME });
@@ -13,7 +13,7 @@ export class S3File {
       const s3Parms: AWS.S3.PutObjectRequest = {
         Bucket: BUCKET_NAME,
         Key: filename.replace(' ', '-'),
-        Body: buffer
+        Body: buffer,
       };
       this.S3.upload(s3Parms, (err, data) => {
         if (err) rej(err);
@@ -26,7 +26,7 @@ export class S3File {
     return new Promise((res, rej) => {
       const parms: AWS.S3.ListObjectsV2Request = {
         Bucket: BUCKET_NAME,
-        MaxKeys: 100
+        MaxKeys: 100,
       };
       this.S3.listObjectsV2(parms, (err, data) => {
         if (err) rej(err);
@@ -41,7 +41,7 @@ export class S3File {
 
       const s3Parms: AWS.S3.PutObjectRequest = {
         Bucket: BUCKET_NAME,
-        Key: filename.replace(' ', '-')
+        Key: filename.replace(' ', '-'),
       };
       this.S3.deleteObject(s3Parms, (err, data) => {
         if (err) rej(err);

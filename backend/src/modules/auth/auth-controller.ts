@@ -13,10 +13,10 @@ export default class AuthController {
     try {
       const { login } = req.body as IBody;
       const token = await this.service.Login(login);
-      res.json({...token, status:true});
+      res.json({ ...token, status: true });
       next();
     } catch (error) {
-      res.status(200).json({ mensage: 'Error on Login', error, status:false });
+      res.status(200).json({ mensage: 'Error on Login', error, status: false });
     }
   }
 }

@@ -14,7 +14,7 @@ export class Cripfy {
       this.Secrete,
       616,
       32,
-      this.Algorithm
+      this.Algorithm,
     ).toString('hex');
   }
 }

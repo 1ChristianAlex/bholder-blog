@@ -7,7 +7,11 @@ import { IUser } from '../Interfaces';
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-const MulterUpload = async (req: Request, res: Response, next: NextFunction) => {
+const MulterUpload = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const s3 = new S3File();
     const jsonToken = new JsonToken();
@@ -23,7 +27,7 @@ const MulterUpload = async (req: Request, res: Response, next: NextFunction) => 
           const url = snapshot.Location;
           [file.fieldname, url];
           return (filesList[file.fieldname] = url);
-        })
+        }),
       );
     }
 
@@ -31,9 +35,9 @@ const MulterUpload = async (req: Request, res: Response, next: NextFunction) => 
     req.body = {
       data: {
         ...oldBody,
-        ...filesList
+        ...filesList,
       },
-      currentUser
+      currentUser,
     };
 
     next();

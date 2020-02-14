@@ -25,10 +25,10 @@ export default class PostService {
           where: {
             [Op.or]: [
               { id: { [Op.like]: query } },
-              { title: { [Op.like]: `%${query}%` } }
-            ]
+              { title: { [Op.like]: `%${query}%` } },
+            ],
           },
-          order: [['id', 'DESC']]
+          order: [['id', 'DESC']],
         })
         .then(postFind => postFind.toJSON() as IPost);
     } catch (error) {
@@ -40,9 +40,9 @@ export default class PostService {
       return await model
         .findAll({
           where: {
-            ...query
+            ...query,
           },
-          order: [['id', 'DESC']]
+          order: [['id', 'DESC']],
         })
         .then(postFind => postFind as Array<IPost>);
     } catch (error) {
@@ -53,10 +53,10 @@ export default class PostService {
     try {
       const update = await model
         .update(updateValue, {
-          where: { id }
+          where: { id },
         })
         .then(() =>
-          model.findByPk(id).then(userUpdated => userUpdated.toJSON() as IPost)
+          model.findByPk(id).then(userUpdated => userUpdated.toJSON() as IPost),
         );
       return update;
     } catch (error) {
@@ -68,8 +68,8 @@ export default class PostService {
       return model
         .destroy({
           where: {
-            id
-          }
+            id,
+          },
         })
         .then(deleted => {
           if (deleted > 0) {

@@ -10,13 +10,13 @@ export class AuthService {
       const parsedPass = cripfy.CreateHash();
       const userToFind: ILogin = {
         email: login.email,
-        password: parsedPass
+        password: parsedPass,
       };
       const user = await model
         .findOne({
           where: {
-            ...userToFind
-          }
+            ...userToFind,
+          },
         })
         .then(itemFinded => itemFinded.toJSON() as IUser);
       const token = this.jsonToken.Sing(user);

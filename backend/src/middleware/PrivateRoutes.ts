@@ -17,7 +17,7 @@ const privatesHandler = (req: Request, res: Response, next: Function) => {
 
     req.body = {
       ...oldBody,
-      currentUser: auth
+      currentUser: auth,
     };
     next();
   }
