@@ -1,6 +1,6 @@
-import React, { forwardRef } from "react";
-import { Card } from "react-bootstrap";
-import { CardStyle } from "./styled";
+import React, { forwardRef } from 'react';
+import { Card } from 'react-bootstrap';
+import { CardStyle } from './styled';
 
 export interface ICardItem {
   title?: string;

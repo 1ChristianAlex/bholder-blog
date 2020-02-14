@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { defaultColors } from "assets/colors";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { defaultColors } from 'assets/colors';
 
 export interface ISLink {
   color?: string;
@@ -9,7 +9,7 @@ export interface ISLink {
 
 export const LinkItem = styled(Link)<ISLink>`
   color: ${props => props.color || defaultColors.white};
-  font-size: ${props => props.fontSize || "14px"};
+  font-size: ${props => props.fontSize || '14px'};
   display: flex;
   text-decoration: none;
   :hover {
@@ -29,11 +29,11 @@ export const IconContainer = styled.span`
   text-align: center;
 `;
 interface ISLinkText {
-  color?: "primary" | "secundary";
+  color?: 'primary' | 'secundary';
 }
 export const TextContainer = styled.div<ISLinkText>`
   flex: 2;
   padding: 10px 10px;
   color: ${({ color }) =>
-    color === "primary" ? defaultColors.black : defaultColors.white};
+    color === 'primary' ? defaultColors.black : defaultColors.white};
 `;

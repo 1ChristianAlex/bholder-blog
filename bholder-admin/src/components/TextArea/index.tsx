@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { CodeArea } from "./styled";
+import React, { FC } from 'react';
+import { CodeArea } from './styled';
 
 interface ITextArea {
   name: string;

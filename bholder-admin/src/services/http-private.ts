@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 class HttpPrivate {
   constructor(private Url: string) {}
@@ -7,12 +7,12 @@ class HttpPrivate {
     baseURL: `http://localhost:5000/api/${this.Url}`,
     headers: {
       Authorization: `Bearer ${localStorage
-        .getItem("TOKEN")
-        ?.replace(/"/gi, "")}`
-    }
+        .getItem('TOKEN')
+        ?.replace(/"/gi, '')}`,
+    },
   });
 
-  public async Post(body: object | string | JSON, path = "/") {
+  public async Post(body: object | string | JSON, path = '/') {
     const respose = await this.Instance.post(path, body);
     return respose.data;
   }
@@ -22,18 +22,18 @@ class HttpPrivate {
     return respose.data;
   }
 
-  public async Patch(body: object | string | JSON, path = "/") {
+  public async Patch(body: object | string | JSON, path = '/') {
     const respose = await this.Instance.patch(path, body);
     return respose.data;
   }
 
-  public async Delete(path = "/") {
+  public async Delete(path = '/') {
     const respose = await this.Instance.delete(path);
     return respose.data;
   }
 
   static getInstance() {
-    return new HttpPrivate("/");
+    return new HttpPrivate('/');
   }
 }
 

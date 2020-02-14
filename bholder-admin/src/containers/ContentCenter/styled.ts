@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Col } from "react-bootstrap";
+import styled from 'styled-components';
+import { Col } from 'react-bootstrap';
 
 export interface IMidleAling {
   height?: string;

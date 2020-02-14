@@ -1,26 +1,26 @@
-import { ILogin, ILoginResponse } from "interfaces";
-import HttpP from "./http-public";
+import { ILogin, ILoginResponse } from 'interfaces';
+import HttpP from './http-public';
 
 class Auth extends HttpP {
   constructor() {
-    super("auth");
+    super('auth');
   }
 
   public async LogOut() {
-    localStorage.removeItem("TOKEN");
+    localStorage.removeItem('TOKEN');
   }
 
   // eslint-disable-next-line
   public getToken() {
-    return localStorage.getItem("TOKEN");
+    return localStorage.getItem('TOKEN');
   }
 
   public async Login(body: ILogin): Promise<ILoginResponse | undefined> {
     try {
       const userData = (await this.Post({
-        login: { ...body }
+        login: { ...body },
       })) as ILoginResponse;
-      localStorage.setItem("TOKEN", JSON.stringify(userData.token));
+      localStorage.setItem('TOKEN', JSON.stringify(userData.token));
       return userData;
     } catch (error) {
       console.log(error);

@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Input } from "@rocketseat/unform";
-import { defaultColors } from "assets/colors";
+import styled from 'styled-components';
+import { Input } from '@rocketseat/unform';
+import { defaultColors } from 'assets/colors';
 
 export const InputT = styled(Input)`
   display: block;

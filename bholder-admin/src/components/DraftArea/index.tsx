@@ -1,16 +1,16 @@
-import React, { FC, useState, useEffect, useRef } from "react";
-import { Editor, EditorState } from "react-draft-wysiwyg";
-import { convertToRaw } from "draft-js";
-import { useField } from "@rocketseat/unform";
-import draftToHtml from "draftjs-to-html";
-import { EditorStyle } from "./styled";
+import React, { FC, useState, useEffect, useRef } from 'react';
+import { Editor, EditorState } from 'react-draft-wysiwyg';
+import { convertToRaw } from 'draft-js';
+import { useField } from '@rocketseat/unform';
+import draftToHtml from 'draftjs-to-html';
+import { EditorStyle } from './styled';
 
 interface IDraftArea {
   name: string;
 }
 
 const DraftArea: FC<IDraftArea> = ({ name }) => {
-  const [draftContent, setDrafContent] = useState<string>("");
+  const [draftContent, setDrafContent] = useState<string>('');
   const inputRef = useRef<HTMLInputElement>(null);
   const { registerField } = useField(name);
 
@@ -24,8 +24,8 @@ const DraftArea: FC<IDraftArea> = ({ name }) => {
 
     registerField({
       name,
-      path: "value",
-      ref: target
+      path: 'value',
+      ref: target,
     });
   }, [name, inputRef]);
 

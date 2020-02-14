@@ -1,6 +1,6 @@
-import React, { createRef, useEffect, useState } from "react";
-import { AccordionCollapse, NavLink, Link } from "components";
-import { Row, Col } from "react-bootstrap";
+import React, { createRef, useEffect, useState } from 'react';
+import { AccordionCollapse, NavLink, Link } from 'components';
+import { Row, Col } from 'react-bootstrap';
 import {
   FaHome,
   FaMarker,
@@ -11,18 +11,18 @@ import {
   FaComment,
   FaCogs,
   FaChevronCircleLeft,
-  FaChevronCircleRight
-} from "react-icons/fa";
+  FaChevronCircleRight,
+} from 'react-icons/fa';
 
-import { useDispatch, useSideBar } from "context/hooks";
-import { ToggleSideBar } from "context/sidebar/action";
+import { useDispatch, useSideBar } from 'context/hooks';
+import { ToggleSideBar } from 'context/sidebar/action';
 import {
   ViewContainer,
   LinksContainer,
   FixedMenu,
   CollpaseSideBarContainer,
-  CollapseSideText
-} from "./styled";
+  CollapseSideText,
+} from './styled';
 
 const SideBarDashboard: React.FC = () => {
   const widthRef = createRef<HTMLDivElement>();
@@ -48,7 +48,7 @@ const SideBarDashboard: React.FC = () => {
               <Col md={12}>
                 <LinksContainer>
                   <Link
-                    text={sideBarStatus ? "Dashboard" : ""}
+                    text={sideBarStatus ? 'Dashboard' : ''}
                     url="/admin"
                     Icon={FaHome}
                   />
@@ -59,7 +59,7 @@ const SideBarDashboard: React.FC = () => {
               <Col md={12}>
                 <LinksContainer>
                   <AccordionCollapse
-                    TogleTitle={sideBarStatus ? "Posts" : ""}
+                    TogleTitle={sideBarStatus ? 'Posts' : ''}
                     Icon={FaMarker}
                   >
                     <>
@@ -78,7 +78,7 @@ const SideBarDashboard: React.FC = () => {
               <Col md={12}>
                 <LinksContainer>
                   <AccordionCollapse
-                    TogleTitle={sideBarStatus ? "Media" : ""}
+                    TogleTitle={sideBarStatus ? 'Media' : ''}
                     Icon={FaImages}
                   >
                     <>
@@ -96,7 +96,7 @@ const SideBarDashboard: React.FC = () => {
               <Col md={12}>
                 <LinksContainer>
                   <AccordionCollapse
-                    TogleTitle={sideBarStatus ? "Comments" : ""}
+                    TogleTitle={sideBarStatus ? 'Comments' : ''}
                     Icon={FaComment}
                   >
                     <>
@@ -115,7 +115,7 @@ const SideBarDashboard: React.FC = () => {
               <Col md={12}>
                 <LinksContainer>
                   <AccordionCollapse
-                    TogleTitle={sideBarStatus ? "Pages" : ""}
+                    TogleTitle={sideBarStatus ? 'Pages' : ''}
                     Icon={FaNewspaper}
                   >
                     <>
@@ -135,7 +135,7 @@ const SideBarDashboard: React.FC = () => {
               <Col md={12}>
                 <LinksContainer>
                   <AccordionCollapse
-                    TogleTitle={sideBarStatus ? "Contacts" : ""}
+                    TogleTitle={sideBarStatus ? 'Contacts' : ''}
                     Icon={FaMailBulk}
                   >
                     <>
@@ -156,7 +156,7 @@ const SideBarDashboard: React.FC = () => {
               <Col md={12}>
                 <LinksContainer>
                   <AccordionCollapse
-                    TogleTitle={sideBarStatus ? "User" : ""}
+                    TogleTitle={sideBarStatus ? 'User' : ''}
                     Icon={FaUserAlt}
                   >
                     <>
@@ -171,7 +171,7 @@ const SideBarDashboard: React.FC = () => {
               <Col md={12}>
                 <LinksContainer>
                   <AccordionCollapse
-                    TogleTitle={sideBarStatus ? "Settings" : ""}
+                    TogleTitle={sideBarStatus ? 'Settings' : ''}
                     Icon={FaCogs}
                   >
                     <>

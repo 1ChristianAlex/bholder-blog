@@ -1,5 +1,5 @@
-import React, { ChangeEvent } from "react";
-import { InputContainer, InputT, Label } from "./styled";
+import React, { ChangeEvent } from 'react';
+import { InputContainer, InputT, Label } from './styled';
 
 export interface IInput {
   id?: string;
@@ -19,7 +19,7 @@ const InputText: React.FC<IInput> = ({
   placeholder,
   ...rest
 }) => (
-  <InputContainer className={!label ? "mt-3 " : ""}>
+  <InputContainer className={!label ? 'mt-3 ' : ''}>
     {label && <Label htmlFor={id} />}
     <InputT
       name={name}

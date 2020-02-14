@@ -1,7 +1,7 @@
-import React, { FC } from "react";
-import { InputText, DraftArea, TextArea } from "components";
-import { Row, Col, Tab, Tabs } from "react-bootstrap";
-import { FormItem } from "./styled";
+import React, { FC } from 'react';
+import { InputText, DraftArea, TextArea } from 'components';
+import { Row, Col, Tab, Tabs } from 'react-bootstrap';
+import { FormItem } from './styled';
 
 interface IPostData {
   postName?: string;

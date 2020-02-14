@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { defaultColors } from "assets/colors";
+import styled from 'styled-components';
+import { defaultColors } from 'assets/colors';
 
 export const CardItemSide = styled.div`
   margin: 5px 0;

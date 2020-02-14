@@ -1,14 +1,14 @@
-import styled from "styled-components";
-import { defaultColors } from "assets/colors";
-import { Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { defaultColors } from 'assets/colors';
+import { Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 interface ISLogoText {
   fontSize?: string;
 }
 export const LogoText = styled.h3<ISLogoText>`
-  font-family: "Righteous", cursive;
-  font-size: ${props => props.fontSize || "40px"};
+  font-family: 'Righteous', cursive;
+  font-size: ${props => props.fontSize || '40px'};
   color: ${defaultColors.yellow};
 `;
 

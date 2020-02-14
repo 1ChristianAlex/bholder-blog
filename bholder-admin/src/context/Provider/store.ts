@@ -1,6 +1,6 @@
-import { createContext } from "react";
-import { IUser } from "interfaces";
-import { ICollapseSideBar } from "../sidebar/reducer";
+import { createContext } from 'react';
+import { IUser } from 'interfaces';
+import { ICollapseSideBar } from '../sidebar/reducer';
 
 export const initalState: IUser = {};
 
@@ -12,9 +12,9 @@ interface IContext {
 const context = {
   user: initalState,
   collapseSideBar: {
-    status: true
+    status: true,
   },
-  dispatch: () => {}
+  dispatch: () => {},
 };
 
 const AppContext = createContext<IContext>(context);

@@ -1,5 +1,5 @@
-import React from "react";
-import { Welcome, LineChart } from "components";
+import React from 'react';
+import { Welcome, LineChart } from 'components';
 
 const Dashboard: React.FC = () => (
   <>

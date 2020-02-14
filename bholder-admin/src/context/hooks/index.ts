@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { AppContext } from "../Provider/store";
+import { useContext } from 'react';
+import { AppContext } from '../Provider/store';
 
 export const useSideBar = () => {
   const { collapseSideBar } = useContext(AppContext);

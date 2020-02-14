@@ -1,6 +1,6 @@
-import { Login, Token, LoginResponse } from "./ILogin";
-import { User } from "./IUser";
-import { Action, Dispatch } from "./IContext";
+import { Login, Token, LoginResponse } from './ILogin';
+import { User } from './IUser';
+import { Action, Dispatch } from './IContext';
 
 export type IAction = Action;
 export type IDispatch = Dispatch;

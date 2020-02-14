@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { defaultColors } from "assets/colors";
+import styled from 'styled-components';
+import { defaultColors } from 'assets/colors';
 
 export interface ISLink {
   color?: string;
@@ -8,7 +8,7 @@ export interface ISLink {
 
 export const AccordionText = styled.span<ISLink>`
   color: ${props => props.color || defaultColors.white};
-  font-size: ${props => props.fontSize || "14px"};
+  font-size: ${props => props.fontSize || '14px'};
   padding: 10px 10px;
   cursor: pointer;
   flex: 2;
@@ -23,7 +23,7 @@ export const AccordionText = styled.span<ISLink>`
 `;
 export const AccordionContent = styled.div<ISLink>`
   color: ${props => props.color || defaultColors.white};
-  font-size: ${props => props.fontSize || "14px"};
+  font-size: ${props => props.fontSize || '14px'};
   display: block;
   text-decoration: none;
   background-color: ${props => props.color || defaultColors.gray};

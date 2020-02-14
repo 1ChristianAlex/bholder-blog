@@ -1,7 +1,7 @@
-import React from "react";
-import { Switch } from "react-router-dom";
-import { Dashboard, Posts } from "pages";
-import PrivateRoute from "./PrivateRoute";
+import React from 'react';
+import { Switch } from 'react-router-dom';
+import { Dashboard, Posts } from 'pages';
+import PrivateRoute from './PrivateRoute';
 
 const AdminRoutes = () => (
   <Switch>

@@ -1,6 +1,6 @@
-import React from "react";
-import { Row, Col } from "react-bootstrap";
-import { TextTitle } from "./styled";
+import React from 'react';
+import { Row, Col } from 'react-bootstrap';
+import { TextTitle } from './styled';
 
 interface IPPageTitle {
   title: string;

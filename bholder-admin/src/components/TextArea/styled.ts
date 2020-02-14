@@ -1,6 +1,6 @@
-import { Textarea } from "@rocketseat/unform";
-import styled from "styled-components";
-import { defaultColors } from "assets/colors";
+import { Textarea } from '@rocketseat/unform';
+import styled from 'styled-components';
+import { defaultColors } from 'assets/colors';
 
 export const CodeArea = styled(Textarea)`
   padding: 0.375rem 0.75rem;

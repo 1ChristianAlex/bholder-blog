@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import { defaultColors } from "assets/colors";
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { defaultColors } from 'assets/colors';
 
 export interface ISLink {
   color?: string;
@@ -9,7 +9,7 @@ export interface ISLink {
 
 export const NavLinkItem = styled(NavLink)<ISLink>`
   color: ${props => props.color || defaultColors.white};
-  font-size: ${props => props.fontSize || "14px"};
+  font-size: ${props => props.fontSize || '14px'};
   display: block;
   text-decoration: none;
   width: 100%;

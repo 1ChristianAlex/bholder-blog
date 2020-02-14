@@ -1,8 +1,8 @@
-import React, { FC } from "react";
-import { Card } from "react-bootstrap";
-import { Button } from "components";
-import { FaFontAwesomeFlag, FaCalendar } from "react-icons/fa";
-import { CardItemSide, Icon, TextItem, ButtonContainer } from "./styled";
+import React, { FC } from 'react';
+import { Card } from 'react-bootstrap';
+import { Button } from 'components';
+import { FaFontAwesomeFlag, FaCalendar } from 'react-icons/fa';
+import { CardItemSide, Icon, TextItem, ButtonContainer } from './styled';
 
 const PostSideBar: FC = () => {
   const mokeDate = new Date();

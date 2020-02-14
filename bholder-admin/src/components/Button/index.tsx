@@ -1,11 +1,11 @@
-import React, { ButtonHTMLAttributes } from "react";
-import { ButtonStyled } from "./styled";
+import React, { ButtonHTMLAttributes } from 'react';
+import { ButtonStyled } from './styled';
 
 export interface IButton extends ButtonHTMLAttributes<any> {
-  color?: "primary" | "secundary";
+  color?: 'primary' | 'secundary';
   background?: string;
   text?: string;
-  type?: "submit" | "reset" | "button";
+  type?: 'submit' | 'reset' | 'button';
   block?: boolean;
 }
 

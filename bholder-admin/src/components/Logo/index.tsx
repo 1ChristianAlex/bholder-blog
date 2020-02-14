@@ -1,6 +1,6 @@
-import React from "react";
-import { Logo as LogoPath } from "assets/images";
-import { LogoText, LogoImage, LogoContainer, LogoLink } from "./styled";
+import React from 'react';
+import { Logo as LogoPath } from 'assets/images';
+import { LogoText, LogoImage, LogoContainer, LogoLink } from './styled';
 
 export interface ILogo {
   height?: number;
