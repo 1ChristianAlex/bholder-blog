@@ -56,7 +56,7 @@ export const FormLogin: React.FC = () => {
         {loading && <Spinner size="sm" animation="border" />}
       </Button>
       <ForgotLinkContainer>
-        <Link url="/" text="Forgot password" />
+        <Link url="/" text="Forgot password" color="primary" />
       </ForgotLinkContainer>
     </LoginForm>
   );

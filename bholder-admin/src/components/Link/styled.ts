@@ -28,8 +28,12 @@ padding:10px 20px;
 flex: 1;
 text-align: center;
 `;
-export const TextContainer = styled.div`
+interface ISLinkText {
+    color?: 'primary' | 'secundary';
+}
+export const TextContainer = styled.div<ISLinkText>`
 flex: 2;
 padding: 10px 10px;
+color:${({ color }) => (color === 'primary' ? defaultColors.black : defaultColors.white)};
 
 `

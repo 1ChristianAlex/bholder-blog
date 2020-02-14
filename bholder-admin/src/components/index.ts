@@ -13,5 +13,7 @@ export { default as Welcome } from './Welcome';
 export { default as LineChart } from './LineChart';
 export { default as Spinner } from './Spinner';
 export { default as PageTitle } from './PageTitle';
-export { default as PostForm } from './PostForm';
+export { default as PostForm } from './PostInputs';
 export { default as DraftArea } from './DraftArea';
+export { default as PostSideBar } from './PostSideBar';
+export { default as TextArea } from './TextArea';

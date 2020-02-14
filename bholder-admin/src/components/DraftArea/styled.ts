@@ -9,4 +9,5 @@ export const EditorStyle = {
   backgroundClip: ' padding-box',
   border: ` 1px solid ${defaultColors.gray}`,
   borderRadius: ' 5px',
+  height: '40vh'
 }

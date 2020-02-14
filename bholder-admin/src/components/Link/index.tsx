@@ -5,11 +5,12 @@ export interface ILink {
   url: string;
   Icon?: React.FC;
   text: string;
+  color?: 'primary' | 'secundary';
 }
 
-const LinkButton: React.FC<ILink> = ({ text, url, Icon }) => (
+const LinkButton: React.FC<ILink> = ({ text, url, Icon, color }) => (
   <LinkItem to={url}>
-    {text && <TextContainer>{text}</TextContainer>}
+    {text && <TextContainer color={color}>{text}</TextContainer>}
     {Icon && (
       <IconContainer>
         <Icon />
