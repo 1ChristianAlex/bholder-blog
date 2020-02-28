@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Form } from '@rocketseat/unform';
-import { FormProps } from '@rocketseat/unform/dist/Form';
+import { Form } from '@unform/web';
+import { FormProps } from '@unform/core';
 
 export const LoginForm = styled(Form)<FormProps>``;
 export const ForgotLinkContainer = styled.div`

@@ -1,4 +1,4 @@
-import { Form } from '@rocketseat/unform';
+import { Form } from '@unform/web';
 import styled from 'styled-components';
 
 export const FormPostContainer = styled(Form)`

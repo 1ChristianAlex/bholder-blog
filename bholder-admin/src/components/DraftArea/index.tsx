@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, useRef } from 'react';
 import { Editor, EditorState } from 'react-draft-wysiwyg';
 import { convertToRaw } from 'draft-js';
-import { useField } from '@rocketseat/unform';
+import { useField } from '@unform/core';
 import draftToHtml from 'draftjs-to-html';
 import { EditorStyle } from './styled';
 
@@ -11,8 +11,8 @@ interface IDraftArea {
 
 const DraftArea: FC<IDraftArea> = ({ name }) => {
   const [draftContent, setDrafContent] = useState<string>('');
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { registerField } = useField(name);
+  const draftRef = useRef<HTMLInputElement>(null);
+  const { registerField, fieldName } = useField(name);
 
   const handleChange = (changeState: EditorState) => {
     const currentContent = changeState.getCurrentContent();
@@ -20,18 +20,18 @@ const DraftArea: FC<IDraftArea> = ({ name }) => {
     setDrafContent(html);
   };
   useEffect(() => {
-    const target = inputRef.current as HTMLInputElement;
+    const target = draftRef.current as HTMLInputElement;
 
     registerField({
-      name,
+      name: fieldName,
       path: 'value',
       ref: target,
     });
-  }, [name, inputRef]);
+  }, [fieldName, draftRef, registerField]);
 
   return (
     <>
-      <input type="hidden" ref={inputRef} value={draftContent} />
+      <input type="hidden" ref={draftRef} value={draftContent} />
       <Editor editorStyle={EditorStyle} onEditorStateChange={handleChange} />
     </>
   );

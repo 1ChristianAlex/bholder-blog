@@ -1,14 +1,13 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useRef, useEffect } from 'react';
 import { InputContainer, InputT, Label } from './styled';
+import { useField } from '@unform/core';
 
 export interface IInput {
   id?: string;
   name: string;
   label?: string;
   placeholder?: string;
-  onChange?:
-    | ((event: ChangeEvent<HTMLInputElement>) => void)
-    | ((event: ChangeEvent<HTMLTextAreaElement>) => void);
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   type?: any;
 }
 
@@ -18,17 +17,30 @@ const InputTextFlat: React.FC<IInput> = ({
   label,
   placeholder,
   ...rest
-}) => (
-  <InputContainer>
-    <Label htmlFor={id} />
-    <InputT
-      className="teste"
-      name={name}
-      label={label}
-      id={id}
-      placeholder={placeholder}
-      {...rest}
-    />
-  </InputContainer>
-);
+}) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { registerField, fieldName } = useField(name);
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      path: 'value',
+      ref: inputRef.current,
+    });
+  }, [registerField, inputRef, fieldName]);
+
+  return (
+    <InputContainer>
+      <Label htmlFor={id} />
+      <InputT
+        ref={inputRef}
+        className="teste"
+        name={name}
+        id={id}
+        placeholder={placeholder}
+        {...rest}
+      />
+    </InputContainer>
+  );
+};
 export default InputTextFlat;

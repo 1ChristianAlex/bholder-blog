@@ -6,9 +6,7 @@ export interface IInput {
   name: string;
   label?: string;
   placeholder?: string;
-  onChange?:
-    | ((event: ChangeEvent<HTMLInputElement>) => void)
-    | ((event: ChangeEvent<HTMLTextAreaElement>) => void);
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   type?: any;
 }
 
@@ -21,13 +19,7 @@ const InputText: React.FC<IInput> = ({
 }) => (
   <InputContainer className={!label ? 'mt-3 ' : ''}>
     {label && <Label htmlFor={id} />}
-    <InputT
-      name={name}
-      label={label}
-      id={id}
-      placeholder={placeholder}
-      {...rest}
-    />
+    <InputT name={name} id={id} placeholder={placeholder} {...rest} />
   </InputContainer>
 );
 export default InputText;
