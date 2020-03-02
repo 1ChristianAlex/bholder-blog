@@ -12,6 +12,5 @@ export const CodeArea = styled.textarea`
   border-radius: 5px;
   height: 50vh;
   width: 100%;
-  margin: 15px 0;
   display: inline-block;
 `;

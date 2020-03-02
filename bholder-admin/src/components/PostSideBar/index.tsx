@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Card } from 'react-bootstrap';
-import { Button } from 'components';
+import { Button, FileDropble } from 'components';
 import { FaFontAwesomeFlag, FaCalendar } from 'react-icons/fa';
 import { CardItemSide, Icon, TextItem, ButtonContainer } from './styled';
 
@@ -29,6 +29,12 @@ const PostSideBar: FC = () => {
             <Button text="Save" type="submit" color="primary" />
           </ButtonContainer>
         </Card.Footer>
+      </Card>
+      <Card className="mt-4">
+        <Card.Header>Publish</Card.Header>
+        <Card.Body>
+          <FileDropble name="input-post-file" />
+        </Card.Body>
       </Card>
     </div>
   );

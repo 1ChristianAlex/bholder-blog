@@ -9,7 +9,7 @@ interface SideBarContainer {
 
 const WithSideBar: FC<SideBarContainer> = ({
   SideBarComponent,
-  MainComponent,
+  MainComponent
 }) => {
   const collapseSideBar = useSideBar();
 

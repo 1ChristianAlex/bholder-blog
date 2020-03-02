@@ -11,7 +11,7 @@ import {
   FaComment,
   FaCogs,
   FaChevronCircleLeft,
-  FaChevronCircleRight,
+  FaChevronCircleRight
 } from 'react-icons/fa';
 
 import { useDispatch, useSideBar } from 'context/hooks';
@@ -21,7 +21,7 @@ import {
   LinksContainer,
   FixedMenu,
   CollpaseSideBarContainer,
-  CollapseSideText,
+  CollapseSideText
 } from './styled';
 
 const SideBarDashboard: React.FC = () => {
@@ -34,8 +34,8 @@ const SideBarDashboard: React.FC = () => {
     dispacth(ToggleSideBar());
   };
   useEffect(() => {
-    if (widthRef.current?.offsetWidth) {
-      setWidthMenu(widthRef.current?.offsetWidth);
+    if (widthRef.current?.clientWidth) {
+      setWidthMenu(widthRef.current?.clientWidth);
     }
   }, [widthRef]);
 

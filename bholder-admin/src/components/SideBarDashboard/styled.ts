@@ -8,8 +8,9 @@ interface ISFixedMenu {
   width: string;
 }
 export const ViewContainer = styled.div<ISViewContainer>`
-  height: calc(100vh - 30px);
+  min-height: calc(100vh - 30px);
   background-color: ${defaultColors.black};
+  position: fixed;
   color: ${defaultColors.white};
   padding: 15px 0;
 `;
@@ -20,7 +21,6 @@ export const LinksContainer = styled.div`
   text-align: left;
 `;
 export const FixedMenu = styled.div<ISFixedMenu>`
-  position: fixed;
   width: ${props => props.width};
 `;
 export const CollpaseSideBarContainer = styled.div`
