@@ -4,8 +4,12 @@ import { useField } from '@unform/core';
 import { FaFileImage } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { FileToBase } from 'helpers';
+import { insertValue } from 'context/form/action';
+import { useFormDispatch } from 'context/hooks';
+
 import {
   DropZoneContainer,
+  DropZonePreviewImage,
   DropZoneContent,
   DropZoneIcon,
   DropZoneText,
@@ -20,6 +24,7 @@ const FileDropable: FC<IPFileDropable> = ({ name }) => {
   const { registerField, fieldName } = useField(name);
   const [fileState, setFileState] = useState<File>();
   const [filePreview, setFilePreview] = useState<string>('');
+  const dispatch = useFormDispatch();
 
   const onDrop = useCallback(async files => {
     const [file] = files as Array<File>;
@@ -30,7 +35,7 @@ const FileDropable: FC<IPFileDropable> = ({ name }) => {
       setFileState(file);
 
       const baseUrl = await fileReader.toBase64();
-
+      dispatch(insertValue({ name: fieldName, value: { file, baseUrl } }));
       setFilePreview(baseUrl);
     } else {
       toast.error('Invalid Image Type');
@@ -51,7 +56,6 @@ const FileDropable: FC<IPFileDropable> = ({ name }) => {
 
   return (
     <>
-      {filePreview && <ImagePreview src={filePreview} />}
       <DropZoneContainer
         {...getRootProps()}
         isDrag={fileState !== undefined || isDragActive}
@@ -59,13 +63,15 @@ const FileDropable: FC<IPFileDropable> = ({ name }) => {
         <input {...getInputProps()} multiple={false} />
         <DropZoneContent>
           {fileState !== undefined ? (
-            <DropZoneText>
-              {fileState.name} - {fileState.size}
-              bytes
-              <DropZoneIcon hasFile={fileState !== undefined}>
-                <FaFileImage />
-              </DropZoneIcon>
-            </DropZoneText>
+            <>
+              <DropZoneText>
+                {fileState.name} - {fileState.size}
+                bytes
+              </DropZoneText>
+              <DropZonePreviewImage>
+                {filePreview && <ImagePreview src={filePreview} />}
+              </DropZonePreviewImage>
+            </>
           ) : (
             <DropZoneText>
               Drag drop some files here, or click to select files

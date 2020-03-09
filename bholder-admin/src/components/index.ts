@@ -18,3 +18,4 @@ export { default as DraftArea } from './DraftArea';
 export { default as PostSideBar } from './PostSideBar';
 export { default as TextArea } from './TextArea';
 export { default as FileDropble } from './FileDropble';
+export { default as ModalButton } from './ModalButton';

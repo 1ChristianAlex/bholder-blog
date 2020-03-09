@@ -12,11 +12,22 @@ interface IContext {
 const context = {
   user: initalState,
   collapseSideBar: {
-    status: true,
+    status: true
   },
-  dispatch: () => {},
+  dispatch: () => {}
 };
 
 const AppContext = createContext<IContext>(context);
 
-export { AppContext };
+const formContext = {
+  dispatch: () => {},
+  form: {}
+};
+
+interface IFormContext {
+  form: object | any;
+  dispatch: React.Dispatch<any>;
+}
+const FormContext = createContext<IFormContext>(formContext);
+
+export { AppContext, FormContext, formContext };

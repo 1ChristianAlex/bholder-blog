@@ -10,7 +10,6 @@ interface ISFixedMenu {
 export const ViewContainer = styled.div<ISViewContainer>`
   min-height: calc(100vh - 30px);
   background-color: ${defaultColors.black};
-  position: fixed;
   color: ${defaultColors.white};
   padding: 15px 0;
 `;

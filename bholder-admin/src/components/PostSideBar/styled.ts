@@ -16,3 +16,6 @@ export const TextItem = styled.div`
 export const ButtonContainer = styled.div`
   text-align: right;
 `;
+export const ImagePreview = styled.img`
+  width: 100%;
+`;

@@ -11,6 +11,10 @@ export const DropZoneContainer = styled.div<IDropZoneContainer>`
   padding: 5px;
   border: 1px dotted
     ${props => (props.isDrag ? defaultColors.purple : defaultColors.coal)};
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 `;
 export const DropZoneContent = styled.div`
   display: flex;
@@ -27,7 +31,15 @@ export const DropZoneIcon = styled.span<IDropZoneIcon>`
   color: ${props =>
     props.hasFile ? defaultColors.purple : defaultColors.coal};
 `;
+
+export const DropZonePreviewImage = styled.div`
+  display: block;
+  text-align: center;
+`;
 export const ImagePreview = styled.img`
-  width: 100%;
+  width: 300px;
   height: auto;
+  flex: 1;
+  text-align: center;
+  margin: 0 auto;
 `;

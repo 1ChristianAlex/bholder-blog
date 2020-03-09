@@ -1,11 +1,20 @@
 import React, { FC } from 'react';
-import { Card } from 'react-bootstrap';
-import { Button, FileDropble } from 'components';
+import { Card, Row, Col } from 'react-bootstrap';
+import { Button, FileDropble, ModalButton } from 'components';
 import { FaFontAwesomeFlag, FaCalendar } from 'react-icons/fa';
-import { CardItemSide, Icon, TextItem, ButtonContainer } from './styled';
+import { useForm } from 'context/hooks';
+import {
+  CardItemSide,
+  Icon,
+  TextItem,
+  ButtonContainer,
+  ImagePreview
+} from './styled';
 
 const PostSideBar: FC = () => {
   const mokeDate = new Date();
+  const fileValue = useForm<{ file: File; baseUrl: string }>('input-post-file');
+
   return (
     <div className="mt-3">
       <Card>
@@ -26,15 +35,28 @@ const PostSideBar: FC = () => {
         </Card.Body>
         <Card.Footer>
           <ButtonContainer>
-            <Button text="Save" type="submit" color="primary" />
+            <Button text="Publish" type="submit" color="primary" />
           </ButtonContainer>
         </Card.Footer>
       </Card>
       <Card className="mt-4">
-        <Card.Header>Publish</Card.Header>
-        <Card.Body>
-          <FileDropble name="input-post-file" />
-        </Card.Body>
+        <Card.Header>
+          <Row>
+            <Col>
+              <TextItem>Thumbnail</TextItem>
+            </Col>
+            <Col>
+              <ModalButton>
+                <FileDropble name="input-post-file" />
+              </ModalButton>
+            </Col>
+          </Row>
+        </Card.Header>
+        {fileValue?.baseUrl && (
+          <Card.Body>
+            <ImagePreview src={fileValue?.baseUrl} />
+          </Card.Body>
+        )}
       </Card>
     </div>
   );

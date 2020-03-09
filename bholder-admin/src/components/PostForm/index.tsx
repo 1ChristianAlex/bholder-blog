@@ -9,7 +9,6 @@ interface IPostData {
   [key: string]: any;
 }
 const PostForm: FC = () => {
-  const [textAreaValue, setTextAreaValue] = useState<string>('');
   const [textSelection, setTextSelection] = useState<boolean>(true);
 
   const changeTextSelection = (idText: number) => {
@@ -42,17 +41,9 @@ const PostForm: FC = () => {
             </TabItem>
           </TabContainer>
           {textSelection ? (
-            <DraftArea
-              name="visualArea"
-              defaultValue={textAreaValue}
-              changeValue={setTextAreaValue}
-            />
+            <DraftArea name="codeArea" />
           ) : (
-            <TextArea
-              name="codeArea"
-              defaultValue={textAreaValue}
-              changeValue={setTextAreaValue}
-            />
+            <TextArea name="codeArea" />
           )}
         </FormItem>
       </Col>

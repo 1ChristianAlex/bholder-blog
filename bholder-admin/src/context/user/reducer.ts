@@ -6,7 +6,7 @@ export const userReducer = (state: IUser, action: IAction) => {
     case UPDATE_USER:
       return {
         ...state,
-        ...action.payload,
+        ...action.payload
       };
     case DELETE_USER:
       return {};
