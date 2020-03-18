@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useRef, useEffect } from 'react';
-import { InputContainer, InputT, Label } from './styled';
 import { useField } from '@unform/core';
+import { InputContainer, InputT, Label } from './styled';
 
 export interface IInput {
   id?: string;
@@ -25,7 +25,7 @@ const InputTextFlat: React.FC<IInput> = ({
     registerField({
       name: fieldName,
       path: 'value',
-      ref: inputRef.current,
+      ref: inputRef.current
     });
   }, [registerField, inputRef, fieldName]);
 

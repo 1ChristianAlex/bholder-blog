@@ -13,7 +13,7 @@ export default class PostController {
     try {
       const { post, data, currentUser } = req.body as IBody;
       const user_id = currentUser?.id;
-      const newPost = { ...post, data, user_id };
+      const newPost = { ...post, ...data, user_id };
 
       const result = await this.service.Create(newPost);
       res.json({ post: result });

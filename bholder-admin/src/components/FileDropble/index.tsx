@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useField } from '@unform/core';
-import { FaFileImage } from 'react-icons/fa';
+import { FaFileImage, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { FileToBase } from 'helpers';
-import { insertValue } from 'context/form/action';
-import { useFormDispatch } from 'context/hooks';
+import { insertValue, deleteField } from 'context/form/action';
+import { useFormDispatch, useForm } from 'context/hooks';
 
 import {
   DropZoneContainer,
@@ -13,7 +13,8 @@ import {
   DropZoneContent,
   DropZoneIcon,
   DropZoneText,
-  ImagePreview
+  ImagePreview,
+  RemoveFile
 } from './styled';
 
 interface IPFileDropable {
@@ -22,8 +23,16 @@ interface IPFileDropable {
 
 const FileDropable: FC<IPFileDropable> = ({ name }) => {
   const { registerField, fieldName } = useField(name);
-  const [fileState, setFileState] = useState<File>();
-  const [filePreview, setFilePreview] = useState<string>('');
+  const formValue = useForm<{ file: File; baseUrl: string }>(name);
+  const [fileState, setFileState] = useState<File | null>(
+    formValue?.file || null
+  );
+  const [filePreview, setFilePreview] = useState<string>(
+    formValue?.baseUrl || ''
+  );
+  const [disableDropZone, setDisableDropZone] = useState<boolean>(
+    !!formValue?.baseUrl
+  );
   const dispatch = useFormDispatch();
 
   const onDrop = useCallback(async files => {
@@ -37,14 +46,27 @@ const FileDropable: FC<IPFileDropable> = ({ name }) => {
       const baseUrl = await fileReader.toBase64();
       dispatch(insertValue({ name: fieldName, value: { file, baseUrl } }));
       setFilePreview(baseUrl);
+      setDisableDropZone(true);
     } else {
       toast.error('Invalid Image Type');
     }
   }, []);
 
   const { getRootProps, getInputProps, isDragActive, inputRef } = useDropzone({
-    onDrop
+    onDrop,
+    disabled: disableDropZone
   });
+  const removeFile = () => {
+    const current = inputRef?.current;
+    if (current) {
+      current.value = '';
+      current.files = null;
+    }
+    setFileState(null);
+    setFilePreview('');
+    dispatch(deleteField([name]));
+    setDisableDropZone(false);
+  };
 
   useEffect(() => {
     registerField({
@@ -62,15 +84,18 @@ const FileDropable: FC<IPFileDropable> = ({ name }) => {
       >
         <input {...getInputProps()} multiple={false} />
         <DropZoneContent>
-          {fileState !== undefined ? (
+          {fileState ? (
             <>
               <DropZoneText>
-                {fileState.name} - {fileState.size}
+                {fileState?.name} - {fileState?.size}
                 bytes
               </DropZoneText>
               <DropZonePreviewImage>
                 {filePreview && <ImagePreview src={filePreview} />}
               </DropZonePreviewImage>
+              <RemoveFile onClick={removeFile}>
+                <FaTimes /> Remove File
+              </RemoveFile>
             </>
           ) : (
             <DropZoneText>

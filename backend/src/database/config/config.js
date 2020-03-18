@@ -6,7 +6,7 @@ module.exports = {
     username: process.env.DB_USER,
     password: process.env.PASSWORD,
     database: process.env.DB_NAME,
-    host: process.env.HOSTNAME,
+    host: process.env.HOST,
     dialect: 'mysql',
     port: 5555,
   },
@@ -21,7 +21,7 @@ module.exports = {
   //   username: process.env.DB_USERNAME,
   //   password: process.env.DB_PASSWORD,
   //   database: process.env.DB_NAME,
-  //   host: process.env.DB_HOSTNAME,
+  //   host: process.env.DB_HOST,
   //   dialect: 'mysql',
   //   dialectOptions: {
   //     ssl: {

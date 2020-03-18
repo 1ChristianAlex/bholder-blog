@@ -19,3 +19,5 @@ export { default as PostSideBar } from './PostSideBar';
 export { default as TextArea } from './TextArea';
 export { default as FileDropble } from './FileDropble';
 export { default as ModalButton } from './ModalButton';
+export { default as PostCategories } from './PostCategories';
+export { default as InputRadio } from './InputCheckBox';

@@ -5,11 +5,10 @@ import { IPost } from '../../Interfaces';
 export default class PostService {
   public async Create(post: IPost): Promise<IPost> {
     try {
-      console.log(post);
-
-      const query = await model
-        .create(post)
-        .then(postCreated => postCreated.toJSON() as IPost);
+      const query = await model.create(post).then(postCreated => {
+        const postItem = postCreated.toJSON() as IPost;
+        return postItem;
+      });
 
       return query;
     } catch (error) {

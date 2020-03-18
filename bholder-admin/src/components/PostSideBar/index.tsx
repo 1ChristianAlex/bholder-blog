@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
-import { Button, FileDropble, ModalButton } from 'components';
+import { Button, FileDropble, ModalButton, PostCategories } from 'components';
 import { FaFontAwesomeFlag, FaCalendar } from 'react-icons/fa';
 import { useForm } from 'context/hooks';
 import {
@@ -58,6 +58,7 @@ const PostSideBar: FC = () => {
           </Card.Body>
         )}
       </Card>
+      <PostCategories />
     </div>
   );
 };

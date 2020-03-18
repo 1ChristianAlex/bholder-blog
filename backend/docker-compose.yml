@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  bholder-blog:
+  bholder-blog-database:
     image: mysql:5.7
     environment:
       MYSQL_USER: 'admin'

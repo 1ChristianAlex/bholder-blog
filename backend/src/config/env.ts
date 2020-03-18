@@ -5,7 +5,7 @@ config({
   path: resolve(__dirname, '.env'),
 });
 export const {
-  HOSTNAME,
+  HOST,
   DB_USER,
   PASSWORD,
   DB_NAME,

@@ -43,3 +43,10 @@ export const ImagePreview = styled.img`
   text-align: center;
   margin: 0 auto;
 `;
+export const RemoveFile = styled.span`
+  color: ${defaultColors.yellow};
+  text-align: center;
+  margin: 15px;
+  cursor: pointer;
+  text-decoration: underline;
+`;

@@ -47,5 +47,6 @@
     "source.fixAll.eslint": true,
     "source.fixAll.tslint": true,
     "source.fixAll.prettier": true
-  }
+  },
+  "editor.semanticHighlighting.enabled": false
 }
