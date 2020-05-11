@@ -1,19 +1,17 @@
 import { config } from 'dotenv';
 import { resolve } from 'path';
 
-config({
-  path: resolve(__dirname, '.env'),
-});
-export const {
-  HOST,
-  DB_USER,
-  PASSWORD,
-  DB_NAME,
-  DB_PORT,
-  BACKEND_PORT,
-  SECRET,
-  AWS_ACCESS_KEY_ID,
-  AWS_SECRET_ACCESS_KEY,
-  AWS_PASS,
-  BUCKET_NAME,
-} = process.env;
+const envPath = resolve('src/config/.env');
+config({ path: envPath });
+
+const { APP_URL, POSTGRES_DB, POSTGRES_PASSWORD, PGURL } = process.env || {
+  APP_URL: 'localhost',
+  POSTGRES_DB: 'blog_bholder',
+  POSTGRES_PASSWORD: '123456',
+  PGURL: 'localhost',
+};
+
+const APP_PORT = parseInt(process.env.APP_PORT) || 5555;
+const PGPORT = parseInt(process.env.PGPORT) || 4444;
+
+export { APP_URL, POSTGRES_DB, POSTGRES_PASSWORD, PGURL, APP_PORT, PGPORT };

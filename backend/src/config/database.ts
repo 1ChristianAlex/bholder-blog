@@ -1,12 +1,16 @@
-import { Sequelize } from 'sequelize';
-import * as env from './env';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { PGPORT, POSTGRES_DB, POSTGRES_PASSWORD, PGURL } from './env';
+import { User } from 'entitys';
 
-export const sequelize = new Sequelize({
-  host: env.HOST,
-  dialect: 'mysql',
-  username: env.DB_USER,
-  password: env.PASSWORD,
-  database: env.DB_NAME,
-  port: parseInt(env.DB_PORT),
-  logging: false,
-});
+const dataBaseConfig: TypeOrmModuleOptions = {
+  type: 'postgres',
+  host: PGURL,
+  port: PGPORT,
+  username: 'postgres',
+  password: POSTGRES_PASSWORD,
+  database: POSTGRES_DB,
+  entities: [User],
+  synchronize: true,
+};
+
+export default dataBaseConfig;

@@ -1,12 +1,13 @@
 version: '3.3'
 
 services:
-  bholder-blog-database:
-    image: mysql:5.7
-    environment:
-      MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: 'bholder-blog-2020'
-      MYSQL_ROOT_PASSWORD: 'bholder-blog-2020'
-      MYSQL_DATABASE: 'bholder-database'
+  bhb_database:
+    container_name: bhb_database
+    image: postgres:11.2-alpine
+    restart: always
     ports:
-      - '5555:3306'
+      - '4444:4444'
+    environment:
+      POSTGRES_DB: blog_bholder
+      POSTGRES_PASSWORD: '123456'
+      PGPORT: 4444
