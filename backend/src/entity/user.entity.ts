@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ schema: 'user' })
 export class User {
@@ -17,10 +17,13 @@ export class User {
   @Column({ nullable: false, type: 'varchar' })
   password: string;
 
+  @Column({ nullable: true, type: 'varchar' })
+  image: string;
+
   @Column({ type: 'timestamp', default: () => 'LOCALTIMESTAMP' })
   createAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'LOCALTIMESTAMP' })
+  @Column({ type: 'timestamp', nullable: true })
   updateAt: Date;
 
   @Column({ default: true })
