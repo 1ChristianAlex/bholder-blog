@@ -40,4 +40,11 @@ export const dbConfigJson: TypeOrmModuleOptions = {
   },
 };
 
-writeFileSync('ormconfig.json', JSON.stringify({ ...dbConfigJson }, null, 2));
+export const graphQLSchemaPath: string = resolve(
+  __dirname,
+  '../../src/config/schema.gql',
+);
+
+(async () => {
+  writeFileSync('ormconfig.json', JSON.stringify({ ...dbConfigJson }, null, 2));
+})();
