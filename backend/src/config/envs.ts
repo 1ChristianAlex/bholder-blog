@@ -13,4 +13,5 @@ export const {
   DB_USERNAME,
   NODE_ENV,
   HASH_KEY,
+  SECRET,
 } = process.env;
