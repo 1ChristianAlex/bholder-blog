@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
+import Role from './role.entity';
 
 @Entity({ schema: 'user' })
 export class User {
@@ -11,7 +18,7 @@ export class User {
   @Column({ nullable: false, type: 'varchar' })
   lastName: string;
 
-  @Column({ nullable: false, type: 'varchar' })
+  @Column({ nullable: false, type: 'varchar', unique: true })
   email: string;
 
   @Column({ nullable: false, type: 'varchar' })
@@ -28,6 +35,10 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToOne((type) => Role)
+  @JoinColumn()
+  role: Role;
 }
 
 export default User;

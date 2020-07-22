@@ -10,7 +10,7 @@ import {
 
 @ObjectType()
 export class User {
-  @Field(type => Int)
+  @Field((type) => Int)
   id: number;
 
   @Field({ nullable: true })
