@@ -19,7 +19,7 @@ export class Post {
   @Column({ nullable: false, type: 'text' })
   content: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: false })
   thumbnail: string;
 
   @Column({ nullable: true, type: 'varchar' })
@@ -46,4 +46,4 @@ export class Post {
   user: User;
 }
 
-export default User;
+export default Post;

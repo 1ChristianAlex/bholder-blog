@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Crypt } from 'services';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, Role } from 'entity';
+import { User } from 'entity';
 import { Repository } from 'typeorm';
 import { ILogin } from 'interfaces';
 import { JwtService } from '@nestjs/jwt';

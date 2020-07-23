@@ -5,7 +5,7 @@ import { envPath, dbConfig } from 'config/configFile';
 import { AppController } from './app.controller';
 // import { GraphQLModule } from '@nestjs/graphql';
 import { AppService } from './app.service';
-import { AuthModule, UserModule } from 'modules';
+import { AuthModule, UserModule, PostModule } from 'modules';
 
 @Module({
   imports: [
@@ -17,6 +17,7 @@ import { AuthModule, UserModule } from 'modules';
 
     AuthModule,
     UserModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
