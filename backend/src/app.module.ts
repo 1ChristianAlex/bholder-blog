@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 // import { GraphQLModule } from '@nestjs/graphql';
 import { AppService } from './app.service';
 import { AuthModule, UserModule } from 'modules';
+
 @Module({
   imports: [
     // GraphQLModule.forRoot({
@@ -13,6 +14,7 @@ import { AuthModule, UserModule } from 'modules';
     // }),
     ConfigModule.forRoot({ envFilePath: envPath }),
     TypeOrmModule.forRoot(dbConfig),
+
     AuthModule,
     UserModule,
   ],

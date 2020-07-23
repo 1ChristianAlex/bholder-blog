@@ -5,17 +5,11 @@ import { Crypt } from 'services';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'entity';
 import { JwtModule } from '@nestjs/jwt';
-import { SECRET } from 'config/envs';
-import { AuthJWT } from './auth.jwt';
+import { configJWT } from 'config/configFile';
+import { JwtStrategy } from 'modules/JWTAuth/jwt.strategy';
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User]),
-    JwtModule.register({
-      secret: SECRET,
-      signOptions: { expiresIn: '24h' },
-    }),
-  ],
+  imports: [TypeOrmModule.forFeature([User]), JwtModule.register(configJWT)],
   controllers: [AuthController],
-  providers: [AuthService, Crypt, AuthJWT],
+  providers: [AuthService, Crypt, JwtStrategy],
 })
 export class AuthModule {}

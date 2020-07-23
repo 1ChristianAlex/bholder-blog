@@ -25,15 +25,22 @@ export class UserService {
       throw new Error(errorQuery.message);
     }
   }
+
   async update(user: Omit<IUser, 'id'>, id: number): Promise<IUser> {
     try {
       const newData = { ...user };
       if (newData.password) {
         newData.password = this.crypt.generateHash(user.password);
       }
-      const [userUpdate] = await this.modelUser
+      const userUpdate = await this.modelUser
         .update({ id }, newData)
-        .then((result) => result.raw as [IUser]);
+        .then(
+          async () =>
+            await this.modelUser.findOne({
+              where: { id },
+              relations: ['role'],
+            }),
+        );
 
       return userUpdate;
     } catch (error) {

@@ -8,7 +8,9 @@ import {
   POSTGRES_PASSWORD,
   PGPORT,
   DB_USERNAME,
+  SECRET,
 } from './envs';
+import { JwtModuleOptions } from '@nestjs/jwt';
 
 export const envPath = resolve(__dirname, '../../src/config/.env');
 
@@ -38,6 +40,11 @@ export const dbConfigJson: TypeOrmModuleOptions = {
   cli: {
     migrationsDir: 'src/migration',
   },
+};
+
+export const configJWT: JwtModuleOptions = {
+  secret: SECRET,
+  signOptions: { expiresIn: '24h' },
 };
 
 export const graphQLSchemaPath: string = resolve(

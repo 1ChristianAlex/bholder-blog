@@ -1,13 +1,15 @@
-import { Controller, Post, Body, Res, Put } from '@nestjs/common';
+import { Controller, Post, Body, Res, Put, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { IUser } from 'interfaces';
 import { Response } from 'express';
+import { JwtAuthGuard } from '../JWTAuth/jwt-auth.guard';
 
-@Controller()
+@UseGuards(JwtAuthGuard)
+@Controller('api/user')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Post('/user')
+  @Post()
   public async CreateUser(
     @Body() user: IUser,
     @Res() res: Response,
@@ -22,7 +24,7 @@ export class UserController {
     }
   }
 
-  @Put('/user')
+  @Put()
   async updateUser(@Body() user: IUser, @Res() res: Response): Promise<void> {
     try {
       const { id, ...newUser } = user;

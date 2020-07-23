@@ -8,8 +8,12 @@ export class AuthController {
 
   @Post('/auth')
   async login(@Body() body: ILogin, @Res() response: Response): Promise<void> {
-    const { email, password } = body;
-    const token = await this.auth.login({ email, password });
-    response.json(token);
+    try {
+      const { email, password } = body;
+      const token = await this.auth.login({ email, password });
+      response.status(200).json({ token });
+    } catch (error) {
+      response.status(302).json(error);
+    }
   }
 }
