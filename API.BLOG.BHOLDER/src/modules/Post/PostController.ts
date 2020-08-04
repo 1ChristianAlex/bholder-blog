@@ -7,13 +7,11 @@ import {
   Get,
   Param,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '../JWTAuth/jwt-auth.guard';
-import { Payload } from '../JWTAuth/payload.decorator';
+import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
+import { Payload } from '../JWTAuth/PayloadDecorator';
 import { Response } from 'express';
-import { PostService } from './post.service';
-import { IPost } from 'interfaces';
-import { IPayload } from 'interfaces/auth';
-import { IPostParms } from 'interfaces/post';
+import { PostService } from './PostService';
+import { IPayload, IPostInputDto, IPostParms } from 'interfaces';
 
 @UseGuards(JwtAuthGuard)
 @Controller('api/post')
@@ -22,7 +20,7 @@ export class PostAPIController {
 
   @Post()
   async create(
-    @Body() body: IPost,
+    @Body() body: IPostInputDto,
     @Res() res: Response,
     @Payload() payload: IPayload,
   ): Promise<void> {

@@ -9,10 +9,10 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UserService } from './user.service';
-import { IUser } from 'interfaces';
+import { UserService } from './UserService';
+import { IUserInputDto } from 'interfaces';
 import { Response } from 'express';
-import { JwtAuthGuard } from '../JWTAuth/jwt-auth.guard';
+import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
 import { memoryStorage } from 'multer';
 
 // @UseGuards(JwtAuthGuard)
@@ -27,14 +27,14 @@ export class UserController {
     }),
   )
   public async CreateUser(
-    @Body() user: IUser,
+    @Body() user: IUserInputDto,
     @Res() res: Response,
-    @UploadedFile() image: Express.Multer.File,
+    @UploadedFile() file: Express.Multer.File,
   ): Promise<void> {
     try {
       const userCreated = await this.userService.create({
         ...user,
-        image,
+        file,
       });
       res.json(userCreated);
     } catch (error) {
@@ -46,7 +46,10 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Put()
-  async updateUser(@Body() user: IUser, @Res() res: Response): Promise<void> {
+  async updateUser(
+    @Body() user: IUserInputDto,
+    @Res() res: Response,
+  ): Promise<void> {
     try {
       const { id, ...newUser } = user;
       const userUpdated = await this.userService.update(newUser, id);

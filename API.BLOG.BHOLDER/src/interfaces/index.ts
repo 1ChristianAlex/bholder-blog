@@ -1,3 +1,3 @@
-export { IUser, IUserData } from './user';
-export { ILogin } from './auth';
-export { IPost } from './post';
+export { IUserInputDto, IUserOutPutDto } from './IUser';
+export { ILoginInputDto, IPayload } from './IAuth';
+export { IPostInputDto, IPostOutputDto, IPostParms } from './IPost';

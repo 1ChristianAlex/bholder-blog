@@ -1,11 +1,11 @@
+import User from './user.entity';
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import User from './user.entity';
 
 @Entity({ schema: 'posts' })
 export class Category {

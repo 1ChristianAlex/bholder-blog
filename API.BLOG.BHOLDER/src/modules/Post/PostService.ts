@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Post } from 'entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IPost } from 'interfaces';
+import { IPostInputDto } from 'interfaces';
+import { IPostService } from './IPostServices';
 
 Injectable();
-export class PostService {
+export class PostService implements IPostService {
   constructor(@InjectRepository(Post) private modelPost: Repository<Post>) {}
 
-  async create(post: IPost, userId: number): Promise<Post> {
+  async create(post: IPostInputDto, userId: number): Promise<Post> {
     try {
       const postCreated = await this.modelPost
         .insert({

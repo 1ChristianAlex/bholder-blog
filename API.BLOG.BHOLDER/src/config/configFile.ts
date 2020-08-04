@@ -1,7 +1,6 @@
 import { writeFileSync } from 'fs';
 import { resolve } from 'path';
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { entitys } from './entitiesDB';
+import { entitys } from './EntitiesDB';
 import {
   DB_URL,
   POSTGRES_DB,
@@ -9,7 +8,8 @@ import {
   PGPORT,
   DB_USERNAME,
   SECRET,
-} from './envs';
+} from './Envs';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { JwtModuleOptions } from '@nestjs/jwt';
 
 export const envPath = resolve(__dirname, '../../src/config/.env');

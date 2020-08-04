@@ -1,3 +1,3 @@
-export { AuthModule } from './auth/auth.module';
-export { UserModule } from './user/user.module';
-export { PostModule } from './posts/post.module';
+export { AuthModule } from './auth/AuthModule';
+export { UserModule } from './User/UserModule';
+export { PostModule } from './Post/PostModule';

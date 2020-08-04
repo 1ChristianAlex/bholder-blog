@@ -3,19 +3,20 @@ import { Crypt } from 'services';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'entity';
 import { Repository } from 'typeorm';
-import { ILogin } from 'interfaces';
+import { ILoginInputDto } from 'interfaces';
 import { JwtService } from '@nestjs/jwt';
-import { IPayload } from 'interfaces/auth';
+import { IPayload } from 'interfaces/IAuth';
+import { IAuthService } from './IAuthService';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
   constructor(
     private crypt: Crypt,
     @InjectRepository(User) private modelUser: Repository<User>,
     private jwt: JwtService,
   ) {}
 
-  async login(login: ILogin): Promise<string> {
+  async login(login: ILoginInputDto): Promise<string> {
     try {
       const { password, email } = login;
 

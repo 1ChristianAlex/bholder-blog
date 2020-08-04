@@ -1,4 +1,4 @@
-export interface IPost {
+export interface IPostInputDto {
   id?: number;
   title?: string;
   content?: string;
@@ -9,6 +9,19 @@ export interface IPost {
   updateAt?: Date;
   isActive?: boolean;
 }
+
+export interface IPostOutputDto {
+  id: number;
+  title: string;
+  content: string;
+  thumbnail: string;
+  keywords: string;
+  datePublish: Date;
+  createAt: Date;
+  updateAt: Date;
+  isActive: boolean;
+}
+
 export interface IPostParms {
   offset?: number;
   limit?: number;

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { envPath, dbConfig } from 'config/configFile';
+import { envPath, dbConfig } from 'config/ConfigFile';
 import { AppController } from './app.controller';
 // import { GraphQLModule } from '@nestjs/graphql';
 import { AppService } from './app.service';
