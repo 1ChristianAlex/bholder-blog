@@ -1,21 +1,41 @@
-import { Controller, Post, Body, Res, Put, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  Put,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from './user.service';
 import { IUser } from 'interfaces';
 import { Response } from 'express';
 import { JwtAuthGuard } from '../JWTAuth/jwt-auth.guard';
+import { memoryStorage } from 'multer';
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @Controller('api/user')
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: memoryStorage(),
+    }),
+  )
   public async CreateUser(
     @Body() user: IUser,
     @Res() res: Response,
+    @UploadedFile() image: Express.Multer.File,
   ): Promise<void> {
     try {
-      const userCreated = await this.userService.create(user);
+      const userCreated = await this.userService.create({
+        ...user,
+        image,
+      });
       res.json(userCreated);
     } catch (error) {
       console.log(error);
@@ -24,6 +44,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put()
   async updateUser(@Body() user: IUser, @Res() res: Response): Promise<void> {
     try {

@@ -1,0 +1,19 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 4444,
+  "username": "postgres",
+  "password": "123456",
+  "database": "blog_bholder",
+  "entities": [
+    "src/entity/*.entity{.ts,.js}"
+  ],
+  "synchronize": true,
+  "migrationsTableName": "migration",
+  "migrations": [
+    "src/migration/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "src/migration"
+  }
+}
