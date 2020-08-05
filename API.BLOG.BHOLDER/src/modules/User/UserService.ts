@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { IUserInputDto } from 'interfaces';
 import { User } from 'entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, QueryFailedError } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Crypt, Bucket } from 'services';
 
 Injectable();
@@ -19,21 +19,25 @@ export class UserService {
       const createObject: IUserInputDto = { ...data, password };
 
       if (file.fieldname) {
-        const urlImage = await this.bucket.uploadMemoryFile(file.buffer);
+        const urlImage = await this.bucket.uploadMemoryFile(file.path);
         createObject.image = urlImage;
       }
 
       const pass = this.crypt.generateHash(password);
       createObject.password = pass;
 
-      const userResult = await this.modelUser.insert(createObject);
+      const userResult = await this.modelUser
+        .insert(createObject)
+        .then((result) =>
+          this.modelUser.findOne({
+            where: { id: result.raw[0].id },
+            relations: ['role'],
+          }),
+        );
 
-      const [userData] = userResult.raw;
-
-      return { ...user, ...userData } as User;
-    } catch (error) {
-      const errorQuery: QueryFailedError = error;
-      throw new Error(errorQuery.message);
+      return userResult;
+    } catch {
+      throw new Error('Error on create new user');
     }
   }
 

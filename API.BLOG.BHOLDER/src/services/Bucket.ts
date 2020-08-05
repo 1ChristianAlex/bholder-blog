@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import { AWS_BUCKET_NAME } from 'config/Envs';
-import { Body } from 'aws-sdk/clients/s3';
 import { IBucket } from 'interfaces/IBucket';
+import { createReadStream, PathLike, unlinkSync } from 'fs';
+import { basename } from 'path';
 
 @Injectable()
 export class Bucket implements IBucket {
@@ -14,21 +15,26 @@ export class Bucket implements IBucket {
     this.s3 = new S3();
   }
 
-  async uploadMemoryFile(file: Body): Promise<string> {
-    let buffer = file as Buffer;
+  async uploadMemoryFile(file: PathLike): Promise<string> {
+    try {
+      return new Promise((res, rej) => {
+        const stream = createReadStream(file);
 
-    if (!Buffer.isBuffer(file)) {
-      buffer = Buffer.from(file);
+        const params: S3.PutObjectRequest = {
+          Bucket: this.bucketName,
+          Body: stream,
+          Key: basename(file as string),
+        };
+        this.s3.upload(params, (err, data) => {
+          if (err) {
+            rej(err);
+          }
+          res(data.Location);
+        });
+        unlinkSync(file);
+      });
+    } catch (error) {
+      throw error;
     }
-
-    const params: S3.PutObjectRequest = {
-      Bucket: this.bucketName,
-      Body: buffer,
-      Key: `${Math.random() * Date.now()}`,
-    };
-
-    const sendData = await this.s3.upload(params).promise();
-
-    return sendData.Location;
   }
 }

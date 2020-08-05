@@ -1,5 +1,6 @@
 node_modules
 .env
 yarn.lock
-backend/ormconfig.json
-backend/yarn.lock
+API.BLOG.BHOLDER/ormconfig.json
+API.BLOG.BHOLDER/yarn.lock
+API.BLOG.BHOLDER/uploads

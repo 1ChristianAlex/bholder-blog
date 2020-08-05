@@ -16,7 +16,7 @@ export class AuthController {
       const token = await this.auth.login({ email, password });
       response.status(200).json({ token });
     } catch (error) {
-      response.status(302).json(error);
+      response.status(404).json({ message: error.message });
     }
   }
 }

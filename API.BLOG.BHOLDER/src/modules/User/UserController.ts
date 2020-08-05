@@ -13,7 +13,8 @@ import { UserService } from './UserService';
 import { IUserInputDto } from 'interfaces';
 import { Response } from 'express';
 import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
-import { memoryStorage } from 'multer';
+import { diskStorage } from 'multer';
+import { resolve } from 'path';
 
 // @UseGuards(JwtAuthGuard)
 @Controller('api/user')
@@ -23,7 +24,11 @@ export class UserController {
   @Post()
   @UseInterceptors(
     FileInterceptor('image', {
-      storage: memoryStorage(),
+      storage: diskStorage({
+        destination: resolve(__dirname, '../../../uploads'),
+        filename: (req, file, cb) =>
+          cb(null, `${Date.now()}-${file.originalname}`),
+      }),
     }),
   )
   public async CreateUser(
@@ -36,11 +41,12 @@ export class UserController {
         ...user,
         file,
       });
+
       res.json(userCreated);
     } catch (error) {
       console.log(error);
 
-      res.status(500).json({ mensage: error });
+      res.status(302).json({ mensage: error.message });
     }
   }
 
