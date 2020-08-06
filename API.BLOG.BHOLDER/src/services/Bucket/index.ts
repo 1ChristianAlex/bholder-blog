@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import { AWS_BUCKET_NAME } from 'config/Envs';
-import { IBucket } from 'interfaces/IBucket';
+import { IBucket } from './IBucket';
 import { createReadStream, PathLike, unlinkSync } from 'fs';
 import { basename } from 'path';
 

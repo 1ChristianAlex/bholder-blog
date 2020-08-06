@@ -34,7 +34,7 @@ export class UserService {
             relations: ['role'],
           }),
         );
-
+      delete userResult.password;
       return userResult;
     } catch {
       throw new Error('Error on create new user');

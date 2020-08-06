@@ -1,7 +1,7 @@
 import { createHmac } from 'crypto';
 import { HASH_KEY } from 'config/Envs';
 import { Injectable } from '@nestjs/common';
-import { ICrypto } from 'interfaces/ICrypto';
+import { ICrypto } from './ICrypto';
 
 @Injectable()
 export default class Crypt implements ICrypto {

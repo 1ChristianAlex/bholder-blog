@@ -9,6 +9,10 @@ import Role from './role.entity';
 
 @Entity({ schema: 'user' })
 export class User {
+  constructor() {
+    this.updateAt = new Date();
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
