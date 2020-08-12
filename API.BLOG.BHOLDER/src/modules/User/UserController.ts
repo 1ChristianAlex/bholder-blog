@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from './UserService';
-import { IUserInputDto } from 'interfaces';
+import { UserInputDto } from 'dto';
 import { Response } from 'express';
 import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
 import { multerConfig } from 'config/ConfigFile';
@@ -23,7 +23,7 @@ export class UserController {
   @Post()
   @UseInterceptors(FileInterceptor('image', multerConfig))
   public async CreateUser(
-    @Body() user: IUserInputDto,
+    @Body() user: UserInputDto,
     @Res() res: Response,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<void> {
@@ -43,7 +43,7 @@ export class UserController {
   @Put()
   @UseInterceptors(FileInterceptor('image', multerConfig))
   async updateUser(
-    @Body() user: IUserInputDto,
+    @Body() user: UserInputDto,
     @Res() res: Response,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<void> {

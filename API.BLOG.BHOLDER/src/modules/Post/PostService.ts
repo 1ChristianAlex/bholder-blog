@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Post } from 'entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IPostInputDto } from 'interfaces';
+import { PostInputDto } from 'dto';
 import { IPostService } from './IPostServices';
 import { Bucket } from 'services';
 
@@ -13,7 +13,7 @@ export class PostService implements IPostService {
     private bucket: Bucket,
   ) {}
 
-  async create(post: IPostInputDto, userId: number): Promise<Post> {
+  async create(post: PostInputDto, userId: number): Promise<Post> {
     try {
       if (post.file.fieldname) {
         const urlImage = await this.bucket.uploadMemoryFile(post.file.path);

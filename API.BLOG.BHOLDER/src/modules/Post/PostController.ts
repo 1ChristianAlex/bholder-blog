@@ -13,7 +13,7 @@ import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
 import { Payload } from '../JWTAuth/PayloadDecorator';
 import { Response } from 'express';
 import { PostService } from './PostService';
-import { IPayload, IPostInputDto, IPostParms } from 'interfaces';
+import { TokenPayload, PostInputDto, PostParms } from 'dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerConfig } from 'config/ConfigFile';
 import { ErrorOnPostCreation, PostNotFound } from 'resources';
@@ -26,9 +26,9 @@ export class PostAPIController {
   @Post()
   @UseInterceptors(FileInterceptor('image', multerConfig))
   async create(
-    @Body() body: IPostInputDto,
+    @Body() body: PostInputDto,
     @Res() res: Response,
-    @Payload() payload: IPayload,
+    @Payload() payload: TokenPayload,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<void> {
     try {
@@ -48,10 +48,7 @@ export class PostController {
   constructor(private _postService: PostService) {}
 
   @Get()
-  async getAll(
-    @Param() parms: IPostParms,
-    @Res() res: Response,
-  ): Promise<void> {
+  async getAll(@Param() parms: PostParms, @Res() res: Response): Promise<void> {
     try {
       const postList = await this._postService.getAll(
         parms?.offset,
@@ -64,7 +61,7 @@ export class PostController {
   }
 
   @Get('/:id/')
-  async get(@Param() parms: IPostParms, @Res() res: Response): Promise<void> {
+  async get(@Param() parms: PostParms, @Res() res: Response): Promise<void> {
     try {
       const postSingle = await this._postService.getById(parms.id);
       res.status(200).json(postSingle);

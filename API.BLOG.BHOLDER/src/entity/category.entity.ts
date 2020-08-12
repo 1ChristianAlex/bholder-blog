@@ -30,7 +30,7 @@ export class Category {
   @Column({ default: true })
   isActive: boolean;
 
-  @OneToOne((type) => User)
+  @OneToOne(() => User)
   @JoinColumn()
   user: User;
 }

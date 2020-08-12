@@ -37,11 +37,11 @@ export class Post {
   @Column({ default: true })
   isActive: boolean;
 
-  @OneToOne((type) => Category)
+  @OneToOne(() => Category)
   @JoinColumn()
   category: Category;
 
-  @OneToOne((type) => User)
+  @OneToOne(() => User)
   @JoinColumn()
   user: User;
 }

@@ -3,9 +3,8 @@ import { Crypt } from 'services';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'entity';
 import { Repository } from 'typeorm';
-import { ILoginInputDto } from 'interfaces';
+import { LoginInputDto, ChangePasswordInputDto, TokenPayload } from 'dto';
 import { JwtService } from '@nestjs/jwt';
-import { IPayload, IChangePasswordInputDto } from 'interfaces/IAuth';
 import { IAuthService } from './IAuthService';
 
 @Injectable()
@@ -17,7 +16,7 @@ export class AuthService implements IAuthService {
   ) {}
 
   public async changePassword(
-    accessToChange: IChangePasswordInputDto,
+    accessToChange: ChangePasswordInputDto,
   ): Promise<User> {
     this.validateLogin(accessToChange);
 
@@ -44,7 +43,7 @@ export class AuthService implements IAuthService {
     return userUpdate;
   }
 
-  private validateLogin(login: ILoginInputDto) {
+  private validateLogin(login: LoginInputDto) {
     if (!login.email) {
       throw new Error('Email is required.');
     }
@@ -57,7 +56,7 @@ export class AuthService implements IAuthService {
     return this.crypt.generateHash(password);
   }
 
-  async login(login: ILoginInputDto): Promise<string> {
+  async login(login: LoginInputDto): Promise<string> {
     try {
       this.validateLogin(login);
 
@@ -74,7 +73,7 @@ export class AuthService implements IAuthService {
       });
 
       if (userLogin?.id) {
-        const payload: IPayload = {
+        const payload: TokenPayload = {
           firstName: userLogin.firstName,
           email: userLogin.email,
           id: userLogin.id,

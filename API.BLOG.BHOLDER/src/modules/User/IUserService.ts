@@ -1,7 +1,7 @@
-import { IUserInputDto } from 'interfaces';
+import { UserInputDto } from 'dto';
 import { User } from 'entity';
 
 export interface IUserService {
-  create(user: IUserInputDto): Promise<User>;
-  update(user: Omit<IUserInputDto, 'id'>, id: number): Promise<User>;
+  create(user: UserInputDto): Promise<User>;
+  update(user: Omit<UserInputDto, 'id'>, id: number): Promise<User>;
 }
