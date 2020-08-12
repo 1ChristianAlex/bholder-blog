@@ -4,6 +4,7 @@ import { User } from 'entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Crypt, Bucket } from 'services';
+import { UserCreated } from 'resources';
 
 Injectable();
 export class UserService {
@@ -37,7 +38,7 @@ export class UserService {
       delete userResult.password;
       return userResult;
     } catch {
-      throw new Error('Error on create new user');
+      throw new Error(UserCreated);
     }
   }
 
@@ -47,6 +48,11 @@ export class UserService {
 
       if (newData.password) {
         newData.password = this.crypt.generateHash(user.password);
+      }
+      if (newData.file.fieldname) {
+        const urlImage = await this.bucket.uploadMemoryFile(newData.file.path);
+        newData.image = urlImage;
+        delete newData.file;
       }
 
       const userUpdate = await this.modelUser.update({ id }, newData).then(

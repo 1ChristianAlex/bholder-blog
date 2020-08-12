@@ -6,10 +6,11 @@ import { JwtStrategy } from '../JWTAuth/JwtStrategy';
 import { configJWT } from 'config/ConfigFile';
 import { PostAPIController, PostController } from './PostController';
 import { PostService } from './PostService';
+import { Bucket } from 'services';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Post]), JwtModule.register(configJWT)],
   controllers: [PostAPIController, PostController],
-  providers: [PostService, JwtStrategy],
+  providers: [PostService, JwtStrategy, Bucket],
 })
 export class PostModule {}

@@ -11,6 +11,7 @@ import {
 } from './Envs';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { JwtModuleOptions } from '@nestjs/jwt';
+import { diskStorage } from 'multer';
 
 export const envPath = resolve(__dirname, '../../src/config/.env');
 
@@ -51,6 +52,13 @@ export const graphQLSchemaPath: string = resolve(
   __dirname,
   '../../src/config/schema.gql',
 );
+
+export const multerConfig = {
+  storage: diskStorage({
+    destination: resolve('uploads'),
+    filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
+  }),
+};
 
 (async () => {
   writeFileSync('ormconfig.json', JSON.stringify({ ...dbConfigJson }, null, 2));

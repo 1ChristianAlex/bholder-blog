@@ -4,21 +4,30 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { IPostInputDto } from 'interfaces';
 import { IPostService } from './IPostServices';
+import { Bucket } from 'services';
 
 Injectable();
 export class PostService implements IPostService {
-  constructor(@InjectRepository(Post) private modelPost: Repository<Post>) {}
+  constructor(
+    @InjectRepository(Post) private modelPost: Repository<Post>,
+    private bucket: Bucket,
+  ) {}
 
   async create(post: IPostInputDto, userId: number): Promise<Post> {
     try {
-      const postCreated = await this.modelPost
-        .insert({
-          datePublish: new Date(),
-          ...post,
-          user: { id: userId },
-          updateAt: new Date(),
-        })
-        .then((res) => res.raw);
+      if (post.file.fieldname) {
+        const urlImage = await this.bucket.uploadMemoryFile(post.file.path);
+        post.thumbnail = urlImage;
+        delete post.file;
+      }
+
+      const postCreated = await this.modelPost.save({
+        datePublish: new Date(),
+        ...post,
+        user: { id: userId },
+        updateAt: new Date(),
+      });
+
       return postCreated;
     } catch (error) {
       console.log(error);

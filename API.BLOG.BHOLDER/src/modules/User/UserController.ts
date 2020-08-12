@@ -13,8 +13,7 @@ import { UserService } from './UserService';
 import { IUserInputDto } from 'interfaces';
 import { Response } from 'express';
 import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
-import { diskStorage } from 'multer';
-import { resolve } from 'path';
+import { multerConfig } from 'config/ConfigFile';
 
 // @UseGuards(JwtAuthGuard)
 @Controller('api/user')
@@ -22,15 +21,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: resolve(__dirname, '../../../uploads'),
-        filename: (req, file, cb) =>
-          cb(null, `${Date.now()}-${file.originalname}`),
-      }),
-    }),
-  )
+  @UseInterceptors(FileInterceptor('image', multerConfig))
   public async CreateUser(
     @Body() user: IUserInputDto,
     @Res() res: Response,
@@ -44,25 +35,24 @@ export class UserController {
 
       res.json(userCreated);
     } catch (error) {
-      console.log(error);
-
       res.status(302).json({ mensage: error.message });
     }
   }
 
   @UseGuards(JwtAuthGuard)
   @Put()
+  @UseInterceptors(FileInterceptor('image', multerConfig))
   async updateUser(
     @Body() user: IUserInputDto,
     @Res() res: Response,
+    @UploadedFile() file: Express.Multer.File,
   ): Promise<void> {
     try {
       const { id, ...newUser } = user;
+      newUser.file = file;
       const userUpdated = await this.userService.update(newUser, id);
       res.json(userUpdated);
     } catch (error) {
-      console.log(error);
-
       res.status(500).json({ mensage: error });
     }
   }

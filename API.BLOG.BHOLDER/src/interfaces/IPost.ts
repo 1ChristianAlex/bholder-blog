@@ -3,6 +3,7 @@ export interface IPostInputDto {
   title?: string;
   content?: string;
   thumbnail?: string;
+  file?: Express.Multer.File;
   keywords?: string;
   datePublish?: Date;
   createAt?: Date;
