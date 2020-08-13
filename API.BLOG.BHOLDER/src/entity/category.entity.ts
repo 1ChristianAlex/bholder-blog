@@ -5,6 +5,7 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  CreateDateColumn,
 } from 'typeorm';
 
 @Entity({ schema: 'posts' })
@@ -21,10 +22,10 @@ export class Category {
   @Column({ nullable: true, type: 'varchar' })
   image_category: string;
 
-  @Column({ type: 'timestamp', default: () => 'LOCALTIMESTAMP' })
+  @CreateDateColumn()
   createAt: Date;
 
-  @Column({ type: 'timestamp' })
+  @CreateDateColumn()
   updateAt: Date;
 
   @Column({ default: true })

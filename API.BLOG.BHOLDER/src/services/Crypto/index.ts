@@ -1,14 +1,17 @@
-import { createHmac } from 'crypto';
-import { HASH_KEY } from 'config/Envs';
 import { Injectable } from '@nestjs/common';
+import { compareSync, hashSync } from 'bcrypt';
+import { HASH_KEY } from 'config/Envs';
 import { ICrypto } from './ICrypto';
 
 @Injectable()
-export default class Crypt implements ICrypto {
+export class Crypt implements ICrypto {
   generateHash(value: string): string {
-    const hmac = createHmac('sha256', HASH_KEY);
-    hmac.update(value);
-    const digest = hmac.digest('hex');
-    return digest;
+    const hash = hashSync(value, HASH_KEY.length);
+    return hash;
+  }
+  compareHash(value: string, hash: string): boolean {
+    const comparedHash = compareSync(value, hash);
+
+    return comparedHash;
   }
 }

@@ -4,6 +4,8 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import Role from './role.entity';
 
@@ -31,10 +33,10 @@ export class User {
   @Column({ nullable: true, type: 'varchar' })
   image: string;
 
-  @Column({ type: 'timestamp', default: () => 'LOCALTIMESTAMP' })
+  @CreateDateColumn()
   createAt: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @UpdateDateColumn()
   updateAt: Date;
 
   @Column({ default: true })

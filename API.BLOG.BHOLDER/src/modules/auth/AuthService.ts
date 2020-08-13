@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'entity';
 import { Repository } from 'typeorm';
 import { LoginInputDto, ChangePasswordInputDto, TokenPayload } from 'dto';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { IAuthService } from './IAuthService';
 
 @Injectable()
@@ -15,6 +15,13 @@ export class AuthService implements IAuthService {
     private jwt: JwtService,
   ) {}
 
+  private generateToken(
+    tokenData: TokenPayload,
+    jwtOptions?: JwtSignOptions,
+  ): string {
+    return this.jwt.sign(tokenData, { expiresIn: '24h', ...jwtOptions });
+  }
+
   public async changePassword(
     accessToChange: ChangePasswordInputDto,
   ): Promise<User> {
@@ -22,8 +29,8 @@ export class AuthService implements IAuthService {
 
     const { email, password, newPassword } = accessToChange;
 
-    const passCrypy = this.cryptoPassword(password);
-    const newCrypy = this.cryptoPassword(newPassword);
+    const passCrypy = this.crypt.generateHash(password);
+    const newCrypy = this.crypt.generateHash(newPassword);
 
     const user = await this.modelUser.findOne({
       where: {
@@ -52,25 +59,22 @@ export class AuthService implements IAuthService {
     }
   }
 
-  private cryptoPassword(password: string): string {
-    return this.crypt.generateHash(password);
-  }
-
   async login(login: LoginInputDto): Promise<string> {
     try {
       this.validateLogin(login);
 
       const { password, email } = login;
 
-      const passCrypy = this.cryptoPassword(password);
-
       const userLogin = await this.modelUser.findOne({
         where: {
           email,
-          password: passCrypy,
         },
         relations: ['role'],
       });
+
+      if (!this.crypt.compareHash(password, userLogin.password)) {
+        throw new Error('Wrong login or password');
+      }
 
       if (userLogin?.id) {
         const payload: TokenPayload = {
@@ -81,7 +85,7 @@ export class AuthService implements IAuthService {
           role: userLogin.role.id,
           description: userLogin.role.description,
         };
-        return this.jwt.sign(payload);
+        return this.generateToken(payload);
       } else {
         throw new Error('User has no access');
       }

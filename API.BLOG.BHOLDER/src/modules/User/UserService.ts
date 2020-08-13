@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IUserInputDto } from 'dto';
+import { UserInputDto, UserOutPutDto } from 'dto';
 import { User } from 'entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,11 +13,11 @@ export class UserService {
     private crypt: Crypt,
     private bucket: Bucket,
   ) {}
-  public async create(user: IUserInputDto): Promise<User> {
+  public async create(user: UserInputDto): Promise<User> {
     try {
       const { file, password, ...data } = user;
 
-      const createObject: IUserInputDto = { ...data, password };
+      const createObject: UserOutPutDto = { ...data, password };
 
       if (file.fieldname) {
         const urlImage = await this.bucket.uploadMemoryFile(file.path);
@@ -27,14 +27,8 @@ export class UserService {
       const pass = this.crypt.generateHash(password);
       createObject.password = pass;
 
-      const userResult = await this.modelUser
-        .insert(createObject)
-        .then((result) =>
-          this.modelUser.findOne({
-            where: { id: result.raw[0].id },
-            relations: ['role'],
-          }),
-        );
+      const userResult: User = await this.modelUser.save(createObject);
+
       delete userResult.password;
       return userResult;
     } catch {
@@ -42,7 +36,7 @@ export class UserService {
     }
   }
 
-  async update(user: Omit<IUserInputDto, 'id'>, id: number): Promise<User> {
+  async update(user: Omit<UserInputDto, 'id'>, id: number): Promise<User> {
     try {
       const newData = { ...user };
 

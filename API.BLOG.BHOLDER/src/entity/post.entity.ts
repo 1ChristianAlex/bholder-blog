@@ -4,6 +4,8 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import Category from './category.entity';
@@ -28,10 +30,10 @@ export class Post {
   @Column({ type: 'timestamp' })
   datePublish: Date;
 
-  @Column({ type: 'timestamp', default: () => 'LOCALTIMESTAMP' })
+  @CreateDateColumn()
   createAt: Date;
 
-  @Column({ type: 'timestamp' })
+  @UpdateDateColumn()
   updateAt: Date;
 
   @Column({ default: true })
