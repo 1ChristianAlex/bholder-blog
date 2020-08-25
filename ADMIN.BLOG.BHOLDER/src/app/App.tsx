@@ -1,13 +1,17 @@
 import React from 'react';
 import AppRoutes from './Routes';
 import GlobalStyle from '../assets/theme/global';
+import { StylesProvider } from '@material-ui/core/styles';
+import { ReduxStore } from '../redux/store';
 
 function App() {
   return (
-    <>
-      <GlobalStyle />
-      <AppRoutes />
-    </>
+    <ReduxStore>
+      <StylesProvider injectFirst>
+        <GlobalStyle />
+        <AppRoutes />
+      </StylesProvider>
+    </ReduxStore>
   );
 }
 
