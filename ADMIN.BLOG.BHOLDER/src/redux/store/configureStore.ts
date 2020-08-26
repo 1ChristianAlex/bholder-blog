@@ -1,8 +1,9 @@
 import { createStore, combineReducers } from 'redux';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { user } from '../reducers';
+import { reducer as formReducer } from 'redux-form';
 
-const reducers = combineReducers();
+const reducers = combineReducers({ user, form: formReducer });
 
 const configureStore = (preloadedState = {}) => {
   let store = createStore(reducers, preloadedState);

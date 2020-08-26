@@ -1,14 +1,37 @@
-import { Reducer } from 'redux';
+import { DELETE_USER, UPDATE_USER } from '../types/user';
 
-type user = {};
-type payload = user;
+interface IUserAction {
+  type: string;
+  payload: IUserState;
+}
+interface IUserState {
+  name?: string;
+  email?: string;
+}
 
-const userReducer: Reducer<user, payload> = (state, action) => {
+const INITIAL_STATE: IUserState = {
+  name: '',
+  email: '',
+};
+
+const userReducer = (
+  state: IUserState = INITIAL_STATE,
+  action: IUserAction
+) => {
   switch (action.type) {
-    case value:
-      break;
-
+    case UPDATE_USER:
+      return {
+        ...state,
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+      };
     default:
-      break;
+      return {
+        ...state,
+      };
   }
 };
+
+export default userReducer;
