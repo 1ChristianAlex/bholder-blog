@@ -1,40 +1,44 @@
 import { IRequest } from './IRequest';
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosResponse } from 'axios';
 
 export default abstract class Request implements IRequest {
-  constructor(private connect: AxiosInstance) {}
+  private configAxios: Function;
 
-  async get(url: string): Promise<any> {
+  constructor(private connect: AxiosInstance, config = () => ({})) {
+    this.configAxios = config;
+  }
+
+  async get(url: string): Promise<AxiosResponse> {
     try {
-      const response = await this.connect.get(url);
-      return response.data;
+      const response = await this.connect.get(url, this.configAxios());
+      return response;
     } catch (error) {
       throw error;
     }
   }
 
-  async post(url: string, body: object): Promise<any> {
+  async post(url: string, body: object): Promise<AxiosResponse> {
     try {
-      const response = await this.connect.post(url, body);
-      return response.data;
+      const response = await this.connect.post(url, body, this.configAxios());
+      return response;
     } catch (error) {
       throw error;
     }
   }
 
-  async put(url: string, body: object): Promise<any> {
+  async put(url: string, body: object): Promise<AxiosResponse> {
     try {
-      const response = await this.connect.post(url, body);
-      return response.data;
+      const response = await this.connect.post(url, body, this.configAxios());
+      return response;
     } catch (error) {
       throw error;
     }
   }
 
-  async delete(url: string, body: object): Promise<any> {
+  async delete(url: string, body: object): Promise<AxiosResponse> {
     try {
-      const response = await this.connect.post(url, body);
-      return response.data;
+      const response = await this.connect.post(url, body, this.configAxios());
+      return response;
     } catch (error) {
       throw error;
     }

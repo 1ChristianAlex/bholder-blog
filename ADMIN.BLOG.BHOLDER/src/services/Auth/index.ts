@@ -1,24 +1,37 @@
 import { Public } from '../Request/Public';
 import { IAuth } from './IAuth';
+import { ILogin } from 'interfaces';
 
 class Auth implements IAuth {
   constructor(private request: Public) {}
+
   private readonly LOGIN_ROUTE = '/auth';
 
-  async login(email: string, password: string): Promise<string> {
+  async login(email: string, password: string): Promise<ILogin> {
     try {
-      const token: string = await this.request.post(this.LOGIN_ROUTE, {
+      const response = await this.request.post(this.LOGIN_ROUTE, {
         email,
         password,
       });
-      localStorage.setItem(process.env.REACT_APP_TOKEN_STORAGE!, token);
-      return token;
+      const user: ILogin = response.data;
+
+      localStorage.setItem(process.env.REACT_APP_TOKEN_STORAGE!, user.token);
+
+      return user;
     } catch (error) {
-      throw Error(error.response.data);
+      throw Error(error.response.data.message);
     }
   }
   async logout(): Promise<void> {
     localStorage.removeItem(process.env.REACT_APP_TOKEN_STORAGE!);
+  }
+
+  static isLoged(): boolean {
+    const token = localStorage.getItem(process.env.REACT_APP_TOKEN_STORAGE!);
+    if (token) {
+      return true;
+    }
+    return false;
   }
 }
 

@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
-import * as colors from '../../assets/theme/colors';
+import { darkTheme } from '../../assets/theme/colors';
 
 export interface ButtonStyleProps {
-  bgColor?: typeof colors;
-  tColor?: typeof colors;
+  bgColor?: typeof darkTheme;
+  tColor?: typeof darkTheme;
 }
 
 const ButtonStyle = styled(Button)<ButtonStyleProps>`
-  background-color: ${(props) => props.bgColor || colors.yellow};
-  color: ${(props) => props.tColor || colors.purple};
-  border: 1px solid ${(props) => props.tColor || colors.purple};
+  background-color: ${(props) => props.bgColor || props.theme.yellow};
+  color: ${(props) => props.tColor || props.theme.purple};
+  border: 1px solid ${(props) => props.tColor || props.theme.purple};
   font-weight: 600;
 
   :hover {
-    background-color: ${(props) => props.bgColor || colors.purple};
-    color: ${(props) => props.tColor || colors.yellow};
+    background-color: ${(props) => props.bgColor || props.theme.purple};
+    color: ${(props) => props.tColor || props.theme.yellow};
   }
 `;
 export { ButtonStyle };

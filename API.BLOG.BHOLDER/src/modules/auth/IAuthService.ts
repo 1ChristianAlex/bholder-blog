@@ -1,7 +1,13 @@
-import { LoginInputDto, ChangePasswordInputDto } from 'dto';
-import { User } from 'entity';
+import {
+  LoginInputDto,
+  ChangePasswordInputDto,
+  LoginOutputDto,
+  UserOutPutDto,
+} from 'dto';
 
 export interface IAuthService {
-  login(login: LoginInputDto): Promise<string>;
-  changePassword(accessToChange: ChangePasswordInputDto): Promise<User>;
+  login(login: LoginInputDto): Promise<LoginOutputDto>;
+  changePassword(
+    accessToChange: ChangePasswordInputDto,
+  ): Promise<UserOutPutDto>;
 }

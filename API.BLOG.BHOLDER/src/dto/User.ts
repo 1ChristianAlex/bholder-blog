@@ -34,12 +34,5 @@ export class UserOutPutDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
-
-  @IsNotEmpty()
-  password: string;
-
   image: string;
-  createAt: Date;
-  updateAt: Date;
-  isActive: boolean;
 }

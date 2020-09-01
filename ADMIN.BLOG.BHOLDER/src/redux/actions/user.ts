@@ -1,4 +1,8 @@
-const UPDATE_USER = 'UPDATE_USER';
-const DELETE_USER = 'DELETE_USER';
+import { DELETE_USER, UPDATE_USER } from '../types/user';
+import { IUser } from 'interfaces';
 
-export { UPDATE_USER, DELETE_USER };
+const updateUser = (payload: IUser) => ({ type: UPDATE_USER, payload });
+
+const deleteUser = () => ({ type: DELETE_USER });
+
+export { updateUser, deleteUser };

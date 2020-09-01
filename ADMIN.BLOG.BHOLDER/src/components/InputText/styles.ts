@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
-import { darkBlue } from 'assets/theme/colors';
 
-const InputTextStyle = styled(TextField)`
+export interface InputTextStyleProps {
+  isInvalid: boolean;
+}
+
+const InputTextStyle = styled(TextField)<InputTextStyleProps>`
+  ${(props) => (props.isInvalid ? { 'border-botom': '1px solid red' } : '')}
   label {
-    color: ${darkBlue};
+    color: ${(props) => props.theme.darkBlue};
   }
 `;
 

@@ -3,7 +3,13 @@ import { Crypt } from 'services';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'entity';
 import { Repository } from 'typeorm';
-import { LoginInputDto, ChangePasswordInputDto, TokenPayload } from 'dto';
+import {
+  LoginInputDto,
+  ChangePasswordInputDto,
+  TokenPayload,
+  LoginOutputDto,
+  UserOutPutDto,
+} from 'dto';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { IAuthService } from './IAuthService';
 
@@ -24,7 +30,7 @@ export class AuthService implements IAuthService {
 
   public async changePassword(
     accessToChange: ChangePasswordInputDto,
-  ): Promise<User> {
+  ): Promise<UserOutPutDto> {
     this.validateLogin(accessToChange);
 
     const { email, password, newPassword } = accessToChange;
@@ -59,7 +65,7 @@ export class AuthService implements IAuthService {
     }
   }
 
-  async login(login: LoginInputDto): Promise<string> {
+  async login(login: LoginInputDto): Promise<LoginOutputDto> {
     try {
       this.validateLogin(login);
 
@@ -72,7 +78,7 @@ export class AuthService implements IAuthService {
         relations: ['role'],
       });
 
-      if (!this.crypt.compareHash(password, userLogin.password)) {
+      if (!userLogin || !this.crypt.compareHash(password, userLogin.password)) {
         throw new Error('Wrong login or password');
       }
 
@@ -85,7 +91,17 @@ export class AuthService implements IAuthService {
           role: userLogin.role.id,
           description: userLogin.role.description,
         };
-        return this.generateToken(payload);
+
+        delete userLogin.password;
+
+        const token = this.generateToken(payload);
+
+        const output: LoginOutputDto = {
+          token,
+          user: userLogin,
+        };
+
+        return output;
       } else {
         throw new Error('User has no access');
       }

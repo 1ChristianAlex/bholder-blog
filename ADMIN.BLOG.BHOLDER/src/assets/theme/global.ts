@@ -1,12 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
-import { yellow, black } from './colors';
+import { darkTheme } from './colors';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;500;600;700;900&display=swap');
 
 :root{
-    --primary:${yellow};
-    --secundary:${black};
+    --primary:${darkTheme.yellow};
+    --secundary:${darkTheme.black};
 }
 body{
     margin:0;

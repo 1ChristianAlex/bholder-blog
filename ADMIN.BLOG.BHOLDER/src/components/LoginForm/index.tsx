@@ -5,6 +5,7 @@ import { LoginContainer } from './styles';
 import { Field, reduxForm, submit } from 'redux-form';
 import LoginSubmit from './LoginSubmit';
 import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,6 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default reduxForm({ form: 'login-form', onSubmit: LoginSubmit })(
-  LoginForm
+export default withRouter(
+  reduxForm({ form: 'login-form', onSubmit: LoginSubmit })(LoginForm)
 );

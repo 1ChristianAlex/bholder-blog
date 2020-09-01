@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { white } from '../../assets/theme/colors';
 
 const LoginContainer = styled.div`
-  background-color: ${white};
+  background-color: ${(props) => props.theme.white};
 `;
 
 export { LoginContainer };

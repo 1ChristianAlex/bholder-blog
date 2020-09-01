@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
 import { AuthService } from './AuthService';
 import { LoginInputDto } from 'dto';
 import { Response } from 'express';
@@ -13,10 +13,14 @@ export class AuthController {
   ): Promise<void> {
     try {
       const { email, password } = body;
-      const token = await this.auth.login({ email, password });
-      response.status(200).json({ token });
+      const loginUser = await this.auth.login({ email, password });
+      response
+        .status(HttpStatus.OK)
+        .header('Authorization', `Bearer ${loginUser.token}`)
+        .header('Access-Control-Expose-Headers', `: Authorization`)
+        .json(loginUser);
     } catch (error) {
-      response.status(404).json({ message: error.message });
+      response.status(HttpStatus.UNAUTHORIZED).json({ message: error.message });
     }
   }
 }

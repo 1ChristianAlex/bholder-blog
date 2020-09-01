@@ -13,11 +13,11 @@ export class UserService {
     private crypt: Crypt,
     private bucket: Bucket,
   ) {}
-  public async create(user: UserInputDto): Promise<User> {
+  public async create(user: UserInputDto): Promise<UserOutPutDto> {
     try {
       const { file, password, ...data } = user;
 
-      const createObject: UserOutPutDto = { ...data, password };
+      const createObject = { ...data, password };
 
       if (file.fieldname) {
         const urlImage = await this.bucket.uploadMemoryFile(file.path);

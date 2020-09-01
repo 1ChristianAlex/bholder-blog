@@ -6,12 +6,9 @@ class Api extends Request {
     super(
       axios.create({
         baseURL: `${process.env.REACT_APP_API}/api`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            process.env.REACT_APP_TOKEN_STORAGE!
-          )}`,
-        },
-      })
+      }),
+      () =>
+        `Bearer ${localStorage.getItem(process.env.REACT_APP_TOKEN_STORAGE!)}`
     );
   }
 }

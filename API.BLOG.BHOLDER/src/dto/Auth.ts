@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
+import { UserOutPutDto } from './User';
 
 export class LoginInputDto {
   @IsEmail()
@@ -8,7 +9,13 @@ export class LoginInputDto {
   @IsNotEmpty()
   password: string;
 }
+export class LoginOutputDto {
+  @IsNotEmpty()
+  user: UserOutPutDto;
 
+  @IsNotEmpty()
+  token: string;
+}
 export class ChangePasswordInputDto {
   @IsEmail()
   @IsNotEmpty()
