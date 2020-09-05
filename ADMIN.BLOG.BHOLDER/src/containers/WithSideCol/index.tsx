@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Grid, Container } from '@material-ui/core';
-import { ColBackground } from './styles';
+import { ColBackground, ColMain } from './styles';
+import { AppHeader } from 'components';
 
 interface WithSideColProps {
   MainComponent: React.FC;
@@ -10,18 +11,29 @@ interface WithSideColProps {
 
 const WithSideCol: React.FC<WithSideColProps> = ({
   ColComponent,
-  Col = 2,
   MainComponent,
 }) => {
+  const refSideCol = useRef<HTMLDivElement>(null);
+  const [widthMain, setWidthMain] = useState(0);
+  useEffect(() => {
+    if (refSideCol.current) {
+      const width = window.outerWidth - refSideCol.current.offsetWidth;
+      setWidthMain(width);
+    }
+  }, [refSideCol]);
+
   return (
     <Grid container>
-      <ColBackground item md={Col}>
+      <ColBackground ref={refSideCol} item md={'auto'}>
         <ColComponent />
       </ColBackground>
-      <Grid item md={'auto'}>
-        <Container>
-          <MainComponent />
-        </Container>
+      <Grid>
+        <AppHeader />
+        <ColMain widthCss={widthMain}>
+          <Container>
+            <MainComponent />
+          </Container>
+        </ColMain>
       </Grid>
     </Grid>
   );

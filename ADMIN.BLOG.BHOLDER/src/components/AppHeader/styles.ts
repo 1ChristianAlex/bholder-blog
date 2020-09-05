@@ -3,8 +3,7 @@ import { Grid } from '@material-ui/core';
 
 const BackgroundHeader = styled(Grid)`
   background-color: ${(props) => props.theme.darkBlue};
-  height: 30px;
-  width: 100vw;
+  height: 45px;
   * {
     color: ${(props) => props.theme.white};
   }

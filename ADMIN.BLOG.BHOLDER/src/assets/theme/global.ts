@@ -2,7 +2,6 @@ import { createGlobalStyle } from 'styled-components';
 import { darkTheme } from './colors';
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;500;600;700;900&display=swap');
 
 :root{
     --primary:${darkTheme.yellow};
@@ -13,6 +12,11 @@ body{
     padding: 0;
     width:100vw;
     font-family: 'Roboto Slab', serif;
+}
+
+h1{
+    font-family: 'Roboto Slab', serif;
+    /* font-family: 'Black Ops One', cursive; */
 }
 `;
 
