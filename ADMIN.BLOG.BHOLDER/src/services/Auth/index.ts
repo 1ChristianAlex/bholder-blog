@@ -16,6 +16,7 @@ class Auth implements IAuth {
       const user: ILogin = response.data;
 
       localStorage.setItem(process.env.REACT_APP_TOKEN_STORAGE!, user.token);
+      localStorage.setItem('user', JSON.stringify(user.user));
 
       return user;
     } catch (error) {
