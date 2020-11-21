@@ -1,6 +1,5 @@
 import { ButtonProps } from '@material-ui/core';
 import React from 'react';
-
 import { ButtonStyle } from './styles';
 
 interface ButtonBholderProps extends ButtonProps {

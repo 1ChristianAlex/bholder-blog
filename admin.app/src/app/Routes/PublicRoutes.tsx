@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { LoginPage } from '../../features';
+import { publicRoutes } from './RoutesNames';
 
 const PublicRoutes: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const PublicRoutes: React.FC = () => {
       <Route exact path="/">
         <h1>Hello world</h1>
       </Route>
-      <Route exact path="/login">
+      <Route exact path={publicRoutes.login}>
         <LoginPage />
       </Route>
     </Switch>
