@@ -32,8 +32,8 @@ const SideDrawer: React.FC = () => {
     {
       Icon: PostAddIcon,
       name: 'Criar Página',
-      url: privateRoutes.singlePosts.replace(':id?', ''),
-      isSelected: pathname === privateRoutes.singlePosts.replace(':id?', ''),
+      url: privateRoutes.singlePage.replace(':id?', ''),
+      isSelected: pathname === privateRoutes.singlePage.replace(':id?', ''),
     },
     {
       Icon: ListIcon,
@@ -44,8 +44,8 @@ const SideDrawer: React.FC = () => {
     {
       Icon: PostAddIcon,
       name: 'Criar Postagem',
-      url: privateRoutes.singlePage.replace(':id?', ''),
-      isSelected: pathname === privateRoutes.singlePage.replace(':id?', ''),
+      url: privateRoutes.singlePosts.replace(':id?', ''),
+      isSelected: pathname === privateRoutes.singlePosts.replace(':id?', ''),
     },
     {
       Icon: SettingsIcon,

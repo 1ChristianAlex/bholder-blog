@@ -14,6 +14,19 @@ body{
     width:100vw;
     font-family: 'Roboto Slab', serif;
 }
+::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+::-webkit-scrollbar-track {
+    border-radius: 5px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background-color:${(prop) => prop.theme.darkBlue};
+    border-radius: 5px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
 `;
 
 export default GlobalStyle;
