@@ -9,6 +9,6 @@ export { default as TextArea } from './TextArea';
 export { default as PaperBholder } from './PaperBholder';
 export { SelectBholder, SelectItens } from './SelectBholder';
 export { default as KeyDatePicker } from './KeyDatePicker';
-export { default as CheckBoxList } from './CheckBoxList';
+export { CheckBoxList, CheckBoxData } from './CheckBoxList';
 export { default as DropZone } from './DropZone';
 export { default as ChipItem } from './ChipItem';

@@ -1,5 +1,5 @@
 import { Divider, FormControl, Grid } from '@material-ui/core';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import {
   PaperBholder,
   SelectBholder,
@@ -19,9 +19,19 @@ import {
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import PublicIcon from '@material-ui/icons/Public';
 import SaveIcon from '@material-ui/icons/Save';
+import { EditPostContext } from './EditPostProvider';
 
 const PostPublish: React.FC = () => {
-  const [postStatus, setPostStatus] = useState<PostStatus>(PostStatus.draft);
+  const {
+    postStatus,
+    setPostStatus,
+    postVisibility,
+    setPostVisibility,
+    postPublication,
+    setPostPublication,
+    datePublish,
+    setDatePublish,
+  } = useContext(EditPostContext);
 
   const selectOptionStatus = [
     new SelectItens(PostStatus.saved, PostStatusDescription[PostStatus.saved]),
@@ -49,10 +59,6 @@ const PostPublish: React.FC = () => {
     ),
   ];
 
-  const [postVisibility, setPostVisibility] = useState<PostVisibility>(
-    PostVisibility.visible
-  );
-
   const onPostVisibility = (
     event: ChangeEvent<{ name?: string; value: unknown }>
   ) => {
@@ -70,17 +76,11 @@ const PostPublish: React.FC = () => {
     ),
   ];
 
-  const [postPublication, setPostPublication] = useState<PostPublication>(
-    PostPublication.imediat
-  );
-
   const onPostPublication = (
     event: ChangeEvent<{ name?: string; value: unknown }>
   ) => {
     setPostPublication(event?.target.value as PostPublication);
   };
-
-  const [datePublish, setDatePublish] = useState(new Date());
 
   const handleDatePublish = (date: Date) => {
     setDatePublish(date);
