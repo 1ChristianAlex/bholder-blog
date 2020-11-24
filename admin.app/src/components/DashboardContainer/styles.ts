@@ -1,10 +1,19 @@
 import styled from 'styled-components';
 
-const ContainerItem = styled.div`
+interface ContainerItemProps {
+  $drawerOpen: boolean;
+}
+
+const ContainerItem = styled.div<ContainerItemProps>`
   padding: 24px;
-  width: calc(100vw - 18.6vw);
+
   max-height: calc(100vh - 112px);
   height: calc(100vh - 112px);
+
+  min-width: ${(props) =>
+    !props.$drawerOpen ? 'unset' : 'calc(100vw - 18.6vw)'};
+  width: ${(props) => (!props.$drawerOpen ? 'unset' : 'calc(100vw - 18.6vw)')};
+
   overflow: auto;
 `;
 export { ContainerItem };

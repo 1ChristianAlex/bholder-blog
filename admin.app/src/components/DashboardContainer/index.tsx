@@ -2,7 +2,7 @@ import { Grid } from '@material-ui/core';
 import React from 'react';
 import AppBarBholder from '../AppBarBholder';
 import SideDrawer from '../SideDrawer';
-import { DashboardProvider } from './DashboradProvider';
+import { DashboardContext, DashboardProvider } from './DashboradProvider';
 import { ContainerItem } from './styles';
 
 const DashboardContainer: React.FC = ({ children }) => {
@@ -16,7 +16,13 @@ const DashboardContainer: React.FC = ({ children }) => {
           <SideDrawer />
         </Grid>
         <Grid item>
-          <ContainerItem>{children}</ContainerItem>
+          <DashboardContext.Consumer>
+            {(value) => (
+              <ContainerItem $drawerOpen={value.drawerOpen}>
+                {children}
+              </ContainerItem>
+            )}
+          </DashboardContext.Consumer>
         </Grid>
       </Grid>
     </DashboardProvider>

@@ -12,7 +12,7 @@ const ButtonBholder: React.FC<ButtonBholderProps> = ({
   ...props
 }) => {
   return (
-    <ButtonStyle {...props} variant="contained" primary={primary}>
+    <ButtonStyle {...props} variant="contained" $primary={primary}>
       {children}
     </ButtonStyle>
   );

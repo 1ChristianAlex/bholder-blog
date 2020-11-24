@@ -3,18 +3,18 @@ import { StylesProvider } from '@material-ui/core/styles';
 import { StoreProvider } from '../redux';
 import AppRoutes from './AppRoutes';
 import GlobalStyle from '../theme/global';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { darkTheme } from '../theme/colors';
 
 const App: React.FC = () => {
   return (
     <StoreProvider>
-      <ThemeProvider theme={darkTheme}>
+      <StyledThemeProvider theme={darkTheme}>
         <StylesProvider injectFirst>
           <GlobalStyle />
           <AppRoutes />
         </StylesProvider>
-      </ThemeProvider>
+      </StyledThemeProvider>
     </StoreProvider>
   );
 };

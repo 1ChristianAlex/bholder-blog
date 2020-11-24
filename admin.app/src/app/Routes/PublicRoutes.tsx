@@ -12,6 +12,7 @@ const PublicRoutes: React.FC = () => {
       <Route exact path={publicRoutes.login}>
         <LoginPage />
       </Route>
+      <Route>Not found</Route>
     </Switch>
   );
 };

@@ -27,6 +27,16 @@ body{
     border-radius: 5px;
     box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
+.MuiCheckbox-colorPrimary.Mui-checked{
+    color:${(prop) => prop.theme.darkBlue};
+}
+.MuiFormLabel-root.Mui-focused {
+    color: ${(props) => props.theme.yellow};
+  }
+  .MuiFilledInput-underline:hover:before,
+  .MuiFilledInput-underline:after {
+    border-bottom: 1px solid ${(props) => props.theme.yellow};
+  }
 `;
 
 export default GlobalStyle;

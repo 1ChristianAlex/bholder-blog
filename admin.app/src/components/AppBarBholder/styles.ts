@@ -27,13 +27,6 @@ const SearchBar = styled(TextField)`
   label {
     color: ${(props) => props.theme.white};
   }
-  .MuiFormLabel-root.Mui-focused {
-    color: ${(props) => props.theme.yellow};
-  }
-  .MuiFilledInput-underline:hover:before,
-  .MuiFilledInput-underline:after {
-    border-bottom: 1px solid ${(props) => props.theme.yellow};
-  }
 `;
 
 export { AppBarStyle, ButtonIcon, SearchBar, MenuButton };

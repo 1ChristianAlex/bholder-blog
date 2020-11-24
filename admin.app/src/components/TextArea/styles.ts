@@ -1,8 +1,13 @@
 import { TextareaAutosize } from '@material-ui/core';
 import styled from 'styled-components';
 
-const TextAreaStyle = styled(TextareaAutosize)`
+interface TextAreaStyleProps {
+  $minHeight?: number;
+}
+
+const TextAreaStyle = styled(TextareaAutosize)<TextAreaStyleProps>`
+  max-width: 100%;
   width: 100%;
-  min-height: 40vh !important;
+  min-height: ${(props) => props.$minHeight || 40}vh !important;
 `;
 export { TextAreaStyle };
