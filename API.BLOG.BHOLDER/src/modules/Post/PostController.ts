@@ -6,16 +6,14 @@ import {
   Body,
   Get,
   Param,
-  UseInterceptors,
-  UploadedFile,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
 import { Payload } from '../JWTAuth/PayloadDecorator';
 import { Response } from 'express';
 import { PostService } from './PostService';
-import { TokenPayload, PostInputDto, PostParms } from 'dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { multerConfig } from 'config/ConfigFile';
+import { TokenPayload, PostInputDto, PostParms, PostOutputDto } from 'dto';
 import { ErrorOnPostCreation, PostNotFound } from 'resources';
 
 @UseGuards(JwtAuthGuard)
@@ -24,21 +22,15 @@ export class PostAPIController {
   constructor(private _postService: PostService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image', multerConfig))
   async create(
     @Body() body: PostInputDto,
-    @Res() res: Response,
     @Payload() payload: TokenPayload,
-    @UploadedFile() file: Express.Multer.File,
-  ): Promise<void> {
+  ): Promise<PostOutputDto> {
     try {
-      const postCreated = await this._postService.create(
-        { ...body, file },
-        payload.id,
-      );
-      res.status(202).json(postCreated);
+      const postCreated = await this._postService.create(body, payload.id);
+      return postCreated;
     } catch (error) {
-      res.status(500).json({ message: ErrorOnPostCreation, error });
+      throw new HttpException(ErrorOnPostCreation, HttpStatus.BAD_REQUEST);
     }
   }
 }

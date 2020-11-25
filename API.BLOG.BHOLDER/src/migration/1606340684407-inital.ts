@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class inital1597271006093 implements MigrationInterface {
-  name = 'inital1597271006093';
+export class inital1606340684407 implements MigrationInterface {
+  name = 'inital1606340684407';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createSchema('user');
@@ -17,7 +17,10 @@ export class inital1597271006093 implements MigrationInterface {
       `CREATE TABLE "posts"."category" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "tags" text NOT NULL, "image_category" character varying, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updateAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT true, "userId" integer, CONSTRAINT "REL_c4d40f0b05f29775783470afaa" UNIQUE ("userId"), CONSTRAINT "PK_69ab32ab4a99c14e9d56025c2d8" PRIMARY KEY ("id", "name"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "posts"."post" ("id" SERIAL NOT NULL, "title" character varying NOT NULL, "content" text NOT NULL, "thumbnail" character varying NOT NULL, "keywords" character varying, "datePublish" TIMESTAMP NOT NULL, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updateAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT true, "categoryId" integer, "categoryName" character varying, "userId" integer, CONSTRAINT "REL_df6043889e74521eed62555679" UNIQUE ("categoryId", "categoryName"), CONSTRAINT "REL_f37e90ce68453c715a0ccd1b4f" UNIQUE ("userId"), CONSTRAINT "PK_ecce54d295e861324881b34d571" PRIMARY KEY ("id", "title"))`,
+      `CREATE TABLE "posts"."media" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "type" character varying, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updateAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_8c0e6f7e51745107d51add2511b" PRIMARY KEY ("id", "name"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "posts"."post" ("id" SERIAL NOT NULL, "title" character varying NOT NULL, "content" text NOT NULL, "shortDescription" text NOT NULL, "thumbnail" character varying, "keywords" character varying, "datePublish" TIMESTAMP NOT NULL, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updateAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT true, "categoryId" integer, "categoryName" character varying, "userId" integer, CONSTRAINT "PK_e55cc433639d0e21c3dbf637bce" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `ALTER TABLE "user"."user" ADD CONSTRAINT "FK_c35a0d55e60a0a560004013ce6c" FOREIGN KEY ("roleId") REFERENCES "user"."role"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -47,11 +50,9 @@ export class inital1597271006093 implements MigrationInterface {
       `ALTER TABLE "user"."user" DROP CONSTRAINT "FK_c35a0d55e60a0a560004013ce6c"`,
     );
     await queryRunner.query(`DROP TABLE "posts"."post"`);
+    await queryRunner.query(`DROP TABLE "posts"."media"`);
     await queryRunner.query(`DROP TABLE "posts"."category"`);
     await queryRunner.query(`DROP TABLE "user"."user"`);
     await queryRunner.query(`DROP TABLE "user"."role"`);
-
-    await queryRunner.dropSchema('user');
-    await queryRunner.dropSchema('posts');
   }
 }

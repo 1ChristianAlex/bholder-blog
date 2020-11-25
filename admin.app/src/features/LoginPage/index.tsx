@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import { BackGroundBlack, ContainerCenter } from './views/style';
+import { BackGroundBlack, ContainerCenter } from './style';
 import Logo from '../../components/Logo';
-import LoginForm from './views/LoginForm';
+import LoginForm from './LoginForm';
 
 const LoginPage: React.FC = () => {
   return (

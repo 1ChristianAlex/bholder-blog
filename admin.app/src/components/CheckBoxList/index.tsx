@@ -6,8 +6,8 @@ class CheckBoxData {
 }
 
 interface CheckBoxListProps {
-  checkedList: (string | number | null)[];
-  setCheckedList(checkedList: (string | number | null)[]): void;
+  checkedList: (string | number)[];
+  setCheckedList(checkedList: (string | number)[]): void;
   checkboxItems: CheckBoxData[];
 }
 
@@ -16,29 +16,39 @@ const CheckBoxList: React.FC<CheckBoxListProps> = ({
   setCheckedList,
   checkboxItems,
 }) => {
-  const handleCheck = (isChecked: boolean, indexItem: number) => {
-    const checkList = checkedList;
-    checkList[indexItem] = isChecked ? checkboxItems[indexItem].value : null;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let listChange = [...checkedList];
 
-    setCheckedList(checkList);
+    if (event.target.checked) {
+      listChange.push(event.target.value);
+    } else {
+      listChange = checkedList.filter(
+        (itemChecked) => itemChecked !== event.target.value
+      );
+    }
+
+    setCheckedList(listChange);
   };
+
   return (
     <FormGroup>
-      {checkboxItems.map((itemCheck, indexCheck) => (
-        <FormControlLabel
-          key={`${itemCheck.name}${itemCheck.value}`}
-          value={itemCheck.value}
-          onChange={(_, checked) => handleCheck(checked, indexCheck)}
-          control={
-            <Checkbox
-              color="primary"
-              checked={checkedList.includes(itemCheck.value as never)}
-              name={itemCheck.name}
-            />
-          }
-          label={itemCheck.name}
-        />
-      ))}
+      {checkboxItems.map((itemCheck) => {
+        return (
+          <FormControlLabel
+            key={`${itemCheck.name}${itemCheck.value}`}
+            value={itemCheck.value}
+            control={
+              <Checkbox
+                onChange={handleChange}
+                color="primary"
+                checked={checkedList.includes(itemCheck.value.toString())}
+                name={itemCheck.name}
+              />
+            }
+            label={itemCheck.name}
+          />
+        );
+      })}
     </FormGroup>
   );
 };

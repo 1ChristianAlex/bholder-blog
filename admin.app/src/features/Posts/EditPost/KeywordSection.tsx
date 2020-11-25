@@ -54,7 +54,7 @@ const KeywordSection: React.FC = () => {
             )}
             <ChipInput
               type="text"
-              value={inputValue}
+              value={inputValue || ''}
               onChange={handleChange}
               onKeyDown={handleInputKey}
             />

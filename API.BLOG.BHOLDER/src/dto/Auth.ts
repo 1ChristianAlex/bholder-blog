@@ -10,6 +10,11 @@ export class LoginInputDto {
   password: string;
 }
 export class LoginOutputDto {
+  constructor(user: UserOutPutDto, token: string) {
+    this.user = user;
+    this.token = token;
+  }
+
   @IsNotEmpty()
   user: UserOutPutDto;
 
@@ -29,10 +34,12 @@ export class ChangePasswordInputDto {
 }
 
 export class TokenPayload {
-  firstName: string;
-  email: string;
-  id: number;
-  isActive: boolean;
-  role: number;
-  description: string;
+  constructor(
+    public firstName: string,
+    public email: string,
+    public id: number,
+    public isActive: boolean,
+    public role: number,
+    public description: string,
+  ) {}
 }

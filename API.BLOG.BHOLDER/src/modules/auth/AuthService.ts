@@ -21,6 +21,36 @@ export class AuthService implements IAuthService {
     private jwt: JwtService,
   ) {}
 
+  async refreshUser(tokenHeader: TokenPayload): Promise<LoginOutputDto> {
+    try {
+      const userLogin = await this.modelUser.findOne({
+        where: {
+          email: tokenHeader.email,
+        },
+        relations: ['role'],
+      });
+
+      const payload: TokenPayload = {
+        firstName: userLogin.firstName,
+        email: userLogin.email,
+        id: userLogin.id,
+        isActive: userLogin.isActive,
+        role: userLogin.role.id,
+        description: userLogin.role.description,
+      };
+
+      delete userLogin.password;
+
+      const token = this.generateToken(payload);
+
+      const output = new LoginOutputDto(userLogin, token);
+
+      return output;
+    } catch (error) {
+      throw new Error('User not exist');
+    }
+  }
+
   private generateToken(
     tokenData: TokenPayload,
     jwtOptions?: JwtSignOptions,
@@ -79,7 +109,7 @@ export class AuthService implements IAuthService {
       });
 
       if (!userLogin || !this.crypt.compareHash(password, userLogin.password)) {
-        throw new Error('Wrong login or password');
+        throw Error('Wrong login or password');
       }
 
       if (userLogin?.id) {
@@ -96,10 +126,7 @@ export class AuthService implements IAuthService {
 
         const token = this.generateToken(payload);
 
-        const output: LoginOutputDto = {
-          token,
-          user: userLogin,
-        };
+        const output = new LoginOutputDto(userLogin, token);
 
         return output;
       } else {

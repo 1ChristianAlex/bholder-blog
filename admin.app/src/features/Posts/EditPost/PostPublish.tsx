@@ -31,6 +31,7 @@ const PostPublish: React.FC = () => {
     setPostPublication,
     datePublish,
     setDatePublish,
+    publishPost,
   } = useContext(EditPostContext);
 
   const selectOptionStatus = [
@@ -171,7 +172,7 @@ const PostPublish: React.FC = () => {
             <ButtonBholder primary={false}>Deletar</ButtonBholder>
           </Grid>
           <Grid item xs={6}>
-            <ButtonBholder>Publicar</ButtonBholder>
+            <ButtonBholder onClick={publishPost}>Publicar</ButtonBholder>
           </Grid>
         </Grid>
       </Grid>

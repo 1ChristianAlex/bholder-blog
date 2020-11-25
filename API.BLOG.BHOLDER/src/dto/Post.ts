@@ -1,28 +1,42 @@
+import { IsNotEmpty } from 'class-validator';
+import { Category } from 'entity';
+
 export class PostInputDto {
-  id: number;
-  title: string;
-  content: string;
-  thumbnail: string;
-  file: Express.Multer.File;
-  keywords: string;
-  datePublish: Date;
-  createAt: Date;
-  updateAt: Date;
-  isActive: boolean;
-}
+  @IsNotEmpty()
+  public title: string;
+  @IsNotEmpty()
+  public content: string;
 
+  @IsNotEmpty()
+  public shortDescription: string;
+
+  @IsNotEmpty()
+  public thumbnail: string;
+
+  @IsNotEmpty()
+  public keywords: string[];
+
+  @IsNotEmpty()
+  public categoryIds: number[];
+
+  @IsNotEmpty()
+  public datePublish: Date;
+
+  public isActive: boolean;
+}
 export class PostOutputDto {
-  id: number;
-  title: string;
-  content: string;
-  thumbnail: string;
-  keywords: string;
-  datePublish: Date;
-  createAt: Date;
-  updateAt: Date;
-  isActive: boolean;
+  public id: number;
+  public title: string;
+  public content: string;
+  public shortDescription: string;
+  public thumbnail: string;
+  public keywords: string[];
+  public category: Category;
+  public datePublish: Date;
+  public createAt: Date;
+  public updateAt: Date;
+  public isActive: boolean;
 }
-
 export class PostParms {
   offset: number;
   limit: number;

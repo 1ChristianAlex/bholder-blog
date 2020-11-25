@@ -1,3 +1,5 @@
-import { User, Category, Role, Post } from 'entity/index';
+import * as EntitysModel from 'entity/index';
 
-export const entitys = [User, Category, Role, Post];
+export const entitys = Object.keys(EntitysModel).map(
+  (keys) => EntitysModel[keys],
+);

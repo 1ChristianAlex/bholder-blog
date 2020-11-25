@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { Role, User } from 'entity';
 
-export class seedsInital1597271075689 implements MigrationInterface {
+export class seedsInital1606340684507 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const roleAdm = {
       id: 1,
@@ -21,5 +21,21 @@ export class seedsInital1597271075689 implements MigrationInterface {
     await queryRunner.manager.insert(User, adminUser);
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    const roleAdmin = new Role();
+    roleAdmin.id = 1;
+
+    const user = new User();
+    user.password =
+      '$2b$10$M9G6chxSfBQchmxjo6j4fuPeBQo2aWL3uVp72X3pK2JRO.HFWaRKO';
+
+    await queryRunner.manager.delete<Role>(
+      `user.${Role.name.toLocaleLowerCase()}`,
+      roleAdmin,
+    );
+    await queryRunner.manager.delete<User>(
+      `user.${User.name.toLocaleLowerCase()}`,
+      user,
+    );
+  }
 }

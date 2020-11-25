@@ -4,7 +4,8 @@ import {
   PostStatus,
   PostVisibility,
 } from '../../../enums/PostEnums';
-
+import { Post } from '../../../models/PostModel';
+import PostService from '../../../services/posts';
 // import { Container } from './styles';
 
 interface IEditPostContext {
@@ -17,7 +18,7 @@ interface IEditPostContext {
   postVisibility: PostVisibility;
   postPublication: PostPublication;
   datePublish: Date;
-  categoryId: number[] | undefined;
+  categoryIds: number[];
   setPostTitle(title: string): void;
   setTextValueEditor(textEditor: string): void;
   setShortDescription(textEditor: string): void;
@@ -27,7 +28,9 @@ interface IEditPostContext {
   setPostVisibility(postStatus: PostVisibility): void;
   setPostPublication(postStatus: PostPublication): void;
   setDatePublish(postStatus: Date): void;
-  setCategoryid(categoryId: number[]): void;
+  setCategoryIds(categoryIds: number[]): void;
+
+  publishPost(): Promise<void>;
 }
 
 const EditPostContext = createContext<IEditPostContext>({
@@ -40,7 +43,7 @@ const EditPostContext = createContext<IEditPostContext>({
   postVisibility: PostVisibility.visible,
   postPublication: PostPublication.imediat,
   datePublish: new Date(),
-  categoryId: [],
+  categoryIds: [],
   setPostTitle: (textEdito) => textEdito,
   setTextValueEditor: (textEdito) => textEdito,
   setShortDescription: (textEdito) => textEdito,
@@ -50,7 +53,8 @@ const EditPostContext = createContext<IEditPostContext>({
   setPostVisibility: (postVisibility: PostVisibility) => postVisibility,
   setPostPublication: (postVisibility: PostPublication) => postVisibility,
   setDatePublish: (date: Date) => date,
-  setCategoryid: (ids: number[]) => ids,
+  setCategoryIds: (ids: number[]) => ids,
+  publishPost: async () => {},
 });
 
 const EditPostProvider: React.FC = ({ children }) => {
@@ -67,19 +71,20 @@ const EditPostProvider: React.FC = ({ children }) => {
     PostPublication.imediat
   );
   const [datePublish, setDatePublish] = useState(new Date());
-  const [categoryId, setCategoryid] = useState<number[]>();
+  const [categoryIds, setCategoryIds] = useState<number[]>([]);
 
-  console.log({
-    textEditor,
-    postTitle,
-    shortDescription,
-    thumbUrl,
-    keywordList,
-    postStatus,
-    postVisibility,
-    postPublication,
-    datePublish,
-  });
+  const publishPost = async () => {
+    const postBody = new Post(
+      postTitle,
+      textEditor,
+      shortDescription,
+      thumbUrl,
+      keywordList,
+      categoryIds.map(Number),
+      datePublish
+    );
+    await PostService.createPost(postBody);
+  };
 
   return (
     <EditPostContext.Provider
@@ -102,8 +107,9 @@ const EditPostProvider: React.FC = ({ children }) => {
         setPostPublication,
         datePublish,
         setDatePublish,
-        categoryId,
-        setCategoryid,
+        categoryIds,
+        setCategoryIds,
+        publishPost,
       }}
     >
       {children}

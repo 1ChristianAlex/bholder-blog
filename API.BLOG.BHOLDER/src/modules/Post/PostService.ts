@@ -15,11 +15,11 @@ export class PostService implements IPostService {
 
   async create(post: PostInputDto, userId: number): Promise<Post> {
     try {
-      if (post.file.fieldname) {
-        const urlImage = await this.bucket.uploadMemoryFile(post.file.path);
+      if (post.thumbnail) {
+        const urlImage = await this.bucket.uploadBaseFile(post.thumbnail);
         post.thumbnail = urlImage;
-        delete post.file;
       }
+      console.log(post);
 
       const postCreated = await this.modelPost.save({
         datePublish: new Date(),
@@ -33,11 +33,17 @@ export class PostService implements IPostService {
       console.log(error);
     }
   }
-  async getAll(offset = 0, limit = 10): Promise<Post[]> {
+  async getAll(
+    offset = 0,
+    limit = 10,
+    caterogyId = 0,
+    statusId = 0,
+  ): Promise<Post[]> {
     try {
       const postList = await this.modelPost.find({
         where: {
           isActive: true,
+          category: { id: caterogyId },
         },
         order: {
           datePublish: 'ASC',

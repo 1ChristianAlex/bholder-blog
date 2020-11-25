@@ -14,5 +14,5 @@ export const {
   NODE_ENV,
   HASH_KEY,
   SECRET,
-  AWS_BUCKET_NAME,
+  BUCKET_NAME,
 } = process.env;

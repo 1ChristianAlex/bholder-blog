@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
-import { AWS_BUCKET_NAME } from 'config/Envs';
+import { BUCKET_NAME } from 'config/Envs';
 import { IBucket } from './IBucket';
-import { createReadStream, PathLike, unlinkSync } from 'fs';
-import { basename } from 'path';
+import { createReadStream, PathLike, unlinkSync, writeFileSync } from 'fs';
+import { basename, resolve } from 'path';
+import { Body } from 'aws-sdk/clients/s3';
 
 @Injectable()
 export class Bucket implements IBucket {
-  protected readonly bucketName = AWS_BUCKET_NAME;
+  protected readonly bucketName = BUCKET_NAME;
 
   private s3: S3;
 
@@ -16,25 +17,44 @@ export class Bucket implements IBucket {
   }
 
   async uploadMemoryFile(file: PathLike): Promise<string> {
-    try {
-      return new Promise((res, rej) => {
-        const stream = createReadStream(file);
+    const stream = createReadStream(file);
 
-        const params: S3.PutObjectRequest = {
-          Bucket: this.bucketName,
-          Body: stream,
-          Key: basename(file as string),
-        };
-        this.s3.upload(params, (err, data) => {
-          if (err) {
-            rej(err);
-          }
-          res(data.Location);
-        });
-        unlinkSync(file);
+    const path = await this.uploadToBucket(stream);
+    unlinkSync(file);
+
+    return path;
+  }
+
+  async uploadBaseFile(file: string): Promise<string> {
+    const type = file.match(/(\/[A-Za-z]*)/)[0];
+    const pathWrite = `${resolve('uploads/')}/${Date.now()}.${type.replace(
+      '/',
+      '',
+    )}`;
+
+    writeFileSync(pathWrite, file.replace(/^data:image\/png;base64,/, ''), {
+      encoding: 'base64',
+    });
+    const pathUrl = await this.uploadToBucket(pathWrite);
+
+    unlinkSync(pathWrite);
+    return pathUrl;
+  }
+
+  private uploadToBucket(file: Body): string | PromiseLike<string> {
+    return new Promise((res, rej) => {
+      const params: S3.PutObjectRequest = {
+        Bucket: this.bucketName,
+        Body: file,
+        Key: basename(file as string),
+      };
+      this.s3.upload(params, (err, data) => {
+        if (err) {
+          rej(err);
+        }
+
+        res(data.Location);
       });
-    } catch (error) {
-      throw error;
-    }
+    });
   }
 }

@@ -2,10 +2,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { User } from './user.entity';
 import Category from './category.entity';
@@ -15,17 +15,20 @@ export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false, type: 'varchar', primary: true })
+  @Column({ nullable: false, type: 'varchar' })
   title: string;
 
   @Column({ nullable: false, type: 'text' })
   content: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ nullable: false, type: 'text' })
+  shortDescription: string;
+
+  @Column({ type: 'varchar', nullable: true })
   thumbnail: string;
 
   @Column({ nullable: true, type: 'varchar' })
-  keywords: string;
+  keywords: string[];
 
   @Column({ type: 'timestamp' })
   datePublish: Date;
@@ -39,11 +42,11 @@ export class Post {
   @Column({ default: true })
   isActive: boolean;
 
-  @OneToOne(() => Category)
+  @ManyToOne(() => Category)
   @JoinColumn()
   category: Category;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
   user: User;
 }

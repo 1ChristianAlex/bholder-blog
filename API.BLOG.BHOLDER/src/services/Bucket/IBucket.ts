@@ -1,5 +1,6 @@
-import { Body } from 'aws-sdk/clients/s3';
+import { PathLike } from 'fs';
 
 export interface IBucket {
-  uploadMemoryFile(file: Body): Promise<string>;
+  uploadMemoryFile(file: PathLike): Promise<string>;
+  uploadBaseFile(file: string): Promise<string>;
 }
