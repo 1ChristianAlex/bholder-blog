@@ -6,7 +6,6 @@ import {
   Put,
   UseGuards,
   UseInterceptors,
-  UploadedFile,
   Get,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -21,18 +20,12 @@ import { CategoryService } from './CatergoryService';
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
-  @UseInterceptors(FileInterceptor('image', multerConfig))
   @Post()
   public async createCategory(
     @Body() category: CategInputDto,
     @Res() res: Response,
-    @UploadedFile() file: Express.Multer.File,
   ): Promise<void> {
     try {
-      if (file.filename) {
-        category.file = file;
-      }
-
       const categoryCreated = await this.categoryService.createCategory(
         category,
       );
@@ -48,13 +41,8 @@ export class CategoryController {
   public async updateCategory(
     @Body() body: CategotyUpdateDto,
     @Res() res: Response,
-    @UploadedFile() file: Express.Multer.File,
   ): Promise<void> {
     try {
-      if (file.filename) {
-        body.category.file = file;
-      }
-
       const categoryUpdate = await this.categoryService.updateCategory(
         body.category,
         body.id,

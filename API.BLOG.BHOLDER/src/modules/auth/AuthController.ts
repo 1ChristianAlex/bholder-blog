@@ -20,9 +20,7 @@ export class AuthController {
   async login(@Body() body: LoginInputDto): Promise<LoginOutputDto> {
     try {
       const { email, password } = body;
-      const loginUser = await this.auth.login({ email, password });
-
-      return loginUser;
+      return this.auth.login({ email, password });
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
     }
@@ -32,8 +30,7 @@ export class AuthController {
   @Get('/refresh')
   async refreshUser(@Payload() payload: TokenPayload): Promise<LoginOutputDto> {
     try {
-      const loginUser = this.auth.refreshUser(payload);
-      return loginUser;
+      return this.auth.refreshUser(payload);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
     }

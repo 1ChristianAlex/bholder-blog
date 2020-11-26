@@ -6,9 +6,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
-import { User } from './user.entity';
-import Category from './category.entity';
+import User from '../user.schema/user.entity';
+import PostCategory from './postCategory.entity';
+import PostPublication from './postPublication.entity';
+import PostStatus from './postStatus.entity';
+import PostVisibility from './postVisibility.entity';
 
 @Entity({ schema: 'posts' })
 export class Post {
@@ -42,9 +46,23 @@ export class Post {
   @Column({ default: true })
   isActive: boolean;
 
-  @ManyToOne(() => Category)
+  @OneToMany(() => PostCategory, (postCateItem) => postCateItem.post, {
+    cascade: true,
+  })
   @JoinColumn()
-  category: Category;
+  category: PostCategory[];
+
+  @ManyToOne(() => PostPublication)
+  @JoinColumn()
+  postPublication: PostPublication;
+
+  @ManyToOne(() => PostStatus)
+  @JoinColumn()
+  postStatus: PostStatus;
+
+  @ManyToOne(() => PostVisibility)
+  @JoinColumn()
+  postVisibility: PostVisibility;
 
   @ManyToOne(() => User)
   @JoinColumn()

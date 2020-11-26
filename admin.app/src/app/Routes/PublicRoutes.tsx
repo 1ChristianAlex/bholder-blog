@@ -6,9 +6,6 @@ import { publicRoutes } from './RoutesNames';
 const PublicRoutes: React.FC = () => {
   return (
     <Switch>
-      <Route exact path="/">
-        <h1>Hello world</h1>
-      </Route>
       <Route exact path={publicRoutes.login}>
         <LoginPage />
       </Route>

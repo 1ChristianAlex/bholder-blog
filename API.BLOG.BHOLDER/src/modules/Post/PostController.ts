@@ -27,10 +27,18 @@ export class PostAPIController {
     @Payload() payload: TokenPayload,
   ): Promise<PostOutputDto> {
     try {
-      const postCreated = await this._postService.create(body, payload.id);
-      return postCreated;
+      return this._postService.create(body, payload.id);
     } catch (error) {
       throw new HttpException(ErrorOnPostCreation, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Get()
+  async getAll(@Param() parms: PostParms): Promise<PostOutputDto[]> {
+    try {
+      return this._postService.getAll(parms?.offset, parms?.limit);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }

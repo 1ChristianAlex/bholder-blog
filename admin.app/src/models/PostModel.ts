@@ -6,7 +6,10 @@ class Post {
     public thumbnail: string,
     public keywords: string[],
     public categoryIds: number[],
-    public datePublish: Date
+    public datePublish: Date,
+    public postPublicationId: number,
+    public postStatusId: number,
+    public postVisibilityId: number
   ) {}
 
   public id: number | undefined;

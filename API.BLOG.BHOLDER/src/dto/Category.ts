@@ -11,19 +11,18 @@ export class CategInputDto {
 
   @IsNotEmpty()
   name?: string;
-  tags?: string;
   image_category?: string;
-  file?: Express.Multer.File;
   isActive?: boolean;
   user?: UserInputDto;
 }
 export class CategOutputDto {
-  id: number;
-  name: string;
-  tags: string;
-  image_category: string;
-  createAt: Date;
-  updateAt: Date;
-  isActive: boolean;
-  user?: UserOutPutDto;
+  constructor(
+    public id: number,
+    public name: string,
+    public image_category: string,
+    public createAt: Date,
+    public updateAt: Date,
+    public isActive: boolean,
+    public user?: UserOutPutDto,
+  ) {}
 }

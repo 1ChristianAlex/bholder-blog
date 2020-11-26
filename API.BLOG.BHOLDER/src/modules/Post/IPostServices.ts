@@ -1,13 +1,12 @@
-import { PostInputDto } from 'dto';
-import { Post } from 'entity';
+import { PostInputDto, PostOutputDto } from 'dto';
 
 export interface IPostService {
-  create(post: PostInputDto, userId: number): Promise<Post>;
+  create(post: PostInputDto, userId: number): Promise<PostOutputDto>;
   getAll(
     offset?: number,
     limit?: number,
     caterogyId?: number,
     statusId?: number,
-  ): Promise<Post[]>;
-  getById(id: number): Promise<Post>;
+  ): Promise<PostOutputDto[]>;
+  getById(id: number): Promise<PostOutputDto>;
 }

@@ -1,9 +1,8 @@
-import { CategInputDto } from 'dto';
-import { Category } from 'entity';
+import { CategInputDto, CategOutputDto } from 'dto';
 
 export interface ICatergoryService {
-  createCategory(category: CategInputDto): Promise<Category>;
-  updateCategory(category: CategInputDto, id: number): Promise<Category>;
+  createCategory(category: CategInputDto): Promise<CategOutputDto>;
+  updateCategory(category: CategInputDto, id: number): Promise<CategOutputDto>;
   deleteCategory(id: number): Promise<void>;
-  getCategories(ids: number[]): Promise<Category[]>;
+  getCategories(ids: number[]): Promise<CategOutputDto[]>;
 }

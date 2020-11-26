@@ -10,7 +10,7 @@ import {
 import Role from './role.entity';
 
 @Entity({ schema: 'user' })
-export class User {
+class User {
   constructor() {
     this.updateAt = new Date();
   }

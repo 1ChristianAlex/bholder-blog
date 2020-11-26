@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { Post } from 'entity';
+import { Category, Post, PostCategory } from 'entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../JWTAuth/JwtStrategy';
@@ -9,7 +9,10 @@ import { PostService } from './PostService';
 import { Bucket } from 'services';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post]), JwtModule.register(configJWT)],
+  imports: [
+    TypeOrmModule.forFeature([Post, PostCategory, Category]),
+    JwtModule.register(configJWT),
+  ],
   controllers: [PostAPIController, PostController],
   providers: [PostService, JwtStrategy, Bucket],
 })

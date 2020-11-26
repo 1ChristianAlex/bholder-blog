@@ -2,7 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import { BUCKET_NAME } from 'config/Envs';
 import { IBucket } from './IBucket';
-import { createReadStream, PathLike, unlinkSync, writeFileSync } from 'fs';
+import {
+  createReadStream,
+  PathLike,
+  unlinkSync,
+  writeFileSync,
+  existsSync,
+} from 'fs';
 import { basename, resolve } from 'path';
 import { Body } from 'aws-sdk/clients/s3';
 
@@ -26,19 +32,22 @@ export class Bucket implements IBucket {
   }
 
   async uploadBaseFile(file: string): Promise<string> {
-    const type = file.match(/(\/[A-Za-z]*)/)[0];
-    const pathWrite = `${resolve('uploads/')}/${Date.now()}.${type.replace(
-      '/',
-      '',
-    )}`;
+    if (!(file.includes('http://') || file.includes('https://'))) {
+      const type = file.match(/(\/[A-Za-z]*)/)[0];
+      const pathWrite = `${resolve('uploads/')}/${Date.now()}.${type.replace(
+        '/',
+        '',
+      )}`;
 
-    writeFileSync(pathWrite, file.replace(/^data:image\/png;base64,/, ''), {
-      encoding: 'base64',
-    });
-    const pathUrl = await this.uploadToBucket(pathWrite);
+      writeFileSync(pathWrite, file.replace(/^data:image\/(...);base64,/, ''), {
+        encoding: 'base64',
+      });
+      const pathUrl = await this.uploadToBucket(pathWrite);
 
-    unlinkSync(pathWrite);
-    return pathUrl;
+      unlinkSync(pathWrite);
+      return pathUrl;
+    }
+    return file;
   }
 
   private uploadToBucket(file: Body): string | PromiseLike<string> {
@@ -51,6 +60,9 @@ export class Bucket implements IBucket {
       this.s3.upload(params, (err, data) => {
         if (err) {
           rej(err);
+          if (existsSync(file.toString())) {
+            unlinkSync(file.toString());
+          }
         }
 
         res(data.Location);

@@ -2,18 +2,14 @@ import {
   Controller,
   Post,
   Body,
-  Res,
   Put,
   UseGuards,
-  UseInterceptors,
-  UploadedFile,
+  HttpStatus,
+  HttpException,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from './UserService';
-import { UserInputDto, TokenPayload } from 'dto';
-import { Response } from 'express';
+import { UserInputDto, TokenPayload, UserOutPutDto } from 'dto';
 import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
-import { multerConfig } from 'config/ConfigFile';
 import { Payload } from '../JWTAuth/PayloadDecorator';
 
 @UseGuards(JwtAuthGuard)
@@ -22,43 +18,27 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image', multerConfig))
   public async CreateUser(
     @Body() user: UserInputDto,
-    @Res() res: Response,
-    @UploadedFile() file: Express.Multer.File,
     @Payload() payload: TokenPayload,
-  ): Promise<void> {
+  ): Promise<UserOutPutDto> {
     try {
       if (payload.role !== 1) {
         throw Error('Only administrator can create new users');
       }
-      const userCreated = await this.userService.create({
-        ...user,
-        file,
-      });
-
-      res.json(userCreated);
+      return this.userService.create(user);
     } catch (error) {
-      res.status(302).json({ mensage: error.message });
+      throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
     }
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put()
-  @UseInterceptors(FileInterceptor('image', multerConfig))
-  async updateUser(
-    @Body() user: UserInputDto,
-    @Res() res: Response,
-    @UploadedFile() file: Express.Multer.File,
-  ): Promise<void> {
+  async updateUser(@Body() user: UserInputDto): Promise<UserOutPutDto> {
     try {
       const { id, ...newUser } = user;
-      newUser.file = file;
-      const userUpdated = await this.userService.update(newUser, id);
-      res.json(userUpdated);
+      return this.userService.update(newUser, id);
     } catch (error) {
-      res.status(500).json({ mensage: error });
+      throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
     }
   }
 }

@@ -34,7 +34,10 @@ export const dbConfigJson: TypeOrmModuleOptions = {
   username: DB_USERNAME,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
-  entities: ['src/entity/*.entity{.ts,.js}'],
+  entities: [
+    'src/entity/*.entity{.ts,.js}',
+    'src/entity/*.schema/*.entity{.ts,.js}',
+  ],
   synchronize: true,
   migrationsTableName: 'migration',
   migrations: ['src/migration/*.ts'],
@@ -47,11 +50,6 @@ export const configJWT: JwtModuleOptions = {
   secret: SECRET,
   signOptions: { expiresIn: '24h' },
 };
-
-export const graphQLSchemaPath: string = resolve(
-  __dirname,
-  '../../src/config/schema.gql',
-);
 
 export const multerConfig = {
   storage: diskStorage({

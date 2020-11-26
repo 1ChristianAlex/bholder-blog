@@ -5,9 +5,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Crypt, Bucket } from 'services';
 import { UserCreated } from 'resources';
+import { IUserService } from './IUserService';
 
 Injectable();
-export class UserService {
+export class UserService implements IUserService {
   constructor(
     @InjectRepository(User) private modelUser: Repository<User>,
     private crypt: Crypt,
@@ -15,38 +16,52 @@ export class UserService {
   ) {}
   public async create(user: UserInputDto): Promise<UserOutPutDto> {
     try {
-      const { file, password, ...data } = user;
+      let userObject: User;
 
-      const createObject = { ...data, password };
+      const urlImage = await this.bucket.uploadBaseFile(user.image);
 
-      if (file.fieldname) {
-        const urlImage = await this.bucket.uploadMemoryFile(file.path);
-        createObject.image = urlImage;
-      }
+      userObject.image = urlImage;
 
-      const pass = this.crypt.generateHash(password);
-      createObject.password = pass;
+      const pass = this.crypt.generateHash(user.password);
 
-      const userResult: User = await this.modelUser.save(createObject);
+      userObject.password = pass;
 
-      delete userResult.password;
-      return userResult;
+      const userCreated = await this.modelUser.save({
+        ...user,
+        ...userObject,
+      });
+
+      const userOutPut = this.mapUserOutput(userCreated);
+
+      return userOutPut;
     } catch {
       throw new Error(UserCreated);
     }
   }
 
-  async update(user: Omit<UserInputDto, 'id'>, id: number): Promise<User> {
+  private mapUserOutput(user: User) {
+    return new UserOutPutDto(
+      user.id,
+      user.firstName,
+      user.lastName,
+      user.email,
+      user.image,
+    );
+  }
+
+  async update(
+    user: Omit<UserInputDto, 'id'>,
+    id: number,
+  ): Promise<UserOutPutDto> {
     try {
       const newData = { ...user };
 
       if (newData.password) {
         newData.password = this.crypt.generateHash(user.password);
       }
-      if (newData.file.fieldname) {
-        const urlImage = await this.bucket.uploadMemoryFile(newData.file.path);
+      if (newData.image) {
+        const urlImage = await this.bucket.uploadBaseFile(newData.image);
         newData.image = urlImage;
-        delete newData.file;
       }
 
       const userUpdate = await this.modelUser.update({ id }, newData).then(
@@ -56,8 +71,7 @@ export class UserService {
             relations: ['role'],
           }),
       );
-
-      return userUpdate;
+      return this.mapUserOutput(userUpdate);
     } catch (error) {
       throw new Error(error.message);
     }

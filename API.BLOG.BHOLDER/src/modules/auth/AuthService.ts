@@ -9,6 +9,7 @@ import {
   TokenPayload,
   LoginOutputDto,
   UserOutPutDto,
+  UserInputDto,
 } from 'dto';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { IAuthService } from './IAuthService';
@@ -43,9 +44,7 @@ export class AuthService implements IAuthService {
 
       const token = this.generateToken(payload);
 
-      const output = new LoginOutputDto(userLogin, token);
-
-      return output;
+      return this.mapLoginOutput(userLogin, token);
     } catch (error) {
       throw new Error('User not exist');
     }
@@ -122,18 +121,27 @@ export class AuthService implements IAuthService {
           description: userLogin.role.description,
         };
 
-        delete userLogin.password;
-
         const token = this.generateToken(payload);
 
-        const output = new LoginOutputDto(userLogin, token);
-
-        return output;
+        return this.mapLoginOutput(userLogin, token);
       } else {
         throw new Error('User has no access');
       }
     } catch (error) {
       throw error;
     }
+  }
+
+  private mapLoginOutput(userLogin: User, token: string) {
+    return new LoginOutputDto(
+      new UserOutPutDto(
+        userLogin.id,
+        userLogin.firstName,
+        userLogin.lastName,
+        userLogin.email,
+        userLogin.image,
+      ),
+      token,
+    );
   }
 }

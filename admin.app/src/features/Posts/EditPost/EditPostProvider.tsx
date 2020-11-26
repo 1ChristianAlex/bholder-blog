@@ -81,7 +81,10 @@ const EditPostProvider: React.FC = ({ children }) => {
       thumbUrl,
       keywordList,
       categoryIds.map(Number),
-      datePublish
+      datePublish,
+      postPublication,
+      postStatus,
+      postVisibility
     );
     await PostService.createPost(postBody);
   };

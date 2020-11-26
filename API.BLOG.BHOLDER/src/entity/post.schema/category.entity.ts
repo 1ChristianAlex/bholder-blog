@@ -1,12 +1,15 @@
+import User from '../user.schema/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  JoinColumn,
   CreateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity({ schema: 'posts' })
-export class Media {
+class Category {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -14,13 +17,20 @@ export class Media {
   name: string;
 
   @Column({ nullable: true, type: 'varchar' })
-  type: string;
+  image_category: string;
 
   @CreateDateColumn()
   createAt: Date;
 
   @CreateDateColumn()
   updateAt: Date;
+
+  @Column({ default: true })
+  isActive: boolean;
+
+  @ManyToOne(() => User)
+  @JoinColumn()
+  user: User;
 }
 
-export default Media;
+export default Category;

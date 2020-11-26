@@ -1,7 +1,13 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { Role, User } from 'entity';
+import {
+  Role,
+  User,
+  PostPublication,
+  PostVisibility,
+  PostStatus,
+} from 'entity';
 
-export class seedsInital1606340684507 implements MigrationInterface {
+export class seedsInital1606398976998 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const roleAdm = {
       id: 1,
@@ -17,8 +23,30 @@ export class seedsInital1606340684507 implements MigrationInterface {
       role: roleAdm,
       id: null,
     };
+
+    const postPublicationList = [
+      new PostPublication(1, 'Imediata'),
+      new PostPublication(2, 'Agendada'),
+    ];
+
+    const postVisibilityList = [
+      new PostVisibility(1, 'Visivel'),
+      new PostVisibility(2, 'Escondido'),
+    ];
+
+    const postStatusList = [
+      new PostStatus(1, 'Draft'),
+      new PostStatus(2, 'Salvo'),
+      new PostStatus(3, 'Deletado'),
+    ];
+
     await queryRunner.manager.insert(Role, roleAdm);
     await queryRunner.manager.insert(User, adminUser);
+
+    await queryRunner.manager.insert(PostPublication, postPublicationList);
+    await queryRunner.manager.insert(PostVisibility, postVisibilityList);
+
+    await queryRunner.manager.insert(PostStatus, postStatusList);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
@@ -37,5 +65,10 @@ export class seedsInital1606340684507 implements MigrationInterface {
       `user.${User.name.toLocaleLowerCase()}`,
       user,
     );
+
+    await queryRunner.manager.delete(PostPublication, {});
+    await queryRunner.manager.delete(PostVisibility, {});
+
+    await queryRunner.manager.delete(PostStatus, {});
   }
 }

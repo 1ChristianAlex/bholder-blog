@@ -5,7 +5,8 @@
   "password": "123456",
   "database": "blog_bholder",
   "entities": [
-    "src/entity/*.entity{.ts,.js}"
+    "src/entity/*.entity{.ts,.js}",
+    "src/entity/*.schema/*.entity{.ts,.js}"
   ],
   "synchronize": true,
   "migrationsTableName": "migration",

@@ -14,25 +14,22 @@ export class UserInputDto {
   email: string;
 
   @IsNotEmpty()
+  roleId: number;
+
+  @IsNotEmpty()
   password: string;
   image: string;
-  file: Express.Multer.File;
   createAt: Date;
   updateAt: Date;
   isActive: boolean;
 }
 
 export class UserOutPutDto {
-  id: number;
-
-  @IsNotEmpty()
-  firstName: string;
-
-  @IsNotEmpty()
-  lastName: string;
-
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
-  image: string;
+  constructor(
+    public id: number,
+    public firstName: string,
+    public lastName: string,
+    public email: string,
+    public image: string,
+  ) {}
 }

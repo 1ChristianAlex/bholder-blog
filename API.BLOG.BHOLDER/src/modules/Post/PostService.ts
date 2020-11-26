@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Post } from 'entity';
+import { Category, Post, PostCategory } from 'entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PostInputDto } from 'dto';
+import { PostInputDto, PostOutputDto } from 'dto';
 import { IPostService } from './IPostServices';
 import { Bucket } from 'services';
 
@@ -10,64 +10,139 @@ Injectable();
 export class PostService implements IPostService {
   constructor(
     @InjectRepository(Post) private modelPost: Repository<Post>,
+    @InjectRepository(PostCategory)
+    private postCategoryModel: Repository<PostCategory>,
     private bucket: Bucket,
   ) {}
 
-  async create(post: PostInputDto, userId: number): Promise<Post> {
+  async create(post: PostInputDto, userId: number): Promise<PostOutputDto> {
     try {
       if (post.thumbnail) {
         const urlImage = await this.bucket.uploadBaseFile(post.thumbnail);
         post.thumbnail = urlImage;
       }
-      console.log(post);
 
-      const postCreated = await this.modelPost.save({
-        datePublish: new Date(),
-        ...post,
-        user: { id: userId },
-        updateAt: new Date(),
-      });
+      const postCreated = await this.modelPost
+        .save({
+          ...post,
+          datePublish: new Date(),
+          keywords: post.keywords.filter(Boolean),
+          postPublication: { id: post.postPublicationId },
+          postStatus: { id: post.postStatusId },
+          postVisibility: { id: post.postPublicationId },
+          user: { id: userId },
+          updateAt: new Date(),
+        })
+        .then(async (postItem) => {
+          await Promise.all(
+            post.categoryIds.map(async (item) => {
+              const postCategory = new PostCategory();
+              const category = new Category();
+              postCategory.category = category;
 
-      return postCreated;
+              postCategory.category.id = 2;
+
+              postCategory.post = new Post();
+              postCategory.post.id = postItem.id;
+
+              postCategory.id = null;
+
+              return await this.postCategoryModel
+                .save(postCategory)
+                .then((item) => {
+                  console.log(postCategory);
+                  console.log(item);
+                });
+            }),
+          );
+
+          return postItem;
+        })
+        .then((postItem) => {
+          return this.modelPost.findOne(postItem.id, {
+            relations: [
+              'user',
+              'postPublication',
+              'postStatus',
+              'postVisibility',
+              'category',
+            ],
+          });
+        });
+
+      return this.mapPostOut(postCreated);
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
+
+  private mapPostOut(postCreated: Post) {
+    return new PostOutputDto(
+      postCreated.id,
+      postCreated.title,
+      postCreated.content,
+      postCreated.shortDescription,
+      postCreated.thumbnail,
+      postCreated.keywords,
+      postCreated.postStatus.id,
+      postCreated.postVisibility.id,
+      postCreated.postPublication.id,
+      postCreated.datePublish,
+      postCreated.createAt,
+      postCreated.updateAt,
+      postCreated.isActive,
+      postCreated.user,
+    );
+  }
+
   async getAll(
     offset = 0,
     limit = 10,
     caterogyId = 0,
     statusId = 0,
-  ): Promise<Post[]> {
+  ): Promise<PostOutputDto[]> {
     try {
       const postList = await this.modelPost.find({
         where: {
           isActive: true,
-          category: { id: caterogyId },
+          id: 3,
         },
         order: {
           datePublish: 'ASC',
         },
+        relations: [
+          'user',
+          'postPublication',
+          'postStatus',
+          'postVisibility',
+          'category',
+        ],
         skip: offset,
         take: limit,
       });
 
-      return postList;
+      return postList.map(this.mapPostOut);
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 
-  async getById(id: number): Promise<Post> {
+  async getById(id: number): Promise<PostOutputDto> {
     try {
       const postUnico = await this.modelPost.findOne({
         where: { id },
-        relations: ['category', 'user'],
+        relations: [
+          'category',
+          'user',
+          'postPublication',
+          'postStatus',
+          'postVisibility',
+        ],
       });
 
-      return postUnico;
+      return this.mapPostOut(postUnico);
     } catch (error) {
-      console.log(error);
+      throw new Error(error.message);
     }
   }
 }

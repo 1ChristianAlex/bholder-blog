@@ -1,5 +1,5 @@
 import { ICatergoryService } from './ICatergoryService';
-import { CategInputDto } from 'dto';
+import { CategInputDto, CategOutputDto } from 'dto';
 import { Injectable } from '@nestjs/common';
 import { Category } from 'entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,24 +13,22 @@ export class CategoryService implements ICatergoryService {
     private bucket: Bucket,
   ) {}
 
-  async getCategories(ids: number[]): Promise<Category[]> {
+  async getCategories(ids: number[]): Promise<CategOutputDto[]> {
     const listCategories = await this.category.findByIds(ids);
 
-    return listCategories;
+    return listCategories.map(this.mapCategoryOutput);
   }
 
-  async createCategory(postCategory: CategInputDto): Promise<Category> {
+  async createCategory(postCategory: CategInputDto): Promise<CategOutputDto> {
     if (await this.getCategory(postCategory)) {
       throw new Error('Categoria ja existe');
     }
 
-    if (postCategory.file) {
-      const urlImage = await this.bucket.uploadMemoryFile(
-        postCategory.file.path,
+    if (postCategory.image_category) {
+      const urlImage = await this.bucket.uploadBaseFile(
+        postCategory.image_category,
       );
       postCategory.image_category = urlImage;
-
-      delete postCategory.file;
     }
 
     const newCategory = await this.category.save({
@@ -40,24 +38,34 @@ export class CategoryService implements ICatergoryService {
       isActive: true,
     });
 
-    return newCategory;
+    return this.mapCategoryOutput(newCategory);
+  }
+
+  private mapCategoryOutput(newCategory: Category) {
+    return new CategOutputDto(
+      newCategory.id,
+      newCategory.name,
+      newCategory.image_category,
+      newCategory.createAt,
+      newCategory.updateAt,
+      newCategory.isActive,
+      newCategory.user,
+    );
   }
 
   async updateCategory(
     postCategory: CategInputDto,
     id: number,
-  ): Promise<Category> {
+  ): Promise<CategOutputDto> {
     if (!(await this.getCategory(postCategory))) {
       throw new Error('Categoria não existe');
     }
 
-    if (postCategory.file) {
-      const urlImage = await this.bucket.uploadMemoryFile(
-        postCategory.file.path,
+    if (postCategory.image_category) {
+      const urlImage = await this.bucket.uploadBaseFile(
+        postCategory.image_category,
       );
       postCategory.image_category = urlImage;
-
-      delete postCategory.file;
     }
 
     const updatedCategory = await this.category
@@ -70,7 +78,7 @@ export class CategoryService implements ICatergoryService {
       )
       .then(() => this.category.findOne({ id }));
 
-    return updatedCategory;
+    return this.mapCategoryOutput(updatedCategory);
   }
 
   async deleteCategory(id: number): Promise<void> {
@@ -86,11 +94,13 @@ export class CategoryService implements ICatergoryService {
     );
   }
 
-  private async getCategory(postCategory: CategInputDto): Promise<Category> {
+  private async getCategory(
+    postCategory: CategInputDto,
+  ): Promise<CategOutputDto> {
     const categoryExists = await this.category.findOne(postCategory);
 
     if (categoryExists?.id) {
-      return categoryExists;
+      return this.mapCategoryOutput(categoryExists);
     }
 
     throw Error('Categoria não existe');

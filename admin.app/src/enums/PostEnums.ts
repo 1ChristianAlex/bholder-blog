@@ -1,7 +1,7 @@
 enum PostStatus {
   draft = 1,
-  deleted,
   saved,
+  deleted,
 }
 
 const PostStatusDescription = {
