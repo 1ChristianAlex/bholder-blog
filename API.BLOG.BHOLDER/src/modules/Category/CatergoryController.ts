@@ -2,17 +2,14 @@ import {
   Controller,
   Post,
   Body,
-  Res,
   Put,
   UseGuards,
-  UseInterceptors,
   Get,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { CategInputDto, CategotyUpdateDto } from 'dto';
-import { Response } from 'express';
+import { CategInputDto, CategotyUpdateDto, CategOutputDto } from 'dto';
 import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
-import { multerConfig } from 'config/ConfigFile';
 import { CategoryService } from './CatergoryService';
 
 @UseGuards(JwtAuthGuard)
@@ -23,51 +20,34 @@ export class CategoryController {
   @Post()
   public async createCategory(
     @Body() category: CategInputDto,
-    @Res() res: Response,
-  ): Promise<void> {
+  ): Promise<CategOutputDto> {
     try {
-      const categoryCreated = await this.categoryService.createCategory(
-        category,
-      );
-
-      res.status(202).json(categoryCreated);
+      return this.categoryService.createCategory(category);
     } catch (error) {
-      res.status(500).json(error);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
-  @UseInterceptors(FileInterceptor('image', multerConfig))
   @Put()
   public async updateCategory(
     @Body() body: CategotyUpdateDto,
-    @Res() res: Response,
-  ): Promise<void> {
+  ): Promise<CategOutputDto> {
     try {
-      const categoryUpdate = await this.categoryService.updateCategory(
-        body.category,
-        body.id,
-      );
-
-      res.status(202).json(categoryUpdate);
+      return this.categoryService.updateCategory(body.category, body.id);
     } catch (error) {
-      res.status(500).json(error);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 
   @Get()
-  public async getCategory(
-    @Body() ids: number[],
-    @Res() res: Response,
-  ): Promise<void> {
+  public async getCategory(@Body() ids: number[]): Promise<CategOutputDto[]> {
     try {
       if (ids?.length === 0) {
         throw Error('Ids is required');
       }
-      const categoryUpdate = await this.categoryService.getCategories(ids);
-
-      res.status(202).json(categoryUpdate);
+      return this.categoryService.getCategories(ids);
     } catch (error) {
-      res.status(404).json(error);
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
     }
   }
 }

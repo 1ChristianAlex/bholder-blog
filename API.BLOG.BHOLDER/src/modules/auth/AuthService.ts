@@ -82,7 +82,7 @@ export class AuthService implements IAuthService {
       .update({ email, password: passCrypy }, { password: newCrypy })
       .then(() => this.modelUser.findOne({ email, password: newCrypy }));
 
-    return userUpdate;
+    return new UserOutPutDto(userUpdate);
   }
 
   private validateLogin(login: LoginInputDto) {
@@ -133,15 +133,9 @@ export class AuthService implements IAuthService {
   }
 
   private mapLoginOutput(userLogin: User, token: string) {
-    return new LoginOutputDto(
-      new UserOutPutDto(
-        userLogin.id,
-        userLogin.firstName,
-        userLogin.lastName,
-        userLogin.email,
-        userLogin.image,
-      ),
+    return new LoginOutputDto({
+      user: new UserOutPutDto(userLogin),
       token,
-    );
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class initialTables1606398971998 implements MigrationInterface {
-  name = 'initialTables1606398971998';
+export class initalTables1606398971998 implements MigrationInterface {
+  name = 'initalTables1606398971998';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -11,13 +11,13 @@ export class initialTables1606398971998 implements MigrationInterface {
       `CREATE TABLE "user"."user" ("id" SERIAL NOT NULL, "firstName" character varying NOT NULL, "lastName" character varying NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, "image" character varying, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updateAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT true, "roleId" integer, CONSTRAINT "UQ_65d72a4b8a5fcdad6edee8563b0" UNIQUE ("email"), CONSTRAINT "REL_c35a0d55e60a0a560004013ce6" UNIQUE ("roleId"), CONSTRAINT "PK_758b8ce7c18b9d347461b30228d" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "posts"."category" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "image_category" character varying, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updateAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT true, "userId" integer, CONSTRAINT "PK_69ab32ab4a99c14e9d56025c2d8" PRIMARY KEY ("id", "name"))`,
+      `CREATE TABLE "posts"."category" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "image_category" character varying, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updateAt" TIMESTAMP NOT NULL DEFAULT now(), "isActive" boolean NOT NULL DEFAULT true, "userId" integer, CONSTRAINT "PK_852f266adc5d67c40405c887b49" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "posts"."media" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "type" character varying, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updateAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_8c0e6f7e51745107d51add2511b" PRIMARY KEY ("id", "name"))`,
+      `CREATE TABLE "posts"."media" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "type" character varying, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updateAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_8c0d3355baa5576ae279530440a" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "posts"."post_category" ("id" SERIAL NOT NULL, "categoryId" integer, "categoryName" character varying, "postId" integer, CONSTRAINT "PK_f98c4f271052516b92c1acf6c4a" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "posts"."post_category" ("id" SERIAL NOT NULL, "categoryId" integer, "postId" integer, CONSTRAINT "PK_f98c4f271052516b92c1acf6c4a" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "posts"."post_publication" ("id" SERIAL NOT NULL, "description" character varying NOT NULL, CONSTRAINT "PK_0fde8d3ffd915f90d5ab4f95244" PRIMARY KEY ("id"))`,
@@ -38,7 +38,7 @@ export class initialTables1606398971998 implements MigrationInterface {
       `ALTER TABLE "posts"."category" ADD CONSTRAINT "FK_c4d40f0b05f29775783470afaa8" FOREIGN KEY ("userId") REFERENCES "user"."user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE "posts"."post_category" ADD CONSTRAINT "FK_4894a17e7ee7864bf229edd8c76" FOREIGN KEY ("categoryId", "categoryName") REFERENCES "posts"."category"("id","name") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      `ALTER TABLE "posts"."post_category" ADD CONSTRAINT "FK_e84fd719056099356ec0e9517d6" FOREIGN KEY ("categoryId") REFERENCES "posts"."category"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "posts"."post_category" ADD CONSTRAINT "FK_e8b90509df8a71bb5b99d1c2587" FOREIGN KEY ("postId") REFERENCES "posts"."post"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -74,7 +74,7 @@ export class initialTables1606398971998 implements MigrationInterface {
       `ALTER TABLE "posts"."post_category" DROP CONSTRAINT "FK_e8b90509df8a71bb5b99d1c2587"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "posts"."post_category" DROP CONSTRAINT "FK_4894a17e7ee7864bf229edd8c76"`,
+      `ALTER TABLE "posts"."post_category" DROP CONSTRAINT "FK_e84fd719056099356ec0e9517d6"`,
     );
     await queryRunner.query(
       `ALTER TABLE "posts"."category" DROP CONSTRAINT "FK_c4d40f0b05f29775783470afaa8"`,

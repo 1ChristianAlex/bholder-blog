@@ -16,6 +16,10 @@ import PostVisibility from './postVisibility.entity';
 
 @Entity({ schema: 'posts' })
 export class Post {
+  constructor(partial: Partial<Post>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -32,7 +36,7 @@ export class Post {
   thumbnail: string;
 
   @Column({ nullable: true, type: 'varchar' })
-  keywords: string[];
+  keywords: string;
 
   @Column({ type: 'timestamp' })
   datePublish: Date;
@@ -48,6 +52,7 @@ export class Post {
 
   @OneToMany(() => PostCategory, (postCateItem) => postCateItem.post, {
     cascade: true,
+    eager: true,
   })
   @JoinColumn()
   category: PostCategory[];

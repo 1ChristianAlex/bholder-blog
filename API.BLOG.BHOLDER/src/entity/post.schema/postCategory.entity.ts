@@ -7,7 +7,7 @@ export class PostCategory {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Category)
+  @ManyToOne(() => Category, { cascade: true, eager: true })
   @JoinColumn()
   category: Category;
 

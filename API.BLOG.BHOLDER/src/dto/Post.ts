@@ -1,6 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
-import { Category, User } from 'entity';
-
+import { Post, PostCategory } from 'entity';
+import { CategOutputDto } from './Category';
+import { UserOutPutDto } from './User';
 export class PostInputDto {
   @IsNotEmpty()
   public title: string;
@@ -33,27 +34,45 @@ export class PostInputDto {
 
   public isActive: boolean;
 }
-export class PostOutputDto {
-  constructor(
-    public id?: number,
-    public title?: string,
-    public content?: string,
-    public shortDescription?: string,
-    public thumbnail?: string,
-    public keywords?: string[],
 
-    public postPublication?: number,
-    public postStatus?: number,
-    public postVisibility?: number,
-    public datePublish?: Date,
-    public createAt?: Date,
-    public updateAt?: Date,
-    public isActive?: boolean,
-    public user?: User,
-  ) {}
-  public category?: Category[];
+export class PostOutputDto {
+  public id?: number;
+  public title?: string;
+  public content?: string;
+  public shortDescription?: string;
+  public thumbnail?: string;
+
+  public keywords?: string[];
+
+  public postPublicationId?: number;
+  public postStatusId?: number;
+  public postVisibilityId?: number;
+  public datePublish?: Date;
+  public createAt?: Date;
+  public updateAt?: Date;
+  public isActive?: boolean;
+  public user?: UserOutPutDto;
+
+  public category?: PostCategoryOutputDto[];
+
+  constructor(partial: Partial<PostOutputDto | Post>) {
+    Object.assign(this, partial);
+    this.category = this.category.map(
+      (item) => new PostCategoryOutputDto(item),
+    );
+  }
 }
-export class PostParms {
+
+class PostCategoryOutputDto {
+  public id: number;
+  public category: CategOutputDto;
+
+  constructor(partial: Partial<PostCategoryOutputDto | PostCategory>) {
+    Object.assign(this, partial);
+    this.category = new CategOutputDto(this.category);
+  }
+}
+export class PostQuery {
   offset: number;
   limit: number;
   id: number;

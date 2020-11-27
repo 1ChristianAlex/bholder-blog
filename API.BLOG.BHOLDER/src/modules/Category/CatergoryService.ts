@@ -42,15 +42,7 @@ export class CategoryService implements ICatergoryService {
   }
 
   private mapCategoryOutput(newCategory: Category) {
-    return new CategOutputDto(
-      newCategory.id,
-      newCategory.name,
-      newCategory.image_category,
-      newCategory.createAt,
-      newCategory.updateAt,
-      newCategory.isActive,
-      newCategory.user,
-    );
+    return new CategOutputDto(newCategory);
   }
 
   async updateCategory(

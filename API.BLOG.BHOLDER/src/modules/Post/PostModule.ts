@@ -7,6 +7,7 @@ import { configJWT } from 'config/ConfigFile';
 import { PostAPIController, PostController } from './PostController';
 import { PostService } from './PostService';
 import { Bucket } from 'services';
+import { PostCategoryService } from './PostCategory/PostCategortyService';
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { Bucket } from 'services';
     JwtModule.register(configJWT),
   ],
   controllers: [PostAPIController, PostController],
-  providers: [PostService, JwtStrategy, Bucket],
+  providers: [PostService, PostCategoryService, JwtStrategy, Bucket],
 })
 export class PostModule {}

@@ -2,19 +2,18 @@ import {
   Controller,
   UseGuards,
   Post,
-  Res,
   Body,
   Get,
   Param,
   HttpException,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
 import { Payload } from '../JWTAuth/PayloadDecorator';
-import { Response } from 'express';
 import { PostService } from './PostService';
-import { TokenPayload, PostInputDto, PostParms, PostOutputDto } from 'dto';
-import { ErrorOnPostCreation, PostNotFound } from 'resources';
+import { TokenPayload, PostInputDto, PostOutputDto } from 'dto';
+import { ErrorOnPostCreation } from 'resources';
 
 @UseGuards(JwtAuthGuard)
 @Controller('api/post')
@@ -33,10 +32,29 @@ export class PostAPIController {
     }
   }
 
-  @Get()
-  async getAll(@Param() parms: PostParms): Promise<PostOutputDto[]> {
+  @Get(':id')
+  async get(@Param('id') id: number): Promise<PostOutputDto> {
     try {
-      return this._postService.getAll(parms?.offset, parms?.limit);
+      return this._postService.getById(id);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @Get()
+  async getAll(
+    @Query('offset') offset = 0,
+    @Query('limit') limit = 10,
+    @Query('categoryId') categoryId: number = null,
+    @Query('statusId') statusId: number = null,
+  ): Promise<PostOutputDto[]> {
+    try {
+      const _offset = Boolean(offset) ? offset : null;
+      const _limit = Boolean(limit) ? limit : null;
+      const _categoryId = Boolean(categoryId) ? categoryId : null;
+      const _statusId = Boolean(statusId) ? statusId : null;
+
+      return this._postService.getAll(_offset, _limit, _categoryId, _statusId);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
@@ -48,25 +66,30 @@ export class PostController {
   constructor(private _postService: PostService) {}
 
   @Get()
-  async getAll(@Param() parms: PostParms, @Res() res: Response): Promise<void> {
+  async getAll(
+    @Query('offset') offset?: number,
+    @Query('limit') limit?: number,
+    @Query('categoryId') categoryId?: number,
+    @Query('statusId') statusId?: number,
+  ): Promise<PostOutputDto[]> {
     try {
-      const postList = await this._postService.getAll(
-        parms?.offset,
-        parms?.limit,
-      );
-      res.status(200).json(postList);
+      const _offset = Boolean(offset) ? offset : null;
+      const _limit = Boolean(limit) ? limit : null;
+      const _categoryId = Boolean(categoryId) ? categoryId : null;
+      const _statusId = Boolean(statusId) ? statusId : null;
+
+      return this._postService.getAll(_offset, _limit, _categoryId, _statusId);
     } catch (error) {
-      res.status(404).json({ message: PostNotFound, error });
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
     }
   }
 
-  @Get('/:id/')
-  async get(@Param() parms: PostParms, @Res() res: Response): Promise<void> {
+  @Get(':id')
+  async get(@Param('id') id: number): Promise<PostOutputDto> {
     try {
-      const postSingle = await this._postService.getById(parms.id);
-      res.status(200).json(postSingle);
+      return this._postService.getById(id);
     } catch (error) {
-      res.status(404).json({ message: PostNotFound, error });
+      throw new HttpException(error.message, HttpStatus.NOT_FOUND);
     }
   }
 }

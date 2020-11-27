@@ -24,6 +24,7 @@ export const dbConfig: TypeOrmModuleOptions = {
   database: POSTGRES_DB,
   entities: entitys,
   synchronize: true,
+  logging: true,
   migrationsTableName: 'migration',
 };
 

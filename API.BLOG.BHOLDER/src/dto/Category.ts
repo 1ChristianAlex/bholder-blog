@@ -1,5 +1,7 @@
 import { UserInputDto, UserOutPutDto } from './User';
 import { IsNotEmpty } from 'class-validator';
+import { Category } from 'entity';
+import { Exclude } from 'class-transformer';
 
 export class CategotyUpdateDto {
   category: CategInputDto;
@@ -16,13 +18,22 @@ export class CategInputDto {
   user?: UserInputDto;
 }
 export class CategOutputDto {
-  constructor(
-    public id: number,
-    public name: string,
-    public image_category: string,
-    public createAt: Date,
-    public updateAt: Date,
-    public isActive: boolean,
-    public user?: UserOutPutDto,
-  ) {}
+  public id: number;
+  public name: string;
+  public image_category: string;
+
+  @Exclude()
+  private createAt: Date;
+
+  @Exclude()
+  private updateAt: Date;
+
+  @Exclude()
+  private isActive: boolean;
+
+  @Exclude()
+  private user?: UserOutPutDto;
+  constructor(partial: Partial<Category | CategOutputDto>) {
+    Object.assign(this, partial);
+  }
 }

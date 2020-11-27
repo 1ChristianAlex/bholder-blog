@@ -40,13 +40,7 @@ export class UserService implements IUserService {
   }
 
   private mapUserOutput(user: User) {
-    return new UserOutPutDto(
-      user.id,
-      user.firstName,
-      user.lastName,
-      user.email,
-      user.image,
-    );
+    return new UserOutPutDto(user);
   }
 
   async update(

@@ -10,7 +10,7 @@ class Media {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false, type: 'varchar', primary: true })
+  @Column({ nullable: false, type: 'varchar' })
   name: string;
 
   @Column({ nullable: true, type: 'varchar' })

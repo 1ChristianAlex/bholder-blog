@@ -10,9 +10,8 @@ export class LoginInputDto {
   password: string;
 }
 export class LoginOutputDto {
-  constructor(user: UserOutPutDto, token: string) {
-    this.user = user;
-    this.token = token;
+  constructor(partial: Partial<LoginOutputDto>) {
+    Object.assign(this, partial);
   }
 
   @IsNotEmpty()

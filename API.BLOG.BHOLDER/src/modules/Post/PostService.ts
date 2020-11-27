@@ -1,32 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { Category, Post, PostCategory } from 'entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In, ObjectLiteral } from 'typeorm';
 import { PostInputDto, PostOutputDto } from 'dto';
 import { IPostService } from './IPostServices';
 import { Bucket } from 'services';
+import { PostCategoryService } from './PostCategory/PostCategortyService';
 
 Injectable();
 export class PostService implements IPostService {
   constructor(
-    @InjectRepository(Post) private modelPost: Repository<Post>,
+    @InjectRepository(Post) private _modelPost: Repository<Post>,
     @InjectRepository(PostCategory)
-    private postCategoryModel: Repository<PostCategory>,
-    private bucket: Bucket,
+    private _postCategoryModel: Repository<PostCategory>,
+    private _postCategoryService: PostCategoryService,
+    private _bucket: Bucket,
   ) {}
 
   async create(post: PostInputDto, userId: number): Promise<PostOutputDto> {
     try {
       if (post.thumbnail) {
-        const urlImage = await this.bucket.uploadBaseFile(post.thumbnail);
+        const urlImage = await this._bucket.uploadBaseFile(post.thumbnail);
         post.thumbnail = urlImage;
       }
 
-      const postCreated = await this.modelPost
+      const postCreated = await this._modelPost
         .save({
           ...post,
           datePublish: new Date(),
-          keywords: post.keywords.filter(Boolean),
+          keywords: JSON.stringify(post.keywords.filter(Boolean)),
           postPublication: { id: post.postPublicationId },
           postStatus: { id: post.postStatusId },
           postVisibility: { id: post.postPublicationId },
@@ -35,38 +37,21 @@ export class PostService implements IPostService {
         })
         .then(async (postItem) => {
           await Promise.all(
-            post.categoryIds.map(async (item) => {
-              const postCategory = new PostCategory();
-              const category = new Category();
-              postCategory.category = category;
-
-              postCategory.category.id = 2;
-
-              postCategory.post = new Post();
-              postCategory.post.id = postItem.id;
-
-              postCategory.id = null;
-
-              return await this.postCategoryModel
-                .save(postCategory)
-                .then((item) => {
-                  console.log(postCategory);
-                  console.log(item);
-                });
-            }),
+            post.categoryIds.map(async (item) =>
+              this._postCategoryService.create(postItem.id, item),
+            ),
           );
-
           return postItem;
         })
-        .then((postItem) => {
-          return this.modelPost.findOne(postItem.id, {
+        .then(async (postItem) => {
+          return this._modelPost.findOne(postItem.id, {
             relations: [
-              'user',
               'postPublication',
               'postStatus',
               'postVisibility',
               'category',
             ],
+            loadRelationIds: { relations: ['user'] },
           });
         });
 
@@ -77,48 +62,51 @@ export class PostService implements IPostService {
   }
 
   private mapPostOut(postCreated: Post) {
-    return new PostOutputDto(
-      postCreated.id,
-      postCreated.title,
-      postCreated.content,
-      postCreated.shortDescription,
-      postCreated.thumbnail,
-      postCreated.keywords,
-      postCreated.postStatus.id,
-      postCreated.postVisibility.id,
-      postCreated.postPublication.id,
-      postCreated.datePublish,
-      postCreated.createAt,
-      postCreated.updateAt,
-      postCreated.isActive,
-      postCreated.user,
-    );
+    return new PostOutputDto(postCreated);
   }
 
   async getAll(
-    offset = 0,
-    limit = 10,
-    caterogyId = 0,
-    statusId = 0,
+    offset: number,
+    limit: number,
+    caterogyId: number,
+    statusId: number,
   ): Promise<PostOutputDto[]> {
     try {
-      const postList = await this.modelPost.find({
-        where: {
-          isActive: true,
-          id: 3,
+      const whereCondition: ObjectLiteral = {};
+
+      if (caterogyId) {
+        const postCategory = new PostCategory();
+
+        postCategory.category = new Category();
+        postCategory.category.id = caterogyId;
+
+        const postFromCategory = await this._postCategoryModel
+          .find({ where: postCategory, relations: ['post'] })
+          .then((item) => item.map((itemCategory) => itemCategory.post.id));
+
+        whereCondition.id = In(postFromCategory);
+      }
+
+      if (statusId) {
+        whereCondition.postStatus = { id: statusId };
+      }
+
+      const postList = await this._modelPost.find({
+        where: whereCondition,
+        relations: ['category'],
+        loadRelationIds: {
+          relations: [
+            'user',
+            'postPublication',
+            'postStatus',
+            'postVisibility',
+          ],
         },
         order: {
           datePublish: 'ASC',
         },
-        relations: [
-          'user',
-          'postPublication',
-          'postStatus',
-          'postVisibility',
-          'category',
-        ],
-        skip: offset,
         take: limit,
+        skip: offset,
       });
 
       return postList.map(this.mapPostOut);
@@ -129,18 +117,20 @@ export class PostService implements IPostService {
 
   async getById(id: number): Promise<PostOutputDto> {
     try {
-      const postUnico = await this.modelPost.findOne({
-        where: { id },
-        relations: [
-          'category',
-          'user',
-          'postPublication',
-          'postStatus',
-          'postVisibility',
-        ],
+      const postComplete = await this._modelPost.findOne(id, {
+        relations: ['category'],
+        loadRelationIds: {
+          relations: [
+            'user',
+            'postPublication',
+            'postStatus',
+            'postVisibility',
+          ],
+        },
+        loadEagerRelations: true,
       });
 
-      return this.mapPostOut(postUnico);
+      return this.mapPostOut(postComplete);
     } catch (error) {
       throw new Error(error.message);
     }
