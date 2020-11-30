@@ -1,4 +1,0 @@
-const UPDATE_USER = 'UPDATE_USER';
-const DELETE_USER = 'DELETE_USER';
-
-export { UPDATE_USER, DELETE_USER };
