@@ -36,11 +36,14 @@ export class PostService implements IPostService {
           updateAt: new Date(),
         })
         .then(async (postItem) => {
-          await Promise.all(
-            post.categoryIds.map(async (item) =>
-              this._postCategoryService.create(postItem.id, item),
-            ),
-          );
+          if (post.categoryIds.length > 0) {
+            await Promise.all(
+              post.categoryIds.map(async (item) =>
+                this._postCategoryService.create(postItem.id, item),
+              ),
+            );
+          }
+
           return postItem;
         })
         .then(async (postItem) => {
@@ -62,7 +65,12 @@ export class PostService implements IPostService {
   }
 
   private mapPostOut(postCreated: Post) {
-    return new PostOutputDto(postCreated);
+    return new PostOutputDto({
+      ...postCreated,
+      postPublicationId: postCreated?.postPublication?.id,
+      postStatusId: postCreated?.postStatus?.id,
+      postVisibilityId: postCreated?.postVisibility?.id,
+    });
   }
 
   async getAll(
@@ -93,14 +101,10 @@ export class PostService implements IPostService {
 
       const postList = await this._modelPost.find({
         where: whereCondition,
-        relations: ['category'],
+        relations: ['category', 'user'],
         loadRelationIds: {
-          relations: [
-            'user',
-            'postPublication',
-            'postStatus',
-            'postVisibility',
-          ],
+          relations: ['postPublication', 'postStatus', 'postVisibility'],
+          disableMixedMap: true,
         },
         order: {
           datePublish: 'ASC',

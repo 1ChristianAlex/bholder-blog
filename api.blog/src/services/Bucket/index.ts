@@ -8,6 +8,7 @@ import {
   unlinkSync,
   writeFileSync,
   existsSync,
+  ReadStream,
 } from 'fs';
 import { basename, resolve } from 'path';
 import { Body } from 'aws-sdk/clients/s3';
@@ -22,15 +23,6 @@ export class Bucket implements IBucket {
     this.s3 = new S3();
   }
 
-  async uploadMemoryFile(file: PathLike): Promise<string> {
-    const stream = createReadStream(file);
-
-    const path = await this.uploadToBucket(stream);
-    unlinkSync(file);
-
-    return path;
-  }
-
   async uploadBaseFile(file: string): Promise<string> {
     if (!(file.includes('http://') || file.includes('https://'))) {
       const type = file.match(/(\/[A-Za-z]*)/)[0];
@@ -42,20 +34,26 @@ export class Bucket implements IBucket {
       writeFileSync(pathWrite, file.replace(/^data:image\/(...);base64,/, ''), {
         encoding: 'base64',
       });
-      const pathUrl = await this.uploadToBucket(pathWrite);
 
+      const stream = createReadStream(pathWrite);
+
+      const pathUrl = await this.uploadToBucket(stream, basename(pathWrite));
       unlinkSync(pathWrite);
+
       return pathUrl;
     }
     return file;
   }
 
-  private uploadToBucket(file: Body): string | PromiseLike<string> {
+  private uploadToBucket(
+    file: ReadStream,
+    filename: string,
+  ): string | PromiseLike<string> {
     return new Promise((res, rej) => {
       const params: S3.PutObjectRequest = {
         Bucket: this.bucketName,
         Body: file,
-        Key: basename(file as string),
+        Key: filename,
       };
       this.s3.upload(params, (err, data) => {
         if (err) {

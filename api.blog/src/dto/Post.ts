@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { IsNotEmpty } from 'class-validator';
 import { Post, PostCategory } from 'entity';
 import { CategOutputDto } from './Category';
@@ -47,6 +48,16 @@ export class PostOutputDto {
   public postPublicationId?: number;
   public postStatusId?: number;
   public postVisibilityId?: number;
+
+  @Exclude()
+  private postPublication?: number;
+
+  @Exclude()
+  private postStatus?: number;
+
+  @Exclude()
+  private postVisibility?: number;
+
   public datePublish?: Date;
   public createAt?: Date;
   public updateAt?: Date;
@@ -60,6 +71,8 @@ export class PostOutputDto {
     this.category = this.category.map(
       (item) => new PostCategoryOutputDto(item),
     );
+
+    this.user = new UserOutPutDto(partial.user);
   }
 }
 

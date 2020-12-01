@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface IRequestOptions {
-  header: object;
-  params: object;
+  header?: object;
+  params?: object;
 }
 
 interface IAdapter {

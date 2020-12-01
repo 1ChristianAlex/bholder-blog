@@ -19,9 +19,26 @@ class Auth implements IAuth {
   }
 
   async auth(credentials: Login): Promise<User> {
+    store.dispatch(
+      actions.updateSnackbar({
+        open: true,
+        message: 'Carregando...',
+        loading: true,
+      })
+    );
     const userAuth = await this.adapter.post<LoginData>('/auth', credentials);
+
     localStorage.setItem('token', userAuth.data.token);
     await store.dispatch(actions.updateUser(userAuth.data.user));
+
+    store.dispatch(
+      actions.updateSnackbar({
+        open: true,
+        message: `Bem vindo ${userAuth.data.user.firstName}`,
+        loading: false,
+      })
+    );
+
     return userAuth.data.user;
   }
 

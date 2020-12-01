@@ -31,6 +31,7 @@ const DropZone: React.FC<DropZoneProps> = ({ setDropZoneBase }) => {
       <input {...getInputProps()} />
       <p>Solte seu arquivo aqui ou clique para selecionar</p>
       {dropZoneFile?.name && <p>{dropZoneFile?.name}</p>}
+      {dropZoneFile?.size && <p>{(dropZoneFile?.size / 1024).toFixed(2)}</p>}
     </DropZoneContainer>
   );
 };

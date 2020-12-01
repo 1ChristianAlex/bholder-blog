@@ -5,6 +5,7 @@ import AppRoutes from './AppRoutes';
 import GlobalStyle from '../theme/global';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { darkTheme } from '../theme/colors';
+import { SnackbarProvider } from '../components';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
         <StylesProvider injectFirst>
           <GlobalStyle />
           <AppRoutes />
+          <SnackbarProvider />
         </StylesProvider>
       </StyledThemeProvider>
     </StoreProvider>

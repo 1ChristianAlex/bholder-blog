@@ -21,7 +21,7 @@ const LoginForm: FC = () => {
 
   const handleLogin = async () => {
     try {
-      const credential = new Login(email, password);
+      const credential = new Login({ email, password });
 
       await Auth.auth(credential);
       history.push('/dashboard');

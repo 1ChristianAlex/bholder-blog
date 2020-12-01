@@ -12,3 +12,4 @@ export { default as KeyDatePicker } from './KeyDatePicker';
 export { CheckBoxList, CheckBoxData } from './CheckBoxList';
 export { default as DropZone } from './DropZone';
 export { default as ChipItem } from './ChipItem';
+export { SnackbarProvider, SnackBarData } from './SnackbarProvider';

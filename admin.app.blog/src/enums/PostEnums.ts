@@ -5,9 +5,9 @@ enum PostStatus {
 }
 
 const PostStatusDescription = {
-  [PostStatus.saved]: 'Salvo',
-  [PostStatus.draft]: 'Draft',
-  [PostStatus.deleted]: 'Deletado',
+  [PostStatus.saved.toString()]: 'Salvo',
+  [PostStatus.draft.toString()]: 'Draft',
+  [PostStatus.deleted.toString()]: 'Deletado',
 };
 
 enum PostVisibility {
@@ -16,8 +16,8 @@ enum PostVisibility {
 }
 
 const PostVisibilityDescription = {
-  [PostVisibility.visible]: 'Visivel',
-  [PostVisibility.hidden]: 'Escondido',
+  [PostVisibility.visible.toString()]: 'Visivel',
+  [PostVisibility.hidden.toString()]: 'Escondido',
 };
 
 enum PostPublication {
@@ -26,8 +26,8 @@ enum PostPublication {
 }
 
 const PostPublicationDescription = {
-  [PostPublication.imediat]: 'Imediata',
-  [PostPublication.scheduling]: 'Agendada',
+  [PostPublication.imediat.toString()]: 'Imediata',
+  [PostPublication.scheduling.toString()]: 'Agendada',
 };
 
 export {

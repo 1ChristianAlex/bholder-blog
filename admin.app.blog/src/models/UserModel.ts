@@ -1,5 +1,5 @@
 class Login {
-  constructor(props: Login) {
+  constructor(props?: Login) {
     Object.assign(this, props);
   }
   public email?: string;
@@ -7,8 +7,8 @@ class Login {
 }
 
 class LoginData {
-  public token?: string;
-  public user?: User;
+  public token!: string;
+  public user!: User;
 
   constructor(props: LoginData) {
     Object.assign(this, props);
@@ -16,7 +16,7 @@ class LoginData {
 }
 
 class User {
-  constructor(props: User) {
+  constructor(props?: User) {
     Object.assign(this, props);
   }
 
