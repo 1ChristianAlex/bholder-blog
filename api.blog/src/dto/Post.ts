@@ -1,9 +1,12 @@
 import { Exclude } from 'class-transformer';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 import { Post, PostCategory } from 'entity';
 import { CategOutputDto } from './Category';
 import { UserOutPutDto } from './User';
 export class PostInputDto {
+  @IsNumber()
+  public id: number;
+
   @IsNotEmpty()
   public title: string;
   @IsNotEmpty()
@@ -71,7 +74,7 @@ export class PostOutputDto {
     this.category = this.category.map(
       (item) => new PostCategoryOutputDto(item),
     );
-
+    this.keywords = JSON.parse(this.keywords.toString());
     this.user = new UserOutPutDto(partial.user);
   }
 }

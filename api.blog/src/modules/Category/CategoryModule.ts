@@ -16,4 +16,4 @@ import { CategoryService } from './CatergoryService';
   controllers: [CategoryController],
   providers: [CategoryService, JwtStrategy, Bucket],
 })
-export class PostCategoryModule {}
+export class CategoryModule {}

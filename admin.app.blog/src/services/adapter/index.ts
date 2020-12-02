@@ -21,7 +21,7 @@ class Adapter implements IAdapter {
     return header;
   }
 
-  async get<T = any>(
+  async get<T>(
     url: string,
     requestOptions?: IRequestOptions
   ): Promise<AxiosResponse<T>> {
@@ -35,7 +35,7 @@ class Adapter implements IAdapter {
       headers: header,
     });
   }
-  async post<T = any>(
+  async post<T>(
     url: string,
     body: object,
     requestOptions?: IRequestOptions
@@ -50,7 +50,7 @@ class Adapter implements IAdapter {
       headers: header,
     });
   }
-  async put<T = any>(
+  async put<T>(
     url: string,
     body: object,
     requestOptions?: IRequestOptions
@@ -60,12 +60,12 @@ class Adapter implements IAdapter {
       ...this.getTokenHeader(),
     };
 
-    return this.http.post(url, body, {
+    return this.http.put(url, body, {
       params: requestOptions?.params,
       headers: header,
     });
   }
-  async delete<T = any>(
+  async delete<T>(
     url: string,
     body: object,
     requestOptions?: IRequestOptions

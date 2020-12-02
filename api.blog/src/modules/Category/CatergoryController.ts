@@ -7,13 +7,14 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Param,
 } from '@nestjs/common';
 import { CategInputDto, CategotyUpdateDto, CategOutputDto } from 'dto';
 import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
 import { CategoryService } from './CatergoryService';
 
 @UseGuards(JwtAuthGuard)
-@Controller('api/post/category')
+@Controller('api/category')
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
@@ -39,13 +40,13 @@ export class CategoryController {
     }
   }
 
-  @Get()
-  public async getCategory(@Body() ids: number[]): Promise<CategOutputDto[]> {
+  @Get('/:id?')
+  public async getCategory(
+    @Param('id') id?: number,
+  ): Promise<CategOutputDto[]> {
     try {
-      if (ids?.length === 0) {
-        throw Error('Ids is required');
-      }
-      return this.categoryService.getCategories(ids);
+      const _id = Number.isInteger(id) ? id : null;
+      return this.categoryService.getCategories(_id);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.NOT_FOUND);
     }

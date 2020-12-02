@@ -11,7 +11,8 @@ import Role from './role.entity';
 
 @Entity({ schema: 'user' })
 class User {
-  constructor() {
+  constructor(partial?: Partial<User>) {
+    Object.assign(this, partial);
     this.updateAt = new Date();
   }
 

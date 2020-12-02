@@ -13,10 +13,13 @@ export class CategoryService implements ICatergoryService {
     private bucket: Bucket,
   ) {}
 
-  async getCategories(ids: number[]): Promise<CategOutputDto[]> {
-    const listCategories = await this.category.findByIds(ids);
-
-    return listCategories.map(this.mapCategoryOutput);
+  async getCategories(id: number): Promise<CategOutputDto[]> {
+    if (id) {
+      const categoryItem = await this.category.findOne(id);
+      return [this.mapCategoryOutput(categoryItem)];
+    }
+    const listCategory = await this.category.find();
+    return listCategory.map(this.mapCategoryOutput);
   }
 
   async createCategory(postCategory: CategInputDto): Promise<CategOutputDto> {

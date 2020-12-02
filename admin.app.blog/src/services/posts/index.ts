@@ -6,6 +6,16 @@ import actions from '../../redux/actions';
 class PostService implements IPostService {
   constructor(private adapter: Adapter) {}
 
+  async getPostById(postId: number): Promise<Post> {
+    try {
+      const postItem = await this.adapter.get<Post>(`api/post/${postId}`);
+
+      return postItem.data;
+    } catch (error) {
+      throw error.mesage;
+    }
+  }
+
   async createPost(postBody: Post): Promise<Post> {
     try {
       store.dispatch(
@@ -22,6 +32,32 @@ class PostService implements IPostService {
         actions.updateSnackbar({
           open: true,
           message: `Post criado com sucesso`,
+          loading: false,
+        })
+      );
+
+      return postCreated.data;
+    } catch (error) {
+      throw error.mesage;
+    }
+  }
+
+  async updatePost(postBody: Post): Promise<Post> {
+    try {
+      store.dispatch(
+        actions.updateSnackbar({
+          open: true,
+          message: 'Carregando...',
+          loading: true,
+        })
+      );
+
+      const postCreated = await this.adapter.put<Post>('api/post', postBody);
+
+      store.dispatch(
+        actions.updateSnackbar({
+          open: true,
+          message: `Post atualizado com sucesso`,
           loading: false,
         })
       );

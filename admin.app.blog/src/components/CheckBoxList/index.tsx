@@ -6,7 +6,7 @@ class CheckBoxData {
 }
 
 interface CheckBoxListProps {
-  checkedList: (string | number)[];
+  checkedList: string[];
   setCheckedList(checkedList: (string | number)[]): void;
   checkboxItems: CheckBoxData[];
 }
@@ -29,6 +29,7 @@ const CheckBoxList: React.FC<CheckBoxListProps> = ({
 
     setCheckedList(listChange);
   };
+  console.log(checkedList);
 
   return (
     <FormGroup>

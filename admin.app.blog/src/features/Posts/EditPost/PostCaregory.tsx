@@ -1,16 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { Divider, Grid } from '@material-ui/core';
 import { CheckBoxList, PaperBholder, CheckBoxData } from '../../../components';
 import { TitlePublish } from './styles';
 import { EditPostContext } from './EditPostProvider';
+import CategoryService from '../../../services/category';
 
 const PostCategory: React.FC = () => {
   const { categoryIds, setCategoryIds } = useContext(EditPostContext);
-  const checkBoxCategoryList = [
-    new CheckBoxData('Filmes', 1),
-    new CheckBoxData('Jogos', 2),
-    new CheckBoxData('Series', 3),
-  ];
+
+  const [checkBoxCategoryList, setCheckBoxCategoryList] = useState<
+    CheckBoxData[]
+  >([]);
+
+  useMemo(() => {
+    if (checkBoxCategoryList.length === 0) {
+      CategoryService.getCategory().then((categoryResponse) => {
+        const categoryCheckBoxList = categoryResponse.map(
+          (categoryItem) => new CheckBoxData(categoryItem.name, categoryItem.id)
+        );
+        setCheckBoxCategoryList(categoryCheckBoxList);
+      });
+    }
+  }, [checkBoxCategoryList]);
 
   const handleCheckedList = (listItem: typeof categoryIds) => {
     setCategoryIds(listItem);
@@ -26,11 +37,13 @@ const PostCategory: React.FC = () => {
           <Divider />
         </Grid>
         <Grid item>
-          <CheckBoxList
-            checkedList={categoryIds}
-            setCheckedList={handleCheckedList}
-            checkboxItems={checkBoxCategoryList}
-          />
+          {checkBoxCategoryList.length > 0 && (
+            <CheckBoxList
+              checkedList={categoryIds.map((item) => item.toString())}
+              setCheckedList={handleCheckedList}
+              checkboxItems={checkBoxCategoryList}
+            />
+          )}
         </Grid>
       </Grid>
     </PaperBholder>

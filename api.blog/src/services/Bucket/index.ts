@@ -4,14 +4,12 @@ import { BUCKET_NAME } from 'config/Envs';
 import { IBucket } from './IBucket';
 import {
   createReadStream,
-  PathLike,
   unlinkSync,
   writeFileSync,
   existsSync,
   ReadStream,
 } from 'fs';
 import { basename, resolve } from 'path';
-import { Body } from 'aws-sdk/clients/s3';
 
 @Injectable()
 export class Bucket implements IBucket {
@@ -30,8 +28,8 @@ export class Bucket implements IBucket {
         '/',
         '',
       )}`;
-
-      writeFileSync(pathWrite, file.replace(/^data:image\/(...);base64,/, ''), {
+      const fileParsed = file.replace(/^data:image\/(.*);base64,/, '');
+      writeFileSync(pathWrite, fileParsed, {
         encoding: 'base64',
       });
 

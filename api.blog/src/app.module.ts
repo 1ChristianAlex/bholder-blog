@@ -5,7 +5,7 @@ import { envPath, dbConfig } from 'config/ConfigFile';
 import { AppController } from './app.controller';
 // import { GraphQLModule } from '@nestjs/graphql';
 import { AppService } from './app.service';
-import { AuthModule, UserModule, PostModule } from 'modules';
+import { AuthModule, UserModule, PostModule, CategoryModule } from 'modules';
 import { MulterModule } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 @Module({
@@ -21,6 +21,7 @@ import { memoryStorage } from 'multer';
     AuthModule,
     UserModule,
     PostModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

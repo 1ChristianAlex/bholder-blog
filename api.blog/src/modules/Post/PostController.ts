@@ -8,6 +8,7 @@ import {
   HttpException,
   HttpStatus,
   Query,
+  Put,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../JWTAuth/JwtAuthGuard';
 import { Payload } from '../JWTAuth/PayloadDecorator';
@@ -16,7 +17,7 @@ import { TokenPayload, PostInputDto, PostOutputDto } from 'dto';
 import { ErrorOnPostCreation } from 'resources';
 
 @UseGuards(JwtAuthGuard)
-@Controller('api/post')
+@Controller('/api/post')
 export class PostAPIController {
   constructor(private _postService: PostService) {}
 
@@ -27,6 +28,18 @@ export class PostAPIController {
   ): Promise<PostOutputDto> {
     try {
       return this._postService.create(body, payload.id);
+    } catch (error) {
+      throw new HttpException(ErrorOnPostCreation, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Put()
+  async update(
+    @Body() body: PostInputDto,
+    @Payload() payload: TokenPayload,
+  ): Promise<PostOutputDto> {
+    try {
+      return this._postService.update(body, payload.id);
     } catch (error) {
       throw new HttpException(ErrorOnPostCreation, HttpStatus.BAD_REQUEST);
     }
@@ -61,7 +74,7 @@ export class PostAPIController {
   }
 }
 
-@Controller('post')
+@Controller('/post/')
 export class PostController {
   constructor(private _postService: PostService) {}
 
@@ -84,7 +97,7 @@ export class PostController {
     }
   }
 
-  @Get(':id')
+  @Get('/:id')
   async get(@Param('id') id: number): Promise<PostOutputDto> {
     try {
       return this._postService.getById(id);

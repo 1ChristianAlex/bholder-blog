@@ -10,6 +10,10 @@ import {
 
 @Entity({ schema: 'posts' })
 class Category {
+  constructor(partial?: Partial<Category>) {
+    Object.assign(this, partial);
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 

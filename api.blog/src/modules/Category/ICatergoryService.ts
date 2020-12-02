@@ -4,5 +4,5 @@ export interface ICatergoryService {
   createCategory(category: CategInputDto): Promise<CategOutputDto>;
   updateCategory(category: CategInputDto, id: number): Promise<CategOutputDto>;
   deleteCategory(id: number): Promise<void>;
-  getCategories(ids: number[]): Promise<CategOutputDto[]>;
+  getCategories(id: number): Promise<CategOutputDto[]>;
 }

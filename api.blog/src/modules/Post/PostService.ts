@@ -17,6 +17,58 @@ export class PostService implements IPostService {
     private _bucket: Bucket,
   ) {}
 
+  async update(post: PostInputDto, userId: number): Promise<PostOutputDto> {
+    try {
+      if (post.thumbnail) {
+        const urlImage = await this._bucket.uploadBaseFile(post.thumbnail);
+        post.thumbnail = urlImage;
+      }
+
+      const postCreated = await this._modelPost
+        .update(
+          { id: post.id },
+          {
+            content: post.content,
+            thumbnail: post.thumbnail,
+            title: post.title,
+            shortDescription: post.shortDescription,
+            datePublish: new Date(),
+            keywords: JSON.stringify(post.keywords.filter(Boolean)),
+            postPublication: { id: post.postPublicationId },
+            postStatus: { id: post.postStatusId },
+            postVisibility: { id: post.postPublicationId },
+            user: { id: userId },
+            updateAt: new Date(),
+          },
+        )
+        .then(async () => {
+          if (post.categoryIds.length > 0) {
+            await this._postCategoryService.delete(post.id);
+            await Promise.all(
+              post.categoryIds.map(async (item) =>
+                this._postCategoryService.create(post.id, item),
+              ),
+            );
+          }
+        })
+        .then(async () => {
+          return this._modelPost.findOne(post.id, {
+            relations: [
+              'postPublication',
+              'postStatus',
+              'postVisibility',
+              'category',
+            ],
+            loadRelationIds: { relations: ['user'] },
+          });
+        });
+
+      return this.mapPostOut(postCreated);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
   async create(post: PostInputDto, userId: number): Promise<PostOutputDto> {
     try {
       if (post.thumbnail) {
@@ -107,7 +159,7 @@ export class PostService implements IPostService {
           disableMixedMap: true,
         },
         order: {
-          datePublish: 'ASC',
+          datePublish: 'DESC',
         },
         take: limit,
         skip: offset,
@@ -122,14 +174,10 @@ export class PostService implements IPostService {
   async getById(id: number): Promise<PostOutputDto> {
     try {
       const postComplete = await this._modelPost.findOne(id, {
-        relations: ['category'],
+        relations: ['category', 'user'],
         loadRelationIds: {
-          relations: [
-            'user',
-            'postPublication',
-            'postStatus',
-            'postVisibility',
-          ],
+          relations: ['postPublication', 'postStatus', 'postVisibility'],
+          disableMixedMap: true,
         },
         loadEagerRelations: true,
       });

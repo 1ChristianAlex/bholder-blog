@@ -3,6 +3,7 @@ import {
   PostPublication,
   PostVisibility,
 } from '../enums/PostEnums';
+import { Category } from './CategoryModel';
 import { User } from './UserModel';
 
 class Post {
@@ -26,6 +27,8 @@ class Post {
   public updateAt: Date;
   public isActive: boolean;
   public user: User;
+
+  public category: { id: number; category: Category }[];
 }
 
 class PostFilters {

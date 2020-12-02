@@ -7,9 +7,11 @@ import {
   INestApplication,
   ValidationPipe,
 } from '@nestjs/common';
+import { json } from 'express';
 
 const appDecorator = (app: INestApplication) => {
   app.use(helmet());
+  app.use(json({ limit: '5mb' }));
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalPipes(
     new ValidationPipe({

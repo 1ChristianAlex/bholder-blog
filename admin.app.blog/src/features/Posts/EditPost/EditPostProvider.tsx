@@ -1,10 +1,12 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
+import { useParams } from 'react-router';
 import {
   PostPublication,
   PostStatus,
   PostVisibility,
 } from '../../../enums/PostEnums';
 import { Post } from '../../../models/PostModel';
+import category from '../../../services/category';
 import PostService from '../../../services/posts';
 // import { Container } from './styles';
 
@@ -58,6 +60,7 @@ const EditPostContext = createContext<IEditPostContext>({
 });
 
 const EditPostProvider: React.FC = ({ children }) => {
+  const [loadingPost, setLoadingPost] = useState(false);
   const [textEditor, setTextValueEditor] = useState('');
   const [postTitle, setPostTitle] = useState('');
   const [shortDescription, setShortDescription] = useState('');
@@ -73,6 +76,40 @@ const EditPostProvider: React.FC = ({ children }) => {
   const [datePublish, setDatePublish] = useState(new Date());
   const [categoryIds, setCategoryIds] = useState<number[]>([]);
 
+  const { id } = useParams<{ id?: string }>();
+
+  useMemo(() => {
+    if (id) {
+      setLoadingPost(true);
+      PostService.getPostById(parseInt(id)).then((postItem) => {
+        setTextValueEditor(postItem.content);
+        setPostTitle(postItem.title);
+        setShortDescription(postItem.shortDescription);
+        setThumbUrl(postItem.thumbnail);
+        setKeywordlist(postItem.keywords);
+        setPostStatus(postItem.postStatusId);
+        setPostVisibility(postItem.postVisibilityId);
+        setPostPublication(postItem.postPublicationId);
+        setDatePublish(new Date(postItem.datePublish));
+        setCategoryIds(
+          postItem.category.map((categoryItem) => categoryItem.category.id)
+        );
+        setLoadingPost(false);
+      });
+    } else {
+      setTextValueEditor('');
+      setPostTitle('');
+      setShortDescription('');
+      setThumbUrl('');
+      setKeywordlist([]);
+      setPostStatus(PostStatus.draft);
+      setPostVisibility(PostVisibility.visible);
+      setPostPublication(PostPublication.imediat);
+      setDatePublish(new Date());
+      setCategoryIds([]);
+    }
+  }, [id]);
+
   const publishPost = async () => {
     const postBody = new Post({
       title: postTitle,
@@ -86,7 +123,13 @@ const EditPostProvider: React.FC = ({ children }) => {
       postPublicationId: postPublication,
       postVisibilityId: postVisibility,
     });
-    await PostService.createPost(postBody);
+
+    if (id) {
+      postBody.id = parseInt(id);
+      await PostService.updatePost(postBody);
+    } else {
+      await PostService.createPost(postBody);
+    }
   };
 
   return (
@@ -115,7 +158,8 @@ const EditPostProvider: React.FC = ({ children }) => {
         publishPost,
       }}
     >
-      {children}
+      {!loadingPost && id && children}
+      {!id && children}
     </EditPostContext.Provider>
   );
 };

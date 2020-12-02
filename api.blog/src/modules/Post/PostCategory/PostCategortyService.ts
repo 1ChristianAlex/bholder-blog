@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Category, Post, PostCategory } from 'entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ObjectLiteral, Repository } from 'typeorm';
 import { IPostCategoryService } from './IPostCategoryService';
 
 Injectable();
@@ -10,6 +10,18 @@ export class PostCategoryService implements IPostCategoryService {
     @InjectRepository(PostCategory)
     private postCategoryModel: Repository<PostCategory>,
   ) {}
+  async delete(postId?: number, categoryId?: number): Promise<void> {
+    const deleteCondition: ObjectLiteral = {};
+
+    if (categoryId) {
+      deleteCondition.category = { id: categoryId };
+    }
+    if (postId) {
+      deleteCondition.post = { id: postId };
+    }
+
+    await this.postCategoryModel.delete(deleteCondition).then(console.log);
+  }
 
   async create(postId: number, categoryId: number): Promise<PostCategory> {
     const postCategory = new PostCategory();
